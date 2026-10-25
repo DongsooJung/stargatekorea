@@ -25,12 +25,40 @@ export default {
     { label: 'Living', href: '/category/living-in-korea/' },
     { label: 'Travel', href: '/category/travel-korea/' },
     { label: 'Culture', href: '/category/korean-culture/' },
+    { label: 'Economy', href: '/economy/' },
     { label: 'Campus Trips', href: '/campus-trips/' },
     { label: 'About', href: '/about/' },
   ],
+  // /economy/ — Korea's economy and policy, checked with data. Posts live in content/economy/*.md.
+  economy: {
+    title: 'Korea Economy, Checked',
+    tagline: "Korea's economy and policy, checked with data",
+    description:
+      "Data-checked reports on Korea's housing policy, household credit, macro trends, industry and regulation — with a verdict, the key numbers, the counter-evidence and sources.",
+    sections: [
+      { slug: 'policy-check', name: 'Policy Check', icon: '⚖️', blurb: 'Housing and credit policies tested against the data' },
+      { slug: 'macro-notes', name: 'Macro Notes', icon: '📈', blurb: 'Rates, the won, household credit and trade' },
+      { slug: 'industry-watch', name: 'Industry Watch', icon: '🏭', blurb: 'Chips, AI, robotics and the companies behind them' },
+      { slug: 'regulation-watch', name: 'Regulation Watch', icon: '📜', blurb: 'Rules that shape how Korean business works' },
+    ],
+    // Verdict scale shared with the Korean /regulation/ reports.
+    verdicts: {
+      effective: { label: 'Effective', tone: 'good' },
+      partial: { label: 'Partially effective', tone: 'mid' },
+      'too-early': { label: 'Too early to judge', tone: 'neutral' },
+      ineffective: { label: 'Not effective', tone: 'bad' },
+      backfire: { label: 'Risk of backfiring', tone: 'bad' },
+    },
+    confidence: {
+      verified: 'Verified against the original source',
+      reference: 'Reported figure, not independently verified',
+      estimate: 'Our estimate — method explained in the text',
+    },
+  },
   channels: [
     { name: 'Stargate Education', note: 'Korean education site', href: 'https://www.stargateedu.co.kr/' },
     { name: 'Stargate Blog', note: 'Korean research & data blog', href: 'https://blog.stargateedu.co.kr/' },
+    { name: 'Korea Economy, Checked', note: 'Data-checked economy and policy reports', href: '/economy/' },
     { name: 'Campus Trips', note: 'Small-group trips for students', href: '/campus-trips/' },
   ],
   footerPages: [

@@ -30,12 +30,18 @@ export function loadContent() {
     .filter((p) => !p.draft)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
   const pages = read('pages');
-  return { posts, pages };
+  const econDir = path.join(ROOT, 'content', 'economy');
+  const reports = fs.existsSync(econDir)
+    ? read('economy')
+        .filter((r) => !r.draft)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+    : [];
+  return { posts, pages, reports };
 }
 
 const catOf = (slug) => site.categories.find((c) => c.slug === slug) || { slug, name: slug, icon: '•' };
 
-function layout({ title, description, pathname, body, type = 'website', jsonld, date }) {
+function layout({ title, description, pathname, body, type = 'website', jsonld, date, head = '' }) {
   const url = site.url + pathname;
   const fullTitle = pathname === '/' ? `${site.title} — ${site.tagline}` : `${title} | ${site.title}`;
   const ads = site.adsenseClient
@@ -63,6 +69,7 @@ function layout({ title, description, pathname, body, type = 'website', jsonld, 
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary">
 ${date ? `<meta property="article:published_time" content="${new Date(date).toISOString()}">` : ''}
+${head}
 <link rel="alternate" type="application/rss+xml" title="${esc(site.title)}" href="${site.url}/feed.xml">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,7 +97,7 @@ ${body}
       <p class="muted">${esc(site.tagline)}.</p>
     </div>
     <nav aria-label="Topics"><h2>Topics</h2>${site.categories.map((c) => `<a href="/category/${c.slug}/">${esc(c.name)}</a>`).join('')}</nav>
-    <nav aria-label="Site"><h2>Site</h2>${site.footerPages.map((p) => `<a href="${p.href}">${esc(p.label)}</a>`).join('')}<a href="/feed.xml">RSS</a></nav>
+    <nav aria-label="Site"><h2>Site</h2>${site.footerPages.map((p) => `<a href="${p.href}">${esc(p.label)}</a>`).join('')}<a href="/economy/">Economy</a><a href="/feed.xml">RSS</a></nav>
   </div>
   <div class="wrap legal muted">© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</div>
 </footer>
@@ -108,6 +115,136 @@ const card = (p) => {
 </article>`;
 };
 
+// ---------- /economy/ ----------
+const E = site.economy;
+const secOf = (slug) => E.sections.find((x) => x.slug === slug) || { slug, name: slug, icon: '•', blurb: '' };
+const verdictBadge = (v) => {
+  const d = E.verdicts[v];
+  return d ? `<span class="verdict v-${d.tone}">${esc(d.label)}</span>` : '';
+};
+const econCard = (r) => {
+  const s = secOf(r.section);
+  return `<article class="card">
+  <div class="card-top"><a class="cat-chip" href="/economy/${s.slug}/">${s.icon} ${esc(s.name)}</a>${verdictBadge(r.verdict)}</div>
+  <h3><a href="/economy/${r.slug}/">${esc(r.title)}</a></h3>
+  <p>${esc(r.excerpt)}</p>
+  <p class="meta"><time datetime="${new Date(r.date).toISOString()}">${fmtDate(r.date)}</time> · ${r.minutes} min read</p>
+</article>`;
+};
+const econEmpty = `<p class="empty">The first data-checked reports are being verified. Until then, read <a href="/economy/methodology/">how we check the numbers</a>.</p>`;
+
+function buildEconomy(reports) {
+  const counts = Object.fromEntries(E.sections.map((s) => [s.slug, reports.filter((r) => r.section === s.slug).length]));
+  const sectionTiles = E.sections
+    .map(
+      (s) => `<a class="topic" href="/economy/${s.slug}/"><span class="ti">${s.icon}</span><strong>${esc(s.name)}</strong><span class="muted">${esc(s.blurb)}</span><span class="count">${counts[s.slug] || 0} ${counts[s.slug] === 1 ? 'report' : 'reports'}</span></a>`
+    )
+    .join('');
+  const scale = Object.entries(E.verdicts)
+    .map(([, d]) => `<span class="verdict v-${d.tone}">${esc(d.label)}</span>`)
+    .join('');
+
+  // Hub
+  write(
+    'economy/index.html',
+    layout({
+      title: E.title,
+      description: E.description,
+      pathname: '/economy/',
+      body: `
+<section class="hero econ"><div class="wrap">
+  <p class="eyebrow">Economy · Written from Seoul</p>
+  <h1>${esc(E.tagline)}.</h1>
+  <p class="lead">${esc(E.description)}</p>
+  <div class="scale" aria-label="Verdict scale">${scale}</div>
+  <div class="cta"><a class="btn" href="#reports">Latest reports</a><a class="btn ghost" href="/economy/methodology/">Methodology</a></div>
+</div></section>
+<section id="sections" class="wrap section">
+  <div class="section-head"><p class="eyebrow">Sections</p><h2>Browse by section</h2></div>
+  <div class="topics">${sectionTiles}</div>
+</section>
+<section id="reports" class="wrap section">
+  <div class="section-head"><p class="eyebrow">Latest</p><h2>Reports</h2></div>
+  ${reports.length ? `<div class="grid">${reports.slice(0, 12).map(econCard).join('')}</div>` : econEmpty}
+</section>`,
+      jsonld: { '@context': 'https://schema.org', '@type': 'CollectionPage', name: E.title, url: `${site.url}/economy/`, description: E.description },
+    })
+  );
+
+  // Section listings
+  for (const s of E.sections) {
+    const list = reports.filter((r) => r.section === s.slug);
+    write(
+      `economy/${s.slug}/index.html`,
+      layout({
+        title: `${s.name} — ${E.title}`,
+        description: `${s.name}: ${s.blurb}. ${E.tagline}.`,
+        pathname: `/economy/${s.slug}/`,
+        body: `
+<section class="wrap section">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/economy/">Economy</a></nav>
+  <div class="section-head"><p class="eyebrow">${s.icon} Section</p><h1>${esc(s.name)}</h1><p class="lead">${esc(s.blurb)}.</p></div>
+  ${list.length ? `<div class="grid">${list.map(econCard).join('')}</div>` : econEmpty}
+</section>`,
+      })
+    );
+  }
+
+  // Reports
+  for (const r of reports) {
+    const s = secOf(r.section);
+    const figures = (r.figures || [])
+      .map(
+        (f) => `<tr><th scope="row">${esc(f.label)}</th><td>${esc(f.value)}</td><td><span class="conf c-${esc(f.confidence || 'reference')}" title="${esc(E.confidence[f.confidence] || '')}">${esc(f.confidence || 'reference')}</span></td><td>${f.source ? `<a href="${esc(f.source)}" rel="noopener">source</a>` : '—'}</td></tr>`
+      )
+      .join('');
+    const sources = (r.sources || [])
+      .map((x) => `<li><a href="${esc(x.url)}" rel="noopener">${esc(x.title)}</a>${x.accessed ? ` <span class="muted">(accessed ${esc(x.accessed)})</span>` : ''}</li>`)
+      .join('');
+    const related = reports.filter((x) => x.slug !== r.slug).slice(0, 3);
+    const altKo = r.korean_original ? `<link rel="alternate" hreflang="ko" href="${esc(r.korean_original)}">` : '';
+    write(
+      `economy/${r.slug}/index.html`,
+      layout({
+        title: r.title,
+        description: r.excerpt,
+        pathname: `/economy/${r.slug}/`,
+        type: 'article',
+        date: r.date,
+        head: altKo,
+        body: `
+<article class="wrap narrow post">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/economy/">Economy</a> / <a href="/economy/${s.slug}/">${esc(s.name)}</a></nav>
+  <h1>${esc(r.title)}</h1>
+  <p class="meta">By ${esc(site.author.name)} · <time datetime="${new Date(r.date).toISOString()}">${fmtDate(r.date)}</time> · ${r.minutes} min read${r.data_as_of ? ` · Data as of ${esc(r.data_as_of)}` : ''}</p>
+  ${r.verdict ? `<p class="verdict-row">Verdict: ${verdictBadge(r.verdict)}</p>` : ''}
+  <p class="dek">${esc(r.excerpt)}</p>
+  ${figures ? `<div class="figures"><h2>Key numbers</h2><table><thead><tr><th>Indicator</th><th>Value</th><th>Status</th><th>Source</th></tr></thead><tbody>${figures}</tbody></table></div>` : ''}
+  <!-- ad-slot: post-top -->
+  <div class="prose">${r.html}</div>
+  <!-- ad-slot: post-bottom -->
+  ${sources ? `<section class="sources"><h2>Sources</h2><ol>${sources}</ol></section>` : ''}
+  ${r.korean_original ? `<p class="muted">Korean version: <a href="${esc(r.korean_original)}" hreflang="ko" rel="noopener">read the original</a></p>` : ''}
+  <p class="muted small">Found an error? See our <a href="/economy/methodology/#corrections">corrections policy</a>.</p>
+</article>
+${related.length ? `<section class="wrap section"><div class="section-head"><h2>More reports</h2></div><div class="grid">${related.map(econCard).join('')}</div></section>` : ''}`,
+        jsonld: {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: r.title,
+          description: r.excerpt,
+          datePublished: new Date(r.date).toISOString(),
+          dateModified: new Date(r.updated || r.date).toISOString(),
+          author: { '@type': 'Person', name: site.author.name },
+          publisher: { '@type': 'Organization', name: site.publisher },
+          mainEntityOfPage: `${site.url}/economy/${r.slug}/`,
+          articleSection: s.name,
+        },
+      })
+    );
+  }
+}
+
 function write(rel, content) {
   const file = path.join(DIST, rel);
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -115,7 +252,7 @@ function write(rel, content) {
 }
 
 export function build() {
-  const { posts, pages } = loadContent();
+  const { posts, pages, reports } = loadContent();
   fs.rmSync(DIST, { recursive: true, force: true });
   fs.mkdirSync(DIST, { recursive: true });
   fs.cpSync(path.join(ROOT, 'static'), DIST, { recursive: true });
@@ -224,6 +361,9 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
     write(`${pg.slug}/index.html`, layout({ title: pg.title, description: pg.excerpt, pathname: `/${pg.slug}/`, body }));
   }
 
+  // Economy
+  buildEconomy(reports);
+
   // 404
   write('404.html', layout({ title: 'Page not found', description: 'This page could not be found.', pathname: '/404/', body: `<section class="wrap narrow section"><h1>Page not found</h1><p>The page you are looking for does not exist. <a href="/">Go to the homepage</a>.</p></section>` }));
 
@@ -237,6 +377,11 @@ ${posts
     (p) => `<item><title>${esc(p.title)}</title><link>${site.url}/${p.slug}/</link><guid>${site.url}/${p.slug}/</guid><pubDate>${new Date(p.date).toUTCString()}</pubDate><category>${esc(catOf(p.category).name)}</category><description>${esc(p.excerpt)}</description></item>`
   )
   .join('\n')}
+${reports
+  .map(
+    (r) => `<item><title>${esc(r.title)}</title><link>${site.url}/economy/${r.slug}/</link><guid>${site.url}/economy/${r.slug}/</guid><pubDate>${new Date(r.date).toUTCString()}</pubDate><category>${esc(secOf(r.section).name)}</category><description>${esc(r.excerpt)}</description></item>`
+  )
+  .join('\n')}
 </channel></rss>`;
   write('feed.xml', feed);
 
@@ -245,6 +390,9 @@ ${posts
     ...posts.map((p) => ({ loc: `/${p.slug}/`, lastmod: p.updated || p.date })),
     ...site.categories.map((c) => ({ loc: `/category/${c.slug}/` })),
     ...pages.map((pg) => ({ loc: `/${pg.slug}/` })),
+    { loc: '/economy/', lastmod: reports[0]?.date },
+    ...E.sections.map((x) => ({ loc: `/economy/${x.slug}/` })),
+    ...reports.map((r) => ({ loc: `/economy/${r.slug}/`, lastmod: r.updated || r.date })),
   ];
   write(
     'sitemap.xml',
@@ -255,8 +403,8 @@ ${posts
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
   if (site.adsenseClient) write('ads.txt', `google.com, ${site.adsenseClient.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n`);
 
-  console.log(`Built ${posts.length} posts, ${pages.length} pages, ${site.categories.length} categories -> dist/`);
-  return { posts, pages };
+  console.log(`Built ${posts.length} posts, ${reports.length} economy reports, ${pages.length} pages, ${site.categories.length} categories -> dist/`);
+  return { posts, pages, reports };
 }
 
 if (process.argv[1] === new URL(import.meta.url).pathname) build();

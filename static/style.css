@@ -116,3 +116,27 @@ img { max-width: 100%; height: auto; }
 .foot nav a { color: var(--ink); font-size: 15px; }
 .legal { font-size: 13px; margin-top: 28px; }
 @media (max-width: 720px) { .foot { grid-template-columns: 1fr 1fr; } .foot > div:first-child { grid-column: 1 / -1; } }
+
+/* Economy */
+.hero.econ { background: radial-gradient(900px 300px at 85% -10%, color-mix(in srgb, var(--brand) 18%, transparent), transparent 70%); }
+.scale { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.card-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.verdict { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; border: 1px solid transparent; white-space: nowrap; }
+.v-good { background: color-mix(in srgb, #1f9d55 14%, transparent); color: #157a42; border-color: color-mix(in srgb, #1f9d55 35%, transparent); }
+.v-mid { background: color-mix(in srgb, #d69e2e 16%, transparent); color: #946200; border-color: color-mix(in srgb, #d69e2e 40%, transparent); }
+.v-neutral { background: var(--chip); color: var(--ink-2); border-color: var(--line); }
+.v-bad { background: color-mix(in srgb, #e53e3e 12%, transparent); color: #b42323; border-color: color-mix(in srgb, #e53e3e 35%, transparent); }
+@media (prefers-color-scheme: dark) { .v-good { color: #6fd39b; } .v-mid { color: #f1c35b; } .v-bad { color: #ff8f8f; } }
+.verdict-row { margin: 10px 0 0; font-size: 14px; color: var(--ink-2); }
+.figures { margin: 24px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; overflow-x: auto; }
+.figures h2, .sources h2 { font-size: 18px; margin: 0 0 10px; }
+.figures table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.figures th, .figures td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.figures thead th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+.figures tbody tr:last-child th, .figures tbody tr:last-child td { border-bottom: 0; }
+.conf { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 6px; background: var(--chip); color: var(--ink-2); }
+.c-verified { color: #157a42; } .c-estimate { color: #946200; }
+@media (prefers-color-scheme: dark) { .c-verified { color: #6fd39b; } .c-estimate { color: #f1c35b; } }
+.sources { margin-top: 32px; font-size: 15px; }
+.sources ol { padding-left: 20px; }
+.small { font-size: 13px; }
