@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- WordPress eXtended RSS export generated from the stargatekorea.net static site on 2026-10-25T03:23:28.910Z -->
+<rss version="2.0"
+  xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:wp="http://wordpress.org/export/1.2/">
+<channel>
+  <title><![CDATA[Stargate Korea]]></title>
+  <link>https://www.stargatekorea.net</link>
+  <description><![CDATA[Study, live and travel in Korea — guides from Seoul]]></description>
+  <pubDate>Sun, 25 Oct 2026 03:23:28 GMT</pubDate>
+  <language>en-US</language>
+  <wp:wxr_version>1.2</wp:wxr_version>
+  <wp:base_site_url>https://www.stargatekorea.net</wp:base_site_url>
+  <wp:base_blog_url>https://www.stargatekorea.net</wp:base_blog_url>
+  <wp:author>
+    <wp:author_id>1</wp:author_id>
+    <wp:author_login><![CDATA[dongsoo]]></wp:author_login>
+    <wp:author_email><![CDATA[ceo@stargateedu.co.kr]]></wp:author_email>
+    <wp:author_display_name><![CDATA[Dongsoo Jung]]></wp:author_display_name>
+    <wp:author_first_name><![CDATA[Dongsoo]]></wp:author_first_name>
+    <wp:author_last_name><![CDATA[Jung]]></wp:author_last_name>
+  </wp:author>
+  <wp:category>
+    <wp:term_id>1</wp:term_id>
+    <wp:category_nicename><![CDATA[study-in-korea]]></wp:category_nicename>
+    <wp:category_parent><![CDATA[]]></wp:category_parent>
+    <wp:cat_name><![CDATA[Study in Korea]]></wp:cat_name>
+    <wp:category_description><![CDATA[Arrival, visas and university life]]></wp:category_description>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>2</wp:term_id>
+    <wp:category_nicename><![CDATA[living-in-korea]]></wp:category_nicename>
+    <wp:category_parent><![CDATA[]]></wp:category_parent>
+    <wp:cat_name><![CDATA[Living in Korea]]></wp:cat_name>
+    <wp:category_description><![CDATA[Housing, neighborhoods and everyday life]]></wp:category_description>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>3</wp:term_id>
+    <wp:category_nicename><![CDATA[travel-korea]]></wp:category_nicename>
+    <wp:category_parent><![CDATA[]]></wp:category_parent>
+    <wp:cat_name><![CDATA[Travel Korea]]></wp:cat_name>
+    <wp:category_description><![CDATA[Transport, day trips and seasons]]></wp:category_description>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>4</wp:term_id>
+    <wp:category_nicename><![CDATA[korean-culture]]></wp:category_nicename>
+    <wp:category_parent><![CDATA[]]></wp:category_parent>
+    <wp:cat_name><![CDATA[Korean Culture]]></wp:cat_name>
+    <wp:category_description><![CDATA[Food, etiquette and language]]></wp:category_description>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>5</wp:term_id>
+    <wp:category_nicename><![CDATA[books]]></wp:category_nicename>
+    <wp:category_parent><![CDATA[]]></wp:category_parent>
+    <wp:cat_name><![CDATA[Books & Guides]]></wp:cat_name>
+    <wp:category_description><![CDATA[Longer guides and our books]]></wp:category_description>
+  </wp:category>
+  <wp:tag>
+    <wp:term_id>100</wp:term_id>
+    <wp:tag_slug><![CDATA[international-students]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[international students]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>101</wp:term_id>
+    <wp:tag_slug><![CDATA[arrival]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[arrival]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>102</wp:term_id>
+    <wp:tag_slug><![CDATA[checklist]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[checklist]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>103</wp:term_id>
+    <wp:tag_slug><![CDATA[seoul]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[seoul]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>104</wp:term_id>
+    <wp:tag_slug><![CDATA[transport]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[transport]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>105</wp:term_id>
+    <wp:tag_slug><![CDATA[subway]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[subway]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>106</wp:term_id>
+    <wp:tag_slug><![CDATA[bus]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[bus]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>107</wp:term_id>
+    <wp:tag_slug><![CDATA[housing]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[housing]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>108</wp:term_id>
+    <wp:tag_slug><![CDATA[neighborhoods]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[neighborhoods]]></wp:tag_name>
+  </wp:tag>
+  <wp:tag>
+    <wp:term_id>109</wp:term_id>
+    <wp:tag_slug><![CDATA[students]]></wp:tag_slug>
+    <wp:tag_name><![CDATA[students]]></wp:tag_name>
+  </wp:tag>
+  <item>
+    <title><![CDATA[Your First Week in Korea as an International Student: A Practical Checklist]]></title>
+    <link>https://www.stargatekorea.net/first-week-in-korea-international-student-checklist/</link>
+    <pubDate>Sun, 25 Oct 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=1</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p>Landing in Korea for a semester or a full degree is exciting, but the first week is mostly paperwork and small errands. The good news: almost everything can be done within a few days if you do it in the right order. Many tasks depend on each other — a bank wants your registration card, the registration office wants your address — so the sequence below is designed to avoid going back and forth.</p>
+<h2>Day 1: Get connected and get moving</h2>
+<p><strong>Phone and data.</strong> Buy a prepaid SIM or eSIM at the airport or a carrier store so you have data from the first hour. You will need a working phone number for nearly every sign-up that follows, including delivery apps and university portals. Once you have your residence card, you can switch to a regular postpaid plan if you want a cheaper long-term option.</p>
+<p><strong>A transport card.</strong> Pick up a T-money card at any convenience store (GS25, CU, 7-Eleven) and load it with cash. It works on subways, buses and many taxis across the country. We wrote a separate guide on <a href="https://www.stargatekorea.net/getting-around-seoul-with-t-money/">getting around Seoul with T-money</a>.</p>
+<p><strong>The apps that actually work here.</strong> Google Maps is limited for walking and driving directions in Korea, so install <strong>Naver Map</strong> or <strong>Kakao Map</strong>. Add <strong>Papago</strong> for translation and <strong>Kakao T</strong> for taxis. <strong>KakaoTalk</strong> is how classmates, landlords and professors will contact you.</p>
+<h2>Days 2–3: Address and residence registration</h2>
+<p>If you will stay in Korea for more than 90 days, you must register as a foreign resident at your local immigration office within 90 days of entry. In practice, do it as early as you can — your residence registration card (still widely called the <strong>ARC</strong>) unlocks bank accounts, phone contracts and many online services.</p>
+<p>What you typically need:</p>
+<ul>
+<li>Passport and visa</li>
+<li>A completed application form</li>
+<li>A passport-style photo</li>
+<li>Proof of enrollment from your university</li>
+<li>Proof of address in Korea (dormitory confirmation or a lease)</li>
+<li>The application fee</li>
+</ul>
+<p>Appointments are booked online through the <strong>HiKorea</strong> website and slots can fill up weeks in advance around the start of each semester, so book on your first day if possible. Your university&#39;s international office can usually tell you which office covers your address and may even arrange group registration.</p>
+<blockquote>
+<p>Requirements change from time to time. Always confirm the current document list on HiKorea or with your university before your appointment.</p>
+</blockquote>
+<h2>Days 3–5: Bank account and money</h2>
+<p>Most major banks will open an account for international students, but many branches ask for the residence card first. Until it arrives, rely on an international debit card and some cash. Branches near large universities often have staff used to helping foreign students, and some offer English-language support — it is worth choosing one of those.</p>
+<p>When you open the account, ask for a debit (check) card that works with mobile payments. It will make online shopping, delivery apps and transport top-ups much easier.</p>
+<h2>Health insurance</h2>
+<p>Students on D-2 (degree) and D-4 (language training) visas are generally enrolled in Korea&#39;s <strong>National Health Insurance Service (NHIS)</strong> once they register as residents. You will receive a monthly premium notice, and you can set up automatic payment from your Korean bank account. Keep an eye on the paperwork: unpaid premiums can cause problems when you extend your stay.</p>
+<h2>Day 6–7: Settle in</h2>
+<ul>
+<li>Find the nearest pharmacy, clinic and 24-hour convenience store.</li>
+<li>Learn your building&#39;s rules for separating trash and recycling — they are taken seriously.</li>
+<li>Save the emergency numbers: <strong>119</strong> for fire and ambulance, <strong>112</strong> for police, and <strong>1345</strong> for the immigration contact center, which offers multilingual help.</li>
+</ul>
+<h2>A simple order to remember</h2>
+<ol>
+<li>SIM card and transport card</li>
+<li>Map, translation and messaging apps</li>
+<li>Book your immigration appointment</li>
+<li>Register your address and apply for the residence card</li>
+<li>Bank account and mobile payments</li>
+<li>Health insurance set-up</li>
+</ol>
+<p>Getting these done in the first week frees you to enjoy the rest of the semester. If you are planning weekend trips once you are settled, keep an eye on our <a href="https://www.stargatekorea.net/category/travel-korea/">Travel Korea</a> section.</p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[Phone, transport card, residence registration, bank account, health insurance — the order you do things in during your first week matters. Here is the sequence that saves the most time.]]></excerpt:encoded>
+    <wp:post_id>1</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-25 09:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-25 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[first-week-in-korea-international-student-checklist]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="study-in-korea"><![CDATA[Study in Korea]]></category>
+    <category domain="post_tag" nicename="international-students"><![CDATA[international students]]></category>
+    <category domain="post_tag" nicename="arrival"><![CDATA[arrival]]></category>
+    <category domain="post_tag" nicename="checklist"><![CDATA[checklist]]></category>
+  </item>
+  <item>
+    <title><![CDATA[Getting Around Seoul with a T-money Card]]></title>
+    <link>https://www.stargatekorea.net/getting-around-seoul-with-t-money/</link>
+    <pubDate>Sat, 24 Oct 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=2</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p>Seoul has one of the easiest public transport systems in the world to use as a visitor, and almost all of it runs on a single tap-to-pay card: <strong>T-money</strong>. Here is everything you need to start using it on your first day.</p>
+<h2>Where to buy it</h2>
+<p>You can buy a T-money card at:</p>
+<ul>
+<li>Convenience stores such as GS25, CU and 7-Eleven (look for the T-money logo at the counter)</li>
+<li>Ticket vending machines and service desks in subway stations</li>
+<li>Airport convenience stores, right after arrivals</li>
+</ul>
+<p>The card itself costs a few thousand won and does not come preloaded, so add money as soon as you buy it. Many designs exist — including character cards — and they all work the same way.</p>
+<h2>How to top it up</h2>
+<p>Top-ups are usually made in <strong>cash</strong>:</p>
+<ul>
+<li>At the counter of any convenience store that sells the card</li>
+<li>At the recharge machines inside every subway station (they have English menus)</li>
+</ul>
+<p>Put the card on the reader, choose the amount, insert notes and wait until the screen confirms. Keep a bit of extra balance — if your balance is too low when you tap out, you will have to add money at the fare adjustment machine before you can leave the station.</p>
+<h2>Tap in, tap out — on buses too</h2>
+<p>On the subway you tap at the gate when you enter and when you exit. On buses, tap the reader by the front door when you get on <strong>and</strong> tap the reader by the rear door when you get off. Forgetting to tap out on a bus is the most common mistake visitors make, because it means you lose the transfer discount.</p>
+<h2>Free and discounted transfers</h2>
+<p>The fare is calculated by distance, and transfers between subway lines and buses are discounted or free when you:</p>
+<ul>
+<li>Tap out and tap in again within the transfer window (about 30 minutes in the daytime, longer late at night), and</li>
+<li>Have tapped out properly on the previous ride.</li>
+</ul>
+<p>This is why tapping out on the bus matters — it starts the transfer clock.</p>
+<h2>Taxis and beyond</h2>
+<p>Most taxis in Seoul accept T-money, which is handy when you have not yet set up a Korean payment card. The card also works on public transport in Busan, Daegu, Incheon and many other cities, and in convenience stores for small purchases.</p>
+<h2>Quick tips</h2>
+<ul>
+<li><strong>Do not keep two transit cards in the same wallet slot.</strong> The gate may read the wrong one or refuse both.</li>
+<li><strong>Leftover balance can be refunded</strong> at convenience stores before you leave Korea, minus a small fee.</li>
+<li><strong>Use a map app for routes.</strong> Naver Map and Kakao Map show bus numbers, platform exits and real-time arrivals in English.</li>
+</ul>
+<p>If you are a student arriving for a semester, our <a href="https://www.stargatekorea.net/first-week-in-korea-international-student-checklist/">first-week checklist</a> explains what to do after you have your transport sorted.</p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[One card covers the subway, buses and many taxis. How to buy it, top it up, transfer for free and avoid the most common mistakes.]]></excerpt:encoded>
+    <wp:post_id>2</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-24 09:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-24 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[getting-around-seoul-with-t-money]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="travel-korea"><![CDATA[Travel Korea]]></category>
+    <category domain="post_tag" nicename="seoul"><![CDATA[seoul]]></category>
+    <category domain="post_tag" nicename="transport"><![CDATA[transport]]></category>
+    <category domain="post_tag" nicename="subway"><![CDATA[subway]]></category>
+    <category domain="post_tag" nicename="bus"><![CDATA[bus]]></category>
+  </item>
+  <item>
+    <title><![CDATA[Seoul Neighborhoods Where International Students Actually Live]]></title>
+    <link>https://www.stargatekorea.net/seoul-neighborhoods-for-international-students/</link>
+    <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=3</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p>Where you live in Seoul shapes your daily life more than almost anything else: your commute, your weekend plans, even how quickly you make friends. Most international students end up in a handful of university neighborhoods. Here is a quick tour.</p>
+<h2>Sinchon and Ewha — the classic student district</h2>
+<p><strong>Nearby universities:</strong> Yonsei, Ewha Womans, Sogang, Hongik is one stop away</p>
+<p>Sinchon is the busiest student area in the city: cafés open late, cheap restaurants, study rooms on every block and a lot of English spoken around campus. It is lively and central, with direct subway access on Line 2 and buses everywhere. The trade-off is noise at night and higher demand for rooms near the start of each semester.</p>
+<h2>Hongdae — for nightlife and the arts</h2>
+<p><strong>Nearby universities:</strong> Hongik, and an easy ride to Sinchon schools</p>
+<p>Hongdae is famous for street performances, live music, independent shops and nightlife. It is a fun place to live if you like being in the middle of things, and well connected by Line 2, the Gyeongui-Jungang Line and the airport railroad. Quieter streets toward Mangwon and Yeonnam are popular with students who want the atmosphere without the weekend crowds.</p>
+<h2>Anam — compact and campus-centered</h2>
+<p><strong>Nearby university:</strong> Korea University</p>
+<p>Anam is smaller and more focused around one campus. Rents are often more moderate than in Sinchon, and daily life revolves around the university. Line 6 connects you to the rest of the city.</p>
+<h2>Hoegi and Imun — a quieter east side</h2>
+<p><strong>Nearby universities:</strong> Kyung Hee, Hankuk University of Foreign Studies (HUFS)</p>
+<p>This area has a strong international-student community thanks to HUFS and Kyung Hee. It is calmer and more residential, with good-value food and housing. Hoegi Station sits on Line 1 and the Gyeongui-Jungang Line.</p>
+<h2>Hyehwa — university town with a theater scene</h2>
+<p><strong>Nearby university:</strong> Sungkyunkwan (Humanities and Social Sciences campus)</p>
+<p>Around Hyehwa you will find Daehangno, Seoul&#39;s theater district, plus parks and historic streets near the palaces. It feels more cultural and a little more grown-up than the bigger student hubs. Line 4 runs through it.</p>
+<h2>Seoul National University area — Nokdu and Seoul Nat&#39;l Univ. Station</h2>
+<p><strong>Nearby university:</strong> Seoul National University</p>
+<p>SNU&#39;s campus sits in the hills of Gwanak. Students tend to live around Seoul Nat&#39;l Univ. Station and the Nokdu area, where rents are known to be some of the most affordable among the major university districts. Expect a shuttle bus or a short bus ride to campus; Line 2 and the Sillim Line connect the area to the city.</p>
+<h2>What kind of housing to expect</h2>
+<ul>
+<li><strong>Dormitories:</strong> The easiest option for your first semester. Apply early — places are limited.</li>
+<li><strong>One-room (원룸):</strong> A studio apartment, usually rented with a deposit plus monthly rent (<em>wolse</em>). Deposits vary widely, so compare listings carefully.</li>
+<li><strong>Goshiwon / goshitel:</strong> Very small furnished rooms with shared facilities and no large deposit. Good as a short-term landing spot while you look for something better.</li>
+<li><strong>Share houses:</strong> Furnished rooms in shared apartments, often marketed to foreigners, with simpler contracts.</li>
+</ul>
+<p>Before you sign anything, visit the room in person, check the contract terms carefully and ask your university&#39;s international office if anything is unclear.</p>
+<p>New to the city? Start with our <a href="https://www.stargatekorea.net/first-week-in-korea-international-student-checklist/">first-week checklist</a> and our guide to <a href="https://www.stargatekorea.net/getting-around-seoul-with-t-money/">getting around with T-money</a>.</p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[Sinchon, Hongdae, Anam, Hoegi and the area around SNU — what each neighborhood is like, which universities are nearby and what kind of housing to expect.]]></excerpt:encoded>
+    <wp:post_id>3</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-23 09:00:00]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-23 00:00:00]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[seoul-neighborhoods-for-international-students]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[post]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="living-in-korea"><![CDATA[Living in Korea]]></category>
+    <category domain="post_tag" nicename="seoul"><![CDATA[seoul]]></category>
+    <category domain="post_tag" nicename="housing"><![CDATA[housing]]></category>
+    <category domain="post_tag" nicename="neighborhoods"><![CDATA[neighborhoods]]></category>
+    <category domain="post_tag" nicename="students"><![CDATA[students]]></category>
+  </item>
+  <item>
+    <title><![CDATA[About Stargate Korea]]></title>
+    <link>https://www.stargatekorea.net/about/</link>
+    <pubDate>Sun, 25 Oct 2026 03:23:28 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=4</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p><strong>Stargate Korea</strong> is a practical guide to studying, living and traveling in Korea, written from Seoul for international students, newcomers and curious travelers.</p>
+<p>We focus on the questions people actually search for in their first months here: how to handle paperwork, how to get around, where to live, what to eat and where to go on a free weekend. Every guide is written to be useful on the ground, not just inspiring on a screen.</p>
+<h2>Who is behind it</h2>
+<p>Stargate Korea is run by <strong>Stargate Corporation (주식회사 별의문)</strong>, a Seoul-based education and technology company founded by <strong>Dongsoo Jung</strong>. Dongsoo studied engineering at Seoul National University, completed doctoral coursework in smart city engineering there, and has spent many years teaching students in Seoul. Our Korean-language education site is at <a href="https://www.stargateedu.co.kr/">stargateedu.co.kr</a> and our Korean research blog is at <a href="https://blog.stargateedu.co.kr/">blog.stargateedu.co.kr</a>.</p>
+<h2>What you will find here</h2>
+<ul>
+<li><strong>Study in Korea</strong> — arrival checklists, visas and university life</li>
+<li><strong>Living in Korea</strong> — housing, neighborhoods, banking and everyday life</li>
+<li><strong>Travel Korea</strong> — transport, day trips and seasonal ideas</li>
+<li><strong>Korean Culture</strong> — food, etiquette and the language behind daily life</li>
+<li><strong>Books &amp; Guides</strong> — longer guides and books we publish</li>
+</ul>
+<h2>Campus Trips</h2>
+<p>We are preparing small-group trips for international students in Korea. See <a href="https://www.stargatekorea.net/campus-trips/">Campus Trips</a> for details.</p>
+<h2>Corrections</h2>
+<p>Rules and prices in Korea change often. If you spot something out of date, please tell us through the <a href="https://www.stargatekorea.net/contact/">contact page</a> and we will fix it.</p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[Practical guides to studying, living and traveling in Korea, written from Seoul.]]></excerpt:encoded>
+    <wp:post_id>4</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-25 12:23:28]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-25 03:23:28]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[about]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[page]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    
+  </item>
+  <item>
+    <title><![CDATA[Campus Trips — Small-Group Trips for International Students]]></title>
+    <link>https://www.stargatekorea.net/campus-trips/</link>
+    <pubDate>Sun, 25 Oct 2026 03:23:28 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=5</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p><strong>Campus Trips</strong> are small-group weekend trips for international students in Korea, organized by Stargate Corporation. The idea is simple: see more of Korea than Seoul, travel with other students, and let someone local handle the planning.</p>
+<h2>What we are planning</h2>
+<ul>
+<li><strong>Day trips from Seoul</strong> — palaces and hanok villages, mountain hikes, seaside towns</li>
+<li><strong>Seasonal trips</strong> — cherry blossoms in spring, autumn leaves in the mountains, winter festivals</li>
+<li><strong>Weekend trips</strong> — Busan, Gyeongju, Jeonju and other cities that are easy to reach by train</li>
+</ul>
+<p>Groups will be small, itineraries will be clear in advance, and guides will speak English.</p>
+<h2>Register your interest</h2>
+<p>Trips are not open for booking yet. If you would like to hear first when the first dates are announced, email us at <strong><a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a></strong> with the subject &quot;Campus Trips&quot; and tell us:</p>
+<ol>
+<li>Your university</li>
+<li>Which kind of trip you would join</li>
+<li>The months you are available</li>
+</ol>
+<p>We will only use your email to contact you about Campus Trips.</p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[Weekend trips across Korea designed for international students. Register your interest.]]></excerpt:encoded>
+    <wp:post_id>5</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-25 12:23:28]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-25 03:23:28]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[campus-trips]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[page]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    
+  </item>
+  <item>
+    <title><![CDATA[Contact]]></title>
+    <link>https://www.stargatekorea.net/contact/</link>
+    <pubDate>Sun, 25 Oct 2026 03:23:28 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=6</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p>We read every message. For questions about a guide, corrections, partnerships or Campus Trips, email us at:</p>
+<p><strong><a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a></strong></p>
+<p>Please write in English or Korean. We usually reply within two business days (Korea Standard Time).</p>
+<p><strong>Stargate Corporation (주식회사 별의문)</strong>
+Seoul, Republic of Korea</p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[How to reach the Stargate Korea team.]]></excerpt:encoded>
+    <wp:post_id>6</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-25 12:23:28]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-25 03:23:28]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[contact]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[page]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    
+  </item>
+  <item>
+    <title><![CDATA[Privacy Policy]]></title>
+    <link>https://www.stargatekorea.net/privacy-policy/</link>
+    <pubDate>Sun, 25 Oct 2026 03:23:28 GMT</pubDate>
+    <dc:creator><![CDATA[dongsoo]]></dc:creator>
+    <guid isPermaLink="false">https://www.stargatekorea.net/?p=7</guid>
+    <description></description>
+    <content:encoded><![CDATA[<p><em>Last updated: October 25, 2026</em></p>
+<p>This Privacy Policy explains how <strong>Stargate Corporation (주식회사 별의문)</strong> (&quot;we&quot;, &quot;us&quot;) handles information when you visit <strong>stargatekorea.net</strong> (the &quot;Site&quot;).</p>
+<h2>Information we collect</h2>
+<ul>
+<li><strong>Information you send us.</strong> If you email us, we receive your email address and the contents of your message. We use it only to reply and, if you asked, to send you updates such as Campus Trips announcements.</li>
+<li><strong>Usage data.</strong> Our hosting provider and analytics tools may automatically record technical information such as your browser type, device, approximate location derived from your IP address, pages visited and referring site. We use this in aggregate to understand which guides are useful.</li>
+</ul>
+<p>We do not sell personal information.</p>
+<h2>Cookies and advertising</h2>
+<p>The Site may display advertising served by <strong>Google AdSense</strong> and other third-party vendors. These vendors, including Google, use cookies to serve ads based on your prior visits to this and other websites. Google&#39;s use of advertising cookies enables it and its partners to serve ads based on your visits to this Site and/or other sites on the internet.</p>
+<p>You can opt out of personalized advertising by visiting Google&#39;s <a href="https://adssettings.google.com/">Ads Settings</a>. You can also opt out of some third-party vendors&#39; use of cookies for personalized advertising at <a href="https://www.aboutads.info/choices/">aboutads.info</a>. For more information, see <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from sites that use its services</a>.</p>
+<p>Visitors in the European Economic Area, the United Kingdom and Switzerland will be asked for consent before personalized ads are shown, as required by law.</p>
+<h2>Third-party links</h2>
+<p>Our guides link to official websites and other services. We are not responsible for the privacy practices of those sites.</p>
+<h2>Children</h2>
+<p>The Site is not directed to children under 14, and we do not knowingly collect personal information from them.</p>
+<h2>Your rights</h2>
+<p>Depending on where you live, you may have the right to access, correct or delete personal information we hold about you. To make a request, email <strong><a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a></strong>.</p>
+<h2>Changes</h2>
+<p>We may update this policy from time to time. The date at the top of this page shows when it was last changed.</p>
+<h2>Contact</h2>
+<p>Stargate Corporation (주식회사 별의문), Seoul, Republic of Korea — <a href="mailto:ceo@stargateedu.co.kr">ceo@stargateedu.co.kr</a></p>
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[How Stargate Korea handles information about visitors.]]></excerpt:encoded>
+    <wp:post_id>7</wp:post_id>
+    <wp:post_date><![CDATA[2026-10-25 12:23:28]]></wp:post_date>
+    <wp:post_date_gmt><![CDATA[2026-10-25 03:23:28]]></wp:post_date_gmt>
+    <wp:comment_status><![CDATA[closed]]></wp:comment_status>
+    <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+    <wp:post_name><![CDATA[privacy-policy]]></wp:post_name>
+    <wp:status><![CDATA[publish]]></wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type><![CDATA[page]]></wp:post_type>
+    <wp:post_password><![CDATA[]]></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    
+  </item>
+</channel>
+</rss>
