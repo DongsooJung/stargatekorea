@@ -58,6 +58,7 @@ function layout({ title, description, pathname, body, type = 'website', jsonld, 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="naver-site-verification" content="2a0043cee1ff978f2bde90cc34a86f780f5f2684">
 <title>${esc(fullTitle)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${url}">
