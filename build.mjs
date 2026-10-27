@@ -39,6 +39,16 @@ export function loadContent() {
   return { posts, pages, reports };
 }
 
+// Sections that have no published content are not built, linked or listed in the sitemap.
+// set by build(): which categories have posts and whether /economy/ has any reports.
+const live = { cats: new Set(site.categories.map((c) => c.slug)), economy: true };
+const isLive = (href) => {
+  if (href.startsWith('/economy/')) return live.economy;
+  const m = href.match(/^\/category\/([^/]+)\//);
+  return m ? live.cats.has(m[1]) : true;
+};
+const liveCategories = () => site.categories.filter((c) => live.cats.has(c.slug));
+
 const catOf = (slug) => site.categories.find((c) => c.slug === slug) || { slug, name: slug, icon: '•' };
 
 function layout({ title, description, pathname, body, type = 'website', jsonld, date, head = '' }) {
@@ -51,6 +61,7 @@ function layout({ title, description, pathname, body, type = 'website', jsonld, 
     ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${site.gaId}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${site.gaId}');</script>`
     : '';
   const nav = site.nav
+    .filter((n) => isLive(n.href))
     .map((n) => `<a href="${n.href}"${pathname.startsWith(n.href) ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`)
     .join('');
   return `<!doctype html>
@@ -97,8 +108,8 @@ ${body}
       <a class="brand" href="/"><span class="star">✦</span><span>STARGATE <b>KOREA</b></span></a>
       <p class="muted">${esc(site.tagline)}.</p>
     </div>
-    <nav aria-label="Topics"><h2>Topics</h2>${site.categories.map((c) => `<a href="/category/${c.slug}/">${esc(c.name)}</a>`).join('')}</nav>
-    <nav aria-label="Site"><h2>Site</h2>${site.footerPages.map((p) => `<a href="${p.href}">${esc(p.label)}</a>`).join('')}<a href="/economy/">Economy</a><a href="/feed.xml">RSS</a></nav>
+    <nav aria-label="Topics"><h2>Topics</h2>${liveCategories().map((c) => `<a href="/category/${c.slug}/">${esc(c.name)}</a>`).join('')}</nav>
+    <nav aria-label="Site"><h2>Site</h2>${site.footerPages.map((p) => `<a href="${p.href}">${esc(p.label)}</a>`).join('')}${live.economy ? '<a href="/economy/">Economy</a>' : ''}<a href="/feed.xml">RSS</a></nav>
   </div>
   <div class="wrap legal muted">© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</div>
 </footer>
@@ -135,8 +146,10 @@ const econCard = (r) => {
 const econEmpty = `<p class="empty">The first data-checked reports are being verified. Until then, read <a href="/economy/methodology/">how we check the numbers</a>.</p>`;
 
 function buildEconomy(reports) {
+  if (!reports.length) return; // nothing published yet: no hub, no empty section pages
   const counts = Object.fromEntries(E.sections.map((s) => [s.slug, reports.filter((r) => r.section === s.slug).length]));
   const sectionTiles = E.sections
+    .filter((s) => counts[s.slug])
     .map(
       (s) => `<a class="topic" href="/economy/${s.slug}/"><span class="ti">${s.icon}</span><strong>${esc(s.name)}</strong><span class="muted">${esc(s.blurb)}</span><span class="count">${counts[s.slug] || 0} ${counts[s.slug] === 1 ? 'report' : 'reports'}</span></a>`
     )
@@ -175,6 +188,7 @@ function buildEconomy(reports) {
   // Section listings
   for (const s of E.sections) {
     const list = reports.filter((r) => r.section === s.slug);
+    if (!list.length) continue;
     write(
       `economy/${s.slug}/index.html`,
       layout({
@@ -254,6 +268,8 @@ function write(rel, content) {
 
 export function build() {
   const { posts, pages, reports } = loadContent();
+  live.cats = new Set(posts.map((p) => p.category));
+  live.economy = reports.length > 0;
   fs.rmSync(DIST, { recursive: true, force: true });
   fs.mkdirSync(DIST, { recursive: true });
   fs.cpSync(path.join(ROOT, 'static'), DIST, { recursive: true });
@@ -273,7 +289,7 @@ export function build() {
 </section>
 <section id="topics" class="wrap section">
   <div class="section-head"><p class="eyebrow">Topics</p><h2>Find guides by topic</h2></div>
-  <div class="topics">${site.categories
+  <div class="topics">${liveCategories()
     .map(
       (c) => `<a class="topic" href="/category/${c.slug}/"><span class="ti">${c.icon}</span><strong>${esc(c.name)}</strong><span class="muted">${esc(c.blurb)}</span><span class="count">${counts[c.slug] || 0} ${counts[c.slug] === 1 ? 'guide' : 'guides'}</span></a>`
     )
@@ -282,6 +298,7 @@ export function build() {
 <section id="channels" class="wrap section">
   <div class="section-head"><p class="eyebrow">Channels</p><h2>More from Stargate</h2></div>
   <div class="channels">${site.channels
+    .filter((ch) => isLive(ch.href))
     .map((ch) => `<a class="channel" href="${ch.href}"${ch.href.startsWith('http') ? ' rel="noopener"' : ''}><strong>${esc(ch.name)}</strong><span class="muted">${esc(ch.note)}</span><span class="arrow">→</span></a>`)
     .join('')}</div>
 </section>`;
@@ -345,7 +362,7 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
   }
 
   // Categories
-  for (const c of site.categories) {
+  for (const c of liveCategories()) {
     const list = posts.filter((p) => p.category === c.slug);
     const body = `
 <section class="wrap section">
@@ -389,10 +406,10 @@ ${reports
   const urls = [
     { loc: '/', lastmod: posts[0]?.date },
     ...posts.map((p) => ({ loc: `/${p.slug}/`, lastmod: p.updated || p.date })),
-    ...site.categories.map((c) => ({ loc: `/category/${c.slug}/` })),
+    ...liveCategories().map((c) => ({ loc: `/category/${c.slug}/` })),
     ...pages.map((pg) => ({ loc: `/${pg.slug}/` })),
-    { loc: '/economy/', lastmod: reports[0]?.date },
-    ...E.sections.map((x) => ({ loc: `/economy/${x.slug}/` })),
+    ...(reports.length ? [{ loc: '/economy/', lastmod: reports[0].date }] : []),
+    ...E.sections.filter((x) => reports.some((r) => r.section === x.slug)).map((x) => ({ loc: `/economy/${x.slug}/` })),
     ...reports.map((r) => ({ loc: `/economy/${r.slug}/`, lastmod: r.updated || r.date })),
   ];
   write(
@@ -404,7 +421,7 @@ ${reports
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
   if (site.adsenseClient) write('ads.txt', `google.com, ${site.adsenseClient.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n`);
 
-  console.log(`Built ${posts.length} posts, ${reports.length} economy reports, ${pages.length} pages, ${site.categories.length} categories -> dist/`);
+  console.log(`Built ${posts.length} posts, ${reports.length} economy reports, ${pages.length} pages, ${live.cats.size}/${site.categories.length} categories (empty ones skipped) -> dist/`);
   return { posts, pages, reports };
 }
 
