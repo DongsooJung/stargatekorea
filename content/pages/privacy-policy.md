@@ -4,7 +4,7 @@ slug: privacy-policy
 excerpt: "How Stargate Korea handles information about visitors."
 ---
 
-*Last updated: October 25, 2026*
+*Last updated: October 27, 2026*
 
 This Privacy Policy explains how **Stargate Corporation (주식회사 별의문)** ("we", "us") handles information when you visit **stargatekorea.net** (the "Site").
 
@@ -12,6 +12,7 @@ This Privacy Policy explains how **Stargate Corporation (주식회사 별의문)
 
 - **Information you send us.** If you email us, we receive your email address and the contents of your message. We use it only to reply and, if you asked, to send you updates such as Campus Trips announcements.
 - **Usage data.** Our hosting provider and analytics tools may automatically record technical information such as your browser type, device, approximate location derived from your IP address, pages visited and referring site. We use this in aggregate to understand which guides are useful.
+- **Visitor counter.** The footer shows how many people visited today and in total. To count each browser once per day, the Site stores a random ID and the date in your browser's local storage and sends that ID, the date and the page path to our counter service on Cloudflare. The ID is not linked to your name or email, and only the totals are shown on the Site. You can clear it at any time by clearing this site's data in your browser.
 
 We do not sell personal information.
 

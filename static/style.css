@@ -114,7 +114,10 @@ img { max-width: 100%; height: auto; }
 .foot nav { display: flex; flex-direction: column; gap: 6px; }
 .foot h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 6px; color: var(--ink-2); }
 .foot nav a { color: var(--ink); font-size: 15px; }
-.legal { font-size: 13px; margin-top: 28px; }
+.legal { font-size: 13px; margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; }
+.visits { font-variant-numeric: tabular-nums; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.visits[hidden] { display: none; }
+.visits b { color: var(--ink); font-weight: 600; }
 @media (max-width: 720px) { .foot { grid-template-columns: 1fr 1fr; } .foot > div:first-child { grid-column: 1 / -1; } }
 
 /* Economy */

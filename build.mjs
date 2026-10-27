@@ -111,8 +111,9 @@ ${body}
     <nav aria-label="Topics"><h2>Topics</h2>${liveCategories().map((c) => `<a href="/category/${c.slug}/">${esc(c.name)}</a>`).join('')}</nav>
     <nav aria-label="Site"><h2>Site</h2>${site.footerPages.map((p) => `<a href="${p.href}">${esc(p.label)}</a>`).join('')}${live.economy ? '<a href="/economy/">Economy</a>' : ''}<a href="/feed.xml">RSS</a></nav>
   </div>
-  <div class="wrap legal muted">© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</div>
+  <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden>Today <b id="visitor-today-count">–</b> · Total <b id="visitor-total-count">–</b></span></div>
 </footer>
+<script src="/visitor-counter.js?v=20261027" defer></script>
 </body>
 </html>`;
 }
