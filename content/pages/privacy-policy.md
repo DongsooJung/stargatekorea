@@ -21,6 +21,10 @@ We do not sell personal information.
 
 Display advertising is not currently enabled. If we introduce advertising, we will update this policy and provide any applicable choices before activating it.
 
+## Book purchases
+
+The buy link opens our Stargate Edu store on Imweb. The store and payment provider process the order, contact information and payment under the policies shown there. This travel website does not collect card details. Use the store order/account page to access a purchased download, and include only your order number and the issue when asking us for help.
+
 ## Third-party links
 
 Our guides link to official websites and other services. We are not responsible for the privacy practices of those sites.

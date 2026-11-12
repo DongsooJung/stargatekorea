@@ -12,15 +12,15 @@ Our public itineraries, arrival checklist and articles are free to read. You do 
 
 ## Our digital travel book
 
-We offer an original English PDF travel guide, **[Seoul, at your own pace](/books/)**. The product page states the edition, language, format, page count and listed price, and provides a free sample. The full PDF is supplied separately after an order and payment are agreed. It is for personal use and does not include travel services or future edition updates.
+We offer an original English PDF travel guide, **[Seoul, at your own pace](/books/)**. The product page states the edition, language, format, page count and listed price, and provides a free sample. The full PDF is delivered through our linked store after payment confirmation. It is for personal use and does not include travel services or future edition updates.
 
-Purchase enquiries are handled by email. The total price, payment method, delivery timing and cancellation/refund terms must be confirmed before an order. The website does not take payments or automatically send the full book.
+Purchases are handled by **[our Stargate Edu store](https://stargateedu.imweb.me/shop_view?idx=10)** on Imweb, operated by 스타게이트. The checkout charges Korean won and is currently in Korean. Review the total price, payment method, seller details and cancellation/refund terms there before paying. Confirmed payments unlock the PDF in your order/account; bank-transfer orders require deposit confirmation. Payment or download issues and cancellation/refund requests can be sent to ceo@stargateedu.co.kr with your order number.
 
 ## Custom guide enquiries
 
 We accept enquiries for custom travel research and writing. A custom digital guide is an information document. The scope, price, delivery date, revision allowance and cancellation/refund terms must be confirmed in writing before an order or payment.
 
-The website does not take payments or confirm orders. Preparing an enquiry on the site does not send it. The visitor chooses whether to send the draft through their own email app.
+Custom guide enquiries are separate from the fixed-price PDF store. Preparing an enquiry on this site does not send it or create an order. The visitor chooses whether to send the draft through their own email app.
 
 A digital brief does not include travel reservations, ticketing, accommodation, transport or in-person guiding. Those services are chosen and purchased directly from their providers.
 

@@ -7,7 +7,7 @@ import { build } from '../build.mjs';
 import { selectTrip } from '../static/trip-data.mjs';
 import commerce from '../commerce.config.mjs';
 import { essentials, resolvedEssential, essentialsSection } from '../travel.mjs';
-import { book, bookMailto } from '../books.mjs';
+import { book } from '../books.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -62,16 +62,20 @@ test('every published internal link, fragment and asset resolves', () => {
   }
 });
 
-test('book enquiry states the actual edition, price and manual ordering', () => {
+test('book checkout points to the live product and explains digital delivery', () => {
   const html = fs.readFileSync(path.join(dist, 'books/index.html'), 'utf8');
   assert.match(html, /24 pages/);
   assert.match(html, /KRW 9,900/);
-  assert.match(html, /no instant checkout/i);
   assert.match(html, /cancellation\/refund terms/);
-  const link = new URL(bookMailto());
-  assert.equal(link.pathname, 'ceo@stargateedu.co.kr');
-  assert.match(link.searchParams.get('body'), /version 1\.0/);
-  assert.match(link.searchParams.get('body'), /KRW 9,900/);
+  assert.match(html, /Checkout is currently in Korean/);
+  assert.match(html, /after payment is confirmed/i);
+  assert.match(html, /book_checkout_open/);
+  assert.ok(!html.includes('book_purchase_email'));
+  const link = new URL(book.checkout);
+  assert.equal(link.origin, 'https://stargateedu.imweb.me');
+  assert.equal(link.pathname, '/shop_view');
+  assert.equal(link.searchParams.get('idx'), '10');
+  assert.ok(html.includes(`href="${book.checkout}"`));
   assert.equal(book.priceKrw, 9900);
   assert.equal(fs.readFileSync(path.join(dist, book.sample)).subarray(0, 5).toString('ascii'), '%PDF-');
 });
