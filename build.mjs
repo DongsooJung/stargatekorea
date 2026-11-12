@@ -3,12 +3,20 @@
 // so the site can move to WordPress later without breaking links.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import site from './site.config.mjs';
+import { homePage, customGuidePage, essentialsSection, postCta } from './travel.mjs';
+import { booksPage, book } from './books.mjs';
 
-const ROOT = path.dirname(new URL(import.meta.url).pathname);
+const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(ROOT, 'dist');
+const travelPages = [
+  { slug: 'custom-guide', title: 'Custom Digital Seoul Guide', excerpt: 'Enquire about a paid custom Seoul travel brief. Scope, fee and delivery are agreed by email before ordering.', body: customGuidePage },
+  { slug: 'travel-essentials', title: 'Seoul Travel Essentials', excerpt: 'Compare airport rail, visitor SIM options, neighborhoods and Seoul experiences before you book.', body: () => essentialsSection(true) },
+  { slug: 'books', title: book.title, excerpt: 'An original 24-page English Seoul PDF guide. Read the free 6-page sample and enquire to buy for KRW 9,900.', body: booksPage },
+];
 
 const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -87,6 +95,7 @@ ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/travel.css?v=20261112">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
 </head>
@@ -114,6 +123,7 @@ ${body}
   <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden>Today <b id="visitor-today-count">–</b> · Total <b id="visitor-total-count">–</b></span></div>
 </footer>
 <script src="/visitor-counter.js?v=20261027" defer></script>
+<script type="module" src="/travel.js?v=20261112"></script>
 </body>
 </html>`;
 }
@@ -276,33 +286,7 @@ export function build() {
   fs.cpSync(path.join(ROOT, 'static'), DIST, { recursive: true });
 
   // Home
-  const counts = Object.fromEntries(site.categories.map((c) => [c.slug, posts.filter((p) => p.category === c.slug).length]));
-  const home = `
-<section class="hero"><div class="wrap">
-  <p class="eyebrow">Written from Seoul</p>
-  <h1>Korea, explained by people who live here.</h1>
-  <p class="lead">${esc(site.description)}</p>
-  <div class="cta"><a class="btn" href="#latest">Read the latest guides</a><a class="btn ghost" href="/campus-trips/">Campus Trips</a></div>
-</div></section>
-<section id="latest" class="wrap section">
-  <div class="section-head"><p class="eyebrow">Latest posts</p><h2>New guides</h2></div>
-  <div class="grid">${posts.slice(0, 9).map(card).join('')}</div>
-</section>
-<section id="topics" class="wrap section">
-  <div class="section-head"><p class="eyebrow">Topics</p><h2>Find guides by topic</h2></div>
-  <div class="topics">${liveCategories()
-    .map(
-      (c) => `<a class="topic" href="/category/${c.slug}/"><span class="ti">${c.icon}</span><strong>${esc(c.name)}</strong><span class="muted">${esc(c.blurb)}</span><span class="count">${counts[c.slug] || 0} ${counts[c.slug] === 1 ? 'guide' : 'guides'}</span></a>`
-    )
-    .join('')}</div>
-</section>
-<section id="channels" class="wrap section">
-  <div class="section-head"><p class="eyebrow">Channels</p><h2>More from Stargate</h2></div>
-  <div class="channels">${site.channels
-    .filter((ch) => isLive(ch.href))
-    .map((ch) => `<a class="channel" href="${ch.href}"${ch.href.startsWith('http') ? ' rel="noopener"' : ''}><strong>${esc(ch.name)}</strong><span class="muted">${esc(ch.note)}</span><span class="arrow">→</span></a>`)
-    .join('')}</div>
-</section>`;
+  const home = homePage(posts, card);
   write(
     'index.html',
     layout({
@@ -334,6 +318,7 @@ export function build() {
   <!-- ad-slot: post-top -->
   <div class="prose">${p.html}</div>
   <!-- ad-slot: post-bottom -->
+  ${p.category === 'travel-korea' ? postCta : ''}
   ${p.tags?.length ? `<p class="tags">${p.tags.map((t) => `<span>#${esc(t)}</span>`).join('')}</p>` : ''}
 </article>
 ${related.length ? `<section class="wrap section"><div class="section-head"><h2>Keep reading</h2></div><div class="grid">${related.map(card).join('')}</div></section>` : ''}`;
@@ -383,8 +368,12 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
   // Economy
   buildEconomy(reports);
 
+  // Travel landing pages have distinct templates and remain in the sitemap.
+  for (const pg of travelPages) {
+    write(`${pg.slug}/index.html`, layout({ title: pg.title, description: pg.excerpt, pathname: `/${pg.slug}/`, body: pg.body() }));
+  }
   // 404
-  write('404.html', layout({ title: 'Page not found', description: 'This page could not be found.', pathname: '/404/', body: `<section class="wrap narrow section"><h1>Page not found</h1><p>The page you are looking for does not exist. <a href="/">Go to the homepage</a>.</p></section>` }));
+  write('404.html', layout({ title: 'Page not found', description: 'This page could not be found.', pathname: '/404.html', head: '<meta name="robots" content="noindex">', body: `<section class="wrap narrow section"><h1>Page not found</h1><p>The page you are looking for does not exist. <a href="/">Go to the homepage</a>.</p></section>` }));
 
   // Feed, sitemap, robots, ads.txt
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
@@ -409,6 +398,7 @@ ${reports
     ...posts.map((p) => ({ loc: `/${p.slug}/`, lastmod: p.updated || p.date })),
     ...liveCategories().map((c) => ({ loc: `/category/${c.slug}/` })),
     ...pages.map((pg) => ({ loc: `/${pg.slug}/` })),
+    ...travelPages.map((pg) => ({ loc: `/${pg.slug}/`, lastmod: '2026-11-12T09:00:00+09:00' })),
     ...(reports.length ? [{ loc: '/economy/', lastmod: reports[0].date }] : []),
     ...E.sections.filter((x) => reports.some((r) => r.section === x.slug)).map((x) => ({ loc: `/economy/${x.slug}/` })),
     ...reports.map((r) => ({ loc: `/economy/${r.slug}/`, lastmod: r.updated || r.date })),
@@ -426,4 +416,4 @@ ${reports
   return { posts, pages, reports };
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) build();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) build();

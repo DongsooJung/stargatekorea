@@ -2,6 +2,6 @@
   "name": "stargatekorea",
   "private": true,
   "type": "module",
-  "scripts": { "build": "node build.mjs", "export:wordpress": "node export-wordpress.mjs" },
+  "scripts": { "build": "node build.mjs", "test": "node --test tests/travel.test.mjs", "export:wordpress": "node export-wordpress.mjs" },
   "dependencies": { "gray-matter": "^4.0.3", "marked": "^14.1.4" }
 }

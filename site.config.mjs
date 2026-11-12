@@ -1,9 +1,9 @@
 // Stargate Korea — site settings shared by the static build and the WordPress export.
 export default {
   title: 'Stargate Korea',
-  tagline: 'Study, live and travel in Korea — guides from Seoul',
+  tagline: 'Thoughtful Korea trips, starting in Seoul',
   description:
-    'Practical guides for international students, newcomers and travelers in Korea: arrival checklists, transport, neighborhoods, culture and weekend trips.',
+    'Plan your first Seoul trip with free itineraries, practical travel essentials and a custom digital guide enquiry. Independent Korea travel advice from Seoul.',
   url: 'https://www.stargatekorea.net',
   language: 'en-US',
   author: { name: 'Dongsoo Jung', login: 'dongsoo', email: 'ceo@stargateedu.co.kr' },
@@ -21,12 +21,11 @@ export default {
     { slug: 'books', name: 'Books & Guides', icon: '📚', blurb: 'Longer guides and our books' },
   ],
   nav: [
-    { label: 'Study', href: '/category/study-in-korea/' },
-    { label: 'Living', href: '/category/living-in-korea/' },
-    { label: 'Travel', href: '/category/travel-korea/' },
-    { label: 'Culture', href: '/category/korean-culture/' },
-    { label: 'Economy', href: '/economy/' },
-    { label: 'Campus Trips', href: '/campus-trips/' },
+    { label: 'Plan your trip', href: '/#plan' },
+    { label: 'Travel essentials', href: '/travel-essentials/' },
+    { label: 'Travel guides', href: '/category/travel-korea/' },
+    { label: 'Travel book', href: '/books/' },
+    { label: 'Custom guide', href: '/custom-guide/' },
     { label: 'About', href: '/about/' },
   ],
   // /economy/ — Korea's economy and policy, checked with data. Posts live in content/economy/*.md.
@@ -64,6 +63,7 @@ export default {
   footerPages: [
     { label: 'About', href: '/about/' },
     { label: 'Contact', href: '/contact/' },
+    { label: 'How we earn', href: '/disclosure/' },
     { label: 'Privacy Policy', href: '/privacy-policy/' },
   ],
 };
