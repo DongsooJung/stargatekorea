@@ -7,7 +7,7 @@ import { build } from '../build.mjs';
 import { selectTrip } from '../static/trip-data.mjs';
 import commerce from '../commerce.config.mjs';
 import { essentials, resolvedEssential, essentialsSection } from '../travel.mjs';
-import { book } from '../books.mjs';
+import { book, bookPriceLabel } from '../books.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -77,6 +77,10 @@ test('book checkout points to the live product and explains digital delivery', (
   assert.equal(link.searchParams.get('idx'), '10');
   assert.ok(html.includes(`href="${book.checkout}"`));
   assert.equal(book.priceKrw, 9900);
+  assert.equal(book.displayKrwPerUsd, 1400);
+  assert.equal(bookPriceLabel(), 'US$7.07 / ₩9,900');
+  assert.ok(html.includes('US$7.07 / ₩9,900'));
+  assert.match(html, /fixed display rate of US\$1 = ₩1,400/);
   assert.equal(fs.readFileSync(path.join(dist, book.sample)).subarray(0, 5).toString('ascii'), '%PDF-');
 });
 

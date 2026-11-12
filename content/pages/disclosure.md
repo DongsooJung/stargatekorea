@@ -14,7 +14,7 @@ Our public itineraries, arrival checklist and articles are free to read. You do 
 
 We offer an original English PDF travel guide, **[Seoul, at your own pace](/books/)**. The product page states the edition, language, format, page count and listed price, and provides a free sample. The full PDF is delivered through our linked store after payment confirmation. It is for personal use and does not include travel services or future edition updates.
 
-Purchases are handled by **[our Stargate Edu store](https://stargateedu.imweb.me/shop_view?idx=10)** on Imweb, operated by 스타게이트. The checkout charges Korean won and is currently in Korean. Review the total price, payment method, seller details and cancellation/refund terms there before paying. Confirmed payments unlock the PDF in your order/account; bank-transfer orders require deposit confirmation. Payment or download issues and cancellation/refund requests can be sent to ceo@stargateedu.co.kr with your order number.
+Purchases are handled by **[our Stargate Edu store](https://stargateedu.imweb.me/shop_view?idx=10)** on Imweb, operated by 스타게이트. We display the USD equivalent first, followed by the KRW price, using a fixed display rate of US$1 = ₩1,400. The checkout charges Korean won and is currently in Korean. Review the total price, payment method, seller details and cancellation/refund terms there before paying. Confirmed payments unlock the PDF in your order/account; bank-transfer orders require deposit confirmation. Payment or download issues and cancellation/refund requests can be sent to ceo@stargateedu.co.kr with your order number.
 
 ## Custom guide enquiries
 

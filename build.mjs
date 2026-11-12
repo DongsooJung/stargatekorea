@@ -15,7 +15,7 @@ const DIST = path.join(ROOT, 'dist');
 const travelPages = [
   { slug: 'custom-guide', title: 'Custom Digital Seoul Guide', excerpt: 'Enquire about a paid custom Seoul travel brief. Scope, fee and delivery are agreed by email before ordering.', body: customGuidePage },
   { slug: 'travel-essentials', title: 'Seoul Travel Essentials', excerpt: 'Compare airport rail, visitor SIM options, neighborhoods and Seoul experiences before you book.', body: () => essentialsSection(true) },
-  { slug: 'books', title: book.title, excerpt: 'An original 24-page English Seoul PDF guide. Read the free 6-page sample and buy for KRW 9,900 through our digital-download store.', body: booksPage },
+  { slug: 'books', title: book.title, excerpt: 'An original 24-page English Seoul PDF guide. Read the free 6-page sample and buy for US$7.07 / ₩9,900 through our digital-download store. USD display rate: ₩1,400 per US$1.', body: booksPage },
 ];
 
 const esc = (s = '') =>
