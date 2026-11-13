@@ -11,6 +11,18 @@ English guides to studying, living and traveling in Korea, by Stargate Corporati
 
 WordPress migration guide (Korean): [kit/README.md](kit/README.md)
 
+## Personalized Seoul planning and conversion measurement
+
+The home planner uses `static/personalization.mjs`, a shared editorial rules module. Days, pace, party, interest, spending style and season determine the route, advice, reading links and optional next offer. Its 1,440 valid preference combinations do not imply 1,440 individually researched itineraries. The recommendations are not live availability checks or per-visitor AI generations. There is no AI key, model bill or visitor text sent to a model. Free plans can be downloaded, printed, shared by preference URL, or remembered on the visitor's own device by choice.
+
+The standard PDF and custom brief are distinct offers. The existing store product remains KRW 9,900, with a fixed USD display equivalent. Family or slower theme-focused requests receive a custom-brief enquiry recommendation. The enquiry carries all six preferences and optional notes into a local email draft; visitors review and send it themselves. Quote writing, replies, custom delivery and payment confirmation are not automated by this site.
+
+`static/conversions.mjs` reuses the existing Stargate analytics service at `https://stargate.stargate8225.workers.dev/api/analytics/`. It records allowlisted action labels without preferences, query strings, draft text or payment data. Actions are deduplicated by label within a page load; they are action counts, not unique customers. Only `www.stargatekorea.net` sends these events. Do Not Track and `?preview=1` suppress this action tracking (the existing visitor counter is independent).
+
+For owner review, POST `{ "p_page_path": "/" }` to `get_site_button_click_counts` using the site origin. Review `route_generated`, `plan_download`, `matched_book_open` and `matched_custom_open`; review `/books/` for `book_sample_download` and `book_checkout_open`, and `/custom-guide/` for `enquiry_prepared` and `enquiry_email_open`. Compare checkout opens against completed paid orders in the store separately. A click or prepared email is never a purchase or received enquiry. No new affiliate commission is enabled.
+
+Run `npm test` before publishing. It builds the site and checks all preference combinations, route variation, shorter family/slow days, untrusted query handling, conversion data minimization, published links, checkout destination and the separation of paid PDF from public sample. Browser checks should include desktop and mobile, preference links, download, remember/forget, book suitability and the enquiry draft. Use `?preview=1&days=5&party=family&interest=food&pace=slow&budget=lean&season=winter#plan` for a production preview without action counts.
+
 ## Economy — /economy/
 
 영어 경제·정책 검증 섹션입니다. 글은 `content/economy/*.md`에 넣으면 `/economy/{slug}/`로 발행됩니다.

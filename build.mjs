@@ -96,6 +96,7 @@ ${head}
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/travel.css?v=20261112">
+<link rel="stylesheet" href="/personalization.css?v=20261113">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
 </head>
@@ -123,7 +124,7 @@ ${body}
   <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden>Today <b id="visitor-today-count">–</b> · Total <b id="visitor-total-count">–</b></span></div>
 </footer>
 <script src="/visitor-counter.js?v=20261027" defer></script>
-<script type="module" src="/travel.js?v=20261112"></script>
+<script type="module" src="/travel.js?v=20261113"></script>
 </body>
 </html>`;
 }
@@ -398,7 +399,7 @@ ${reports
     ...posts.map((p) => ({ loc: `/${p.slug}/`, lastmod: p.updated || p.date })),
     ...liveCategories().map((c) => ({ loc: `/category/${c.slug}/` })),
     ...pages.map((pg) => ({ loc: `/${pg.slug}/` })),
-    ...travelPages.map((pg) => ({ loc: `/${pg.slug}/`, lastmod: '2026-11-12T09:00:00+09:00' })),
+    ...travelPages.map((pg) => ({ loc: `/${pg.slug}/`, lastmod: '2026-11-13T16:30:00+09:00' })),
     ...(reports.length ? [{ loc: '/economy/', lastmod: reports[0].date }] : []),
     ...E.sections.filter((x) => reports.some((r) => r.section === x.slug)).map((x) => ({ loc: `/economy/${x.slug}/` })),
     ...reports.map((r) => ({ loc: `/economy/${r.slug}/`, lastmod: r.updated || r.date })),

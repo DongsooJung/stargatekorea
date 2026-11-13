@@ -8,6 +8,8 @@ import { selectTrip } from '../static/trip-data.mjs';
 import commerce from '../commerce.config.mjs';
 import { essentials, resolvedEssential, essentialsSection } from '../travel.mjs';
 import { book, bookPriceLabel } from '../books.mjs';
+import { defaults, profileOptions, normalizeProfile, profileFromQuery, profileQuery, personalizeTrip, planAsText } from '../static/personalization.mjs';
+import { conversionNames, conversionPayload } from '../static/conversions.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -107,4 +109,79 @@ test('page and enquiry descriptions do not claim an automatic submission', () =>
   const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
   assert.match(home, /do not currently earn affiliate commission/);
   assert.ok(!home.includes('adsbygoogle'));
+});
+
+test('all 1,440 traveler combinations keep the requested length and a usable, non-repeating route', () => {
+  let checked = 0;
+  for (const days of Object.keys(profileOptions.days)) for (const pace of Object.keys(profileOptions.pace))
+  for (const party of Object.keys(profileOptions.party)) for (const interest of Object.keys(profileOptions.interest))
+  for (const budget of Object.keys(profileOptions.budget)) for (const season of Object.keys(profileOptions.season)) {
+    const trip = personalizeTrip({ days, pace, party, interest, budget, season });
+    assert.equal(trip.days.length, Number(days));
+    assert.equal(new Set(trip.days.map(day => day.id)).size, Number(days));
+    for (const day of trip.days) {
+      assert.ok(day.detail.length > 80 && day.alternative.length > 80);
+      assert.ok(new URL(day.map).searchParams.get('query').includes(day.stops[0]));
+      if (party === 'family' || pace === 'slow') assert.ok(day.stops.length <= 2);
+    }
+    assert.ok(trip.resources.every(resource => fs.existsSync(path.join(dist, resource.href, 'index.html'))));
+    checked++;
+  }
+  assert.equal(checked, 1440);
+});
+
+test('interests change the route, including one-day family plans; budget and season change useful advice', () => {
+  for (const party of Object.keys(profileOptions.party)) {
+    const firstStops = ['culture', 'food', 'design'].map(interest => personalizeTrip({ days: '1', party, interest }).days[0].id);
+    assert.equal(new Set(firstStops).size, 3);
+  }
+  const lightWinter = personalizeTrip({ budget: 'lean', season: 'winter' });
+  const specialSummer = personalizeTrip({ budget: 'flexible', season: 'summer' });
+  assert.notEqual(lightWinter.why[1], specialSummer.why[1]);
+  assert.notEqual(lightWinter.why[2], specialSummer.why[2]);
+  assert.equal(personalizeTrip({ party: 'family' }).offer.kind, 'custom');
+  assert.equal(personalizeTrip({ party: 'solo', pace: 'balanced' }).offer.kind, 'book');
+});
+
+test('shared preferences round-trip and hostile or malformed values fall back to known editorial choices', () => {
+  const profile = { days: '5', pace: 'slow', party: 'family', interest: 'food', budget: 'lean', season: 'winter' };
+  assert.deepEqual(profileFromQuery(profileQuery(profile)), profile);
+  for (const invalid of [null, [], 'not an object', { days: '999', party: '<img src=x onerror=alert(1)>', email: 'private@example.com' }]) {
+    assert.deepEqual(normalizeProfile(invalid), defaults);
+  }
+  const shared = profileQuery({ ...profile, email: 'private@example.com', token: 'secret' });
+  assert.ok(!shared.includes('private') && !shared.includes('token'));
+  const exported = planAsText(personalizeTrip(profile));
+  assert.ok(exported.includes('5 days in Seoul'));
+  assert.ok(exported.includes('Day 5:'));
+  assert.ok(exported.includes('Save or share your settings: https://www.stargatekorea.net/?' + profileQuery(profile)));
+  assert.ok(exported.includes('Free editorial outline'));
+});
+
+test('conversion events allow fixed funnel actions, strip URL preferences and cannot claim a completed purchase', () => {
+  const context = { event: 'event-id', visitor: 'visitor-id', session: 'session-id', path: '/custom-guide/?email=private@example.com&party=family#plan', device: 'mobile' };
+  const payload = conversionPayload('enquiry_prepared', context);
+  assert.equal(payload.p_page_path, '/custom-guide/');
+  assert.equal(payload.p_element_label, 'enquiry_prepared');
+  assert.equal(payload.p_target_url, null);
+  assert.ok(!JSON.stringify(payload).includes('private') && !JSON.stringify(payload).includes('family'));
+  assert.equal(conversionPayload('private@example.com', context), null);
+  assert.ok(!conversionNames.has('purchase') && !conversionNames.has('payment_completed'));
+});
+
+test('personalized landing pages, checkout fit and all six enquiry choices are published', () => {
+  const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+  const custom = fs.readFileSync(path.join(dist, 'custom-guide/index.html'), 'utf8');
+  for (const key of Object.keys(defaults)) {
+    assert.ok(home.includes(`id="trip-${key}"`));
+    assert.ok(custom.includes(`id="guide-${key}"`));
+  }
+  for (const slug of ['seoul-family-trip-plan', 'seoul-food-neighborhood-plan', 'seoul-culture-at-your-pace', 'seoul-design-neighborhood-plan']) {
+    assert.ok(fs.readFileSync(path.join(dist, 'sitemap.xml'), 'utf8').includes(`/${slug}/`));
+    assert.ok(fs.existsSync(path.join(dist, slug, 'index.html')));
+  }
+  assert.ok(home.indexOf('id="route-list"') < home.indexOf('id="matched-offer"'));
+  assert.match(home, /id="download-plan"/);
+  assert.match(home, /id="share-plan"/);
+  assert.match(fs.readFileSync(path.join(dist, 'books/index.html'), 'utf8'), /id="book-fit" hidden/);
 });

@@ -4,11 +4,13 @@ slug: disclosure
 excerpt: "How Stargate Korea handles paid digital guides, affiliate links, advertising and editorial choices."
 ---
 
-*Updated November 12, 2026*
+*Updated November 13, 2026*
 
 ## Free travel information
 
 Our public itineraries, arrival checklist and articles are free to read. You do not need to give us an email address to use or download the free resources.
+
+The personalized planner uses editorial route ideas and rules applied to the choices you select. It does not call a live AI service or check current prices, route conditions or availability. You can download or print the outline for free. Optional product suggestions explain why a standard book or a separately quoted custom brief may fit your choices.
 
 ## Our digital travel book
 
