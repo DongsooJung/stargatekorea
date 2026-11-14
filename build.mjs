@@ -9,6 +9,7 @@ import { marked } from 'marked';
 import site from './site.config.mjs';
 import { homePage, customGuidePage, essentialsSection, postCta } from './travel.mjs';
 import { booksPage, book } from './books.mjs';
+import { renderUpdates } from './updates.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(ROOT, 'dist');
@@ -95,7 +96,7 @@ ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/travel.css?v=20261114">
+<link rel="stylesheet" href="/travel.css?v=20261114-updates1">
 <link rel="stylesheet" href="/personalization.css?v=20261113">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
@@ -287,7 +288,9 @@ export function build() {
   fs.cpSync(path.join(ROOT, 'static'), DIST, { recursive: true });
 
   // Home
-  const home = homePage(posts, card);
+  const snapshot = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/data/seoul-events.json'), 'utf8'));
+  const notices = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/data/travel-notices.json'), 'utf8'));
+  const home = homePage(posts, card, renderUpdates(snapshot, notices));
   write(
     'index.html',
     layout({

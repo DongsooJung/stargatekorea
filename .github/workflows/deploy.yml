@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Daily at 08:17 Asia/Seoul (23:17 UTC on the previous day).
+    - cron: '17 23 * * *'
 
 permissions:
   contents: read
@@ -17,13 +20,29 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm ci
+      - name: Refresh official Seoul event listing
+        run: npm run refresh:events
       - run: npm test
+      - name: Save checked listing for the next run
+        run: |
+          git add content/data/seoul-events.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Refresh official Seoul event listing'
+            git push origin HEAD:main
+          fi
+      - name: Write update status
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const s=JSON.parse(fs.readFileSync('content/data/seoul-events.json')); fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## Seoul listing check\\nStatus: '+s.status+'\\nLast success: '+s.lastSuccessAt+'\\nEvents retained: '+s.events.length+'\\n');"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

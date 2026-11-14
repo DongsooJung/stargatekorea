@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "name": "Visit Seoul · Seoul Tourism Organization",
+    "url": "https://english.visitseoul.net/events"
+  },
+  "status": "ok",
+  "lastAttemptAt": "2026-11-14T05:42:54.112Z",
+  "lastSuccessAt": "2026-11-14T05:42:54.112Z",
+  "events": [
+    {
+      "id": "ENP2vf8eo",
+      "title": "2026 Seoul K-CONTENT WEEK",
+      "url": "https://english.visitseoul.net/events/2026Seoul-K-content-Week/ENP2vf8eo",
+      "startDate": "2026-11-14",
+      "endDate": "2026-11-20"
+    },
+    {
+      "id": "ENP3rjagy",
+      "title": "2026 Namsan Night Festival",
+      "url": "https://english.visitseoul.net/events/2026Namsan-Night-Festival/ENP3rjagy",
+      "startDate": "2026-10-23",
+      "endDate": "2026-11-14"
+    },
+    {
+      "id": "ENPjm3hw1",
+      "title": "2026 SEOUL AUTUMN FESTA",
+      "url": "https://english.visitseoul.net/events/2026SeoulAutumnFesta/ENPjm3hw1",
+      "startDate": "2026-09-18",
+      "endDate": "2026-11-29"
+    }
+  ]
+}
