@@ -196,4 +196,7 @@ test('visitor statistics are published on the home page and footer, hidden until
   const counter = fs.readFileSync(path.join(root, 'static', 'visitor-counter.js'), 'utf8');
   assert.match(counter, /allowedHosts = \['www\.stargatekorea\.net'\]/);
   assert.match(counter, /box\.hidden = true/);
+  assert.match(home, /data-visitor-trend hidden/);
+  assert.match(counter, /get_site_visit_daily/);
+  assert.match(counter, /get_site_visit_summary/);
 });
