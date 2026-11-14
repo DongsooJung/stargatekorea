@@ -95,7 +95,7 @@ ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/travel.css?v=20261112">
+<link rel="stylesheet" href="/travel.css?v=20261114">
 <link rel="stylesheet" href="/personalization.css?v=20261113">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
@@ -121,9 +121,9 @@ ${body}
     <nav aria-label="Topics"><h2>Topics</h2>${liveCategories().map((c) => `<a href="/category/${c.slug}/">${esc(c.name)}</a>`).join('')}</nav>
     <nav aria-label="Site"><h2>Site</h2>${site.footerPages.map((p) => `<a href="${p.href}">${esc(p.label)}</a>`).join('')}${live.economy ? '<a href="/economy/">Economy</a>' : ''}<a href="/feed.xml">RSS</a></nav>
   </div>
-  <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden>Today <b id="visitor-today-count">–</b> · Total <b id="visitor-total-count">–</b></span></div>
+  <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden><span aria-hidden="true">👥</span> Visitors · Today <b id="visitor-today-count" data-visitor-today>–</b> · Total <b id="visitor-total-count" data-visitor-total>–</b></span></div>
 </footer>
-<script src="/visitor-counter.js?v=20261027" defer></script>
+<script src="/visitor-counter.js?v=20261114" defer></script>
 <script type="module" src="/travel.js?v=20261113"></script>
 </body>
 </html>`;

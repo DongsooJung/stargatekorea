@@ -8,10 +8,8 @@
   const allowedHosts = ['www.stargatekorea.net'];
   const prefix = 'stargateKoreaVisitorV1';
 
-  const box = document.getElementById('visitor-summary');
-  const todayEl = document.getElementById('visitor-today-count');
-  const totalEl = document.getElementById('visitor-total-count');
-  if (!box || !todayEl || !totalEl) return;
+  const boxes = [...document.querySelectorAll('#visitor-summary, [data-visitor-stats]')];
+  if (!boxes.length) return;
   // Local previews and other hosts must not write into the live counter.
   if (!allowedHosts.includes(window.location.hostname)) return;
 
@@ -59,13 +57,14 @@
         store.set(`counted:${day}`, '1');
       }
       const stats = await rpc('get_site_visit_summary', { p_days: 30 });
-      todayEl.textContent = fmt(stats.today);
-      totalEl.textContent = fmt(stats.total);
-      box.title = `Unique visitors per day, counted in Korea time (${day})`;
-      box.hidden = false;
+      if (!Number.isFinite(Number(stats.today)) || !Number.isFinite(Number(stats.total))) throw new Error('bad_summary');
+      document.querySelectorAll('[data-visitor-today]').forEach((el) => { el.textContent = fmt(stats.today); });
+      document.querySelectorAll('[data-visitor-total]').forEach((el) => { el.textContent = fmt(stats.total); });
+      document.querySelectorAll('[data-visitor-day]').forEach((el) => { el.textContent = day; });
+      boxes.forEach((box) => { box.title = `Unique visitors per day, counted in Korea time (${day})`; box.hidden = false; });
     } catch (error) {
       console.error('Visitor counter failed:', error);
-      box.hidden = true;
+      boxes.forEach((box) => { box.hidden = true; });
     }
   }
 

@@ -185,3 +185,15 @@ test('personalized landing pages, checkout fit and all six enquiry choices are p
   assert.match(home, /id="share-plan"/);
   assert.match(fs.readFileSync(path.join(dist, 'books/index.html'), 'utf8'), /id="book-fit" hidden/);
 });
+
+test('visitor statistics are published on the home page and footer, hidden until real counts load', () => {
+  const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+  assert.match(home, /<section[^>]*id="visitor-stats"[^>]*data-visitor-stats hidden/);
+  assert.match(home, /data-visitor-today>–</);
+  assert.match(home, /data-visitor-total>–</);
+  assert.match(home, /id="visitor-summary" class="visits" hidden/);
+  assert.match(home, /\/visitor-counter\.js\?v=/);
+  const counter = fs.readFileSync(path.join(root, 'static', 'visitor-counter.js'), 'utf8');
+  assert.match(counter, /allowedHosts = \['www\.stargatekorea\.net'\]/);
+  assert.match(counter, /box\.hidden = true/);
+});

@@ -85,12 +85,20 @@ export function customTeaser() {
   return `<section class="wrap section" id="custom"><div class="custom-panel"><div><p class="eyebrow">03 / A guide that fits you</p><h2>Your interests.<br>Your pace.<br>Your Seoul.</h2><p class="lead">Have a particular neighborhood, family pace or theme in mind? Enquire about a paid, custom digital travel brief.</p><a class="btn" href="/custom-guide/" data-conversion="custom_guide_view">Explore a custom guide →</a><p class="small">Individual quote · scope & delivery agreed by email</p></div><div class="deliverables"><p class="eyebrow">What to ask for</p><ul><li><strong>A day-by-day reading guide</strong><span>Neighborhoods grouped into a practical order.</span></li><li><strong>The details behind the choices</strong><span>Transport notes, useful links and things to check.</span></li><li><strong>Alternatives for your kind of day</strong><span>Slower options, indoor ideas and room for free time.</span></li></ul><p class="small muted">Digital information only. Bookings, tickets, accommodation and in-person guiding are arranged separately with providers.</p></div></div></section>`;
 }
 
+// Visitor statistics from the existing Cloudflare counter. Hidden until real numbers load,
+// so no placeholder figure is ever shown as a count.
+export const visitorStatsSince = '2026-10-27';
+export function visitorStats() {
+  return `<section class="wrap section visitor-stats" id="visitor-stats" aria-labelledby="visitor-stats-title" data-visitor-stats hidden><div class="section-head"><p class="eyebrow">Site statistics · Live</p><h2 id="visitor-stats-title">Who's reading along.</h2></div><dl class="stat-tiles"><div class="stat-tile"><dt>Visitors today</dt><dd data-visitor-today>–</dd><span class="small muted">Korea time · <span data-visitor-day></span></span></div><div class="stat-tile"><dt>Total visitors</dt><dd data-visitor-total>–</dd><span class="small muted">Since 27 October 2026</span></div></dl><p class="small muted">Unique browsers per day, counted once per Korea-time day. No names, emails or trip choices are attached. <a href="/privacy-policy/">Privacy policy</a></p></section>`;
+}
+
 export function homePage(posts, card) {
   const travelPosts = posts.filter((post) => post.category === 'travel-korea');
   return `<section class="travel-hero wrap"><div class="hero-copy"><p class="eyebrow">Independent Korea travel notes · From Seoul</p><h1>Seoul, at<br>your own <em>pace.</em></h1><p class="lead">Traveling solo, with your partner, friends or family? Find a Seoul plan around your interests, pace and spending style — with free ideas before you buy anything.</p><div class="cta"><a class="btn" href="#plan">Make my free Seoul plan <span aria-hidden="true">↗</span></a><a class="text-link" href="/custom-guide/">Ask for a custom guide →</a></div><p class="hero-note"><span aria-hidden="true">✦</span> Free personalized outline · Instant download · Optional book or custom brief</p></div><figure class="hero-photo"><img src="/images/seoul-palace.jpg" width="1440" height="960" alt="Gyeongbokgung Palace and the green mountains behind central Seoul" fetchpriority="high"><figcaption><span>SEOUL, SOUTH KOREA</span><span>Gyeongbokgung, a place to begin</span></figcaption></figure></section>
   <div class="wrap travel-promise"><span>Tell us your kind of trip</span><span>Keep your free plan instantly</span><span>Choose the help worth paying for</span></div>
   ${planner()}${bookTeaser()}${essentialsSection()}${customTeaser()}
   <section class="wrap section" id="latest"><div class="section-head split-head"><div><p class="eyebrow">Field notes</p><h2>Read before you roam.</h2></div><a class="text-link" href="/category/travel-korea/">All travel guides →</a></div><div class="grid">${travelPosts.slice(0, 3).map(card).join('')}</div></section>
+  ${visitorStats()}
   <section class="wrap section quiet-section"><h2>Staying a little longer?</h2><p>Our guides for international students and newcomers are still here.</p><div class="cta"><a class="text-link" href="/category/study-in-korea/">Study in Korea →</a><a class="text-link" href="/category/living-in-korea/">Living in Korea →</a></div></section>`;
 }
 
