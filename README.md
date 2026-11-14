@@ -23,6 +23,18 @@ For owner review, POST `{ "p_page_path": "/" }` to `get_site_button_click_counts
 
 Run `npm test` before publishing. It builds the site and checks all preference combinations, route variation, shorter family/slow days, untrusted query handling, conversion data minimization, published links, checkout destination and the separation of paid PDF from public sample. Browser checks should include desktop and mobile, preference links, download, remember/forget, book suitability and the enquiry draft. Use `?preview=1&days=5&party=family&interest=food&pace=slow&budget=lean&season=winter#plan` for a production preview without action counts.
 
+## Customer planning desk and PDF export
+
+The preparation desk adds profile-specific checklist items and an estimate calculator. Accommodation is the combined nightly amount for all rooms, counted once for the group; food and local transport are per person per sightseeing day; activities and contingency are whole-stay group amounts. All prices are the visitor's own inputs. No market price, transport fare or exchange-rate feed is used. The optional book or custom brief is excluded from the calculation.
+
+`static/plan-pdf.mjs` generates the free personalized PDF locally with the pinned `pdf-lib` dependency. The library is copied with its license into `dist/vendor/` at build time and loaded only when exporting, rather than from a third-party CDN. Each PDF contains a cover, one page per selected day, and a preparation/budget page with interactive checkboxes. It snapshots the choices at the export click so a later form edit cannot change a pending export. The paid standard edition stays separate and private in the store.
+
+Remembering a plan now saves and updates its preferences, budget and completed checklist in the browser until the visitor forgets it. Shared URLs still contain only allowlisted trip preferences. The `/book-help/` page translates store labels, answers four purchase/file situations and prepares an optional support email locally. It never submits an order, sends an email, or accesses payment records. Compare the offers at `/books/#guide-options`.
+
+Additional allowlisted action counts are `plan_pdf_download`, `planning_desk_open`, `budget_calculated`, `checklist_updated`, `purchase_help_open`, `support_answer_view`, `support_draft_prepared` and `support_email_open`. They never include estimate values, checkbox values, order references or draft text. The first four appear on `/`; support counts appear on `/book-help/`. No sales confirmation is inferred from them.
+
+The test suite includes the real client modules in a controlled DOM for save/restore/forget, recalculation after profile changes, export snapshot consistency, reset, support drafts and inert text handling. PDFs are reopened to validate their page count and canonical interactive field values. This is in addition to route-combination and published-link tests, and does not replace visual browser QA.
+
 ## Economy — /economy/
 
 영어 경제·정책 검증 섹션입니다. 글은 `content/economy/*.md`에 넣으면 `/economy/{slug}/`로 발행됩니다.

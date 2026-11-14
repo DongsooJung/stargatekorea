@@ -2,6 +2,18 @@
   "name": "stargatekorea",
   "private": true,
   "type": "module",
-  "scripts": { "build": "node build.mjs", "test": "node --test --test-concurrency=1 tests/*.test.mjs", "refresh:events": "node scripts/refresh-events.mjs", "export:wordpress": "node export-wordpress.mjs" },
-  "dependencies": { "gray-matter": "^4.0.3", "marked": "^14.1.4" }
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "refresh:events": "node scripts/refresh-events.mjs",
+    "export:wordpress": "node export-wordpress.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^14.1.4",
+    "pdf-lib": "1.17.1"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  }
 }

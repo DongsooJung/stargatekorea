@@ -1,3 +1,4 @@
+import { buyingHelpPage } from './journey.mjs';
 // Static build for stargatekorea.net.
 // Markdown in content/ -> HTML in dist/, using WordPress-style URLs (/post-slug/, /category/slug/)
 // so the site can move to WordPress later without breaking links.
@@ -14,6 +15,7 @@ import { renderUpdates } from './updates.mjs';
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(ROOT, 'dist');
 const travelPages = [
+  { slug: 'book-help', title: 'English Buying & PDF Download Help', excerpt: 'Read the sample, understand the Korean store buttons, and find help with payment or your PDF download.', body: () => buyingHelpPage(book) },
   { slug: 'custom-guide', title: 'Custom Digital Seoul Guide', excerpt: 'Enquire about a paid custom Seoul travel brief. Scope, fee and delivery are agreed by email before ordering.', body: customGuidePage },
   { slug: 'travel-essentials', title: 'Seoul Travel Essentials', excerpt: 'Compare airport rail, visitor SIM options, neighborhoods and Seoul experiences before you book.', body: () => essentialsSection(true) },
   { slug: 'books', title: book.title, excerpt: 'An original 24-page English Seoul PDF guide. Read the free 6-page sample and buy for US$7.07 / ₩9,900 through our digital-download store. USD display rate: ₩1,400 per US$1.', body: booksPage },
@@ -97,7 +99,7 @@ ${head}
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/travel.css?v=20261114b-updates1">
-<link rel="stylesheet" href="/personalization.css?v=20261113">
+<link rel="stylesheet" href="/personalization.css?v=20261114-desk">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
 </head>
@@ -125,7 +127,7 @@ ${body}
   <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden><span aria-hidden="true">👥</span> Visitors · Today <b id="visitor-today-count" data-visitor-today>–</b> · Total <b id="visitor-total-count" data-visitor-total>–</b></span></div>
 </footer>
 <script src="/visitor-counter.js?v=20261114b" defer></script>
-<script type="module" src="/travel.js?v=20261113"></script>
+<script type="module" src="/travel.js?v=20261114-desk"></script>
 </body>
 </html>`;
 }
@@ -286,6 +288,9 @@ export function build() {
   fs.rmSync(DIST, { recursive: true, force: true });
   fs.mkdirSync(DIST, { recursive: true });
   fs.cpSync(path.join(ROOT, 'static'), DIST, { recursive: true });
+  fs.mkdirSync(path.join(DIST,'vendor'), {recursive:true});
+  fs.copyFileSync(path.join(ROOT,'node_modules/pdf-lib/dist/pdf-lib.esm.min.js'),path.join(DIST,'vendor/pdf-lib.esm.min.js'));
+  fs.copyFileSync(path.join(ROOT,'node_modules/pdf-lib/LICENSE.md'),path.join(DIST,'vendor/pdf-lib-LICENSE.md'));
 
   // Home
   const snapshot = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/data/seoul-events.json'), 'utf8'));

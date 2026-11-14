@@ -31,6 +31,68 @@
 #book-fit{border-left:3px solid var(--accent);padding:10px 16px;margin:20px 0;background:var(--paper-panel)}
 #book-fit p{font-size:13px}
 .quote-card .planner-submit{grid-column:auto}
+.plan-quick{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin:24px 0 8px}
+.plan-quick .btn{min-width:230px}
+.pdf-status{font-size:12px;color:var(--brand);margin:10px 0}
+.pdf-status:empty{display:none}
+button:disabled{cursor:wait;opacity:.65}
+.planning-desk{margin:28px 0;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.planning-desk>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px;font-size:15px;min-height:70px;list-style:none}
+.planning-desk>summary:after{content:'+';font-size:25px;color:var(--accent)}
+.planning-desk[open]>summary:after{content:'−'}
+.planning-desk>summary strong,.planning-desk>summary .small{display:block}
+.planning-desk>summary .small{font-weight:400;color:var(--ink-2);margin-top:6px}
+.desk-count{margin-left:auto;white-space:nowrap;color:var(--accent);font-size:12px}
+.desk-grid{border-top:1px solid var(--line);padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:38px}
+.desk-grid h3{font:400 27px/1.25 var(--serif);margin:12px 0 16px}
+.checklist-item{padding:15px 0;border-bottom:1px solid var(--line)}
+.checklist-item label{display:flex;flex-direction:row;align-items:flex-start;gap:12px;font-size:13px;cursor:pointer;line-height:1.6}
+.checklist-item input{width:18px;min-width:18px;height:18px;min-height:18px;padding:0;accent-color:var(--brand);margin:2px 0 0}
+.checklist-item p{margin:7px 0 0 30px;font-size:12px;line-height:1.7;color:var(--ink-2)}
+.checklist-item a{text-decoration:underline;text-underline-offset:3px}
+.budget-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.budget-fields label{font-size:11px;line-height:1.6}
+.budget-fields .btn{align-self:end}
+.budget-result{margin-top:22px;background:var(--paper-panel);padding:20px;font-size:12px;line-height:1.7}
+.budget-total{display:block;font:400 31px/1.2 var(--serif);margin:10px 0}
+.budget-breakdown{display:grid;grid-template-columns:1fr auto;gap:8px 20px;margin:18px 0 0;border-top:1px solid var(--line);padding-top:15px}
+.budget-breakdown dt{font-size:11px;color:var(--ink-2)}
+.budget-breakdown dd{margin:0;white-space:nowrap;font-size:11px}
+.desk-footer{display:flex;align-items:center;justify-content:space-between;gap:25px;border-top:1px solid var(--line);padding:18px 28px}
+.desk-footer p{max-width:80ch;margin:0}
+.desk-footer button{flex-shrink:0}
+.guide-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.option-card{border:1px solid var(--line);padding:28px;display:flex;align-items:flex-start;flex-direction:column;background:var(--surface)}
+.option-card.featured{border-top:4px solid var(--accent);padding-top:25px}
+.option-card h3{font:400 28px/1.2 var(--serif);margin:12px 0 16px}
+.option-price{font:400 29px/1.4 var(--serif);margin:0 0 18px;color:var(--accent)}
+.option-price span{display:block;font:12px/1.5 var(--font);color:var(--ink-2)}
+.option-card ul{padding-left:18px;font-size:13px;line-height:1.9;margin:0 0 16px}
+.option-card>.small{color:var(--ink-2);margin-top:auto;margin-bottom:22px}
+.option-card .text-link{display:inline-block;margin-top:15px}
+.purchase-help-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:start}
+.purchase-help-grid h2{font:400 27px/1.25 var(--serif)}
+.purchase-steps{list-style:none;margin:0;padding:0}
+.purchase-steps>li{display:grid;grid-template-columns:44px 1fr;gap:20px;border-top:1px solid var(--line);padding:28px 0}
+.purchase-steps>li>span{font:400 30px var(--serif);color:var(--accent)}
+.purchase-steps h2{margin:0 0 16px}
+.purchase-steps p{font-size:14px;line-height:1.9}
+.checkout-glossary{margin-top:24px;padding:22px;border:1px solid var(--line)}
+.checkout-glossary summary{font-size:14px;font-weight:600}
+.checkout-glossary dl{display:grid;grid-template-columns:1fr 1fr;gap:15px;font-size:13px}
+.checkout-glossary dd{margin:0}
+.support-helper{border:1px solid var(--line);padding:30px;background:var(--surface)}
+.support-helper>img{display:block;width:160px;height:auto;margin:0 auto 28px;box-shadow:7px 9px 0 var(--paper-panel)}
+.support-helper form{display:grid;gap:18px}
+#support-answer{padding:18px;background:var(--paper-panel);font-size:12px;line-height:1.8}
+#support-answer h3{font-size:15px;margin:0 0 12px}
+#support-answer ol{padding-left:18px;margin:0}
+#support-answer li+li{margin-top:12px}
+#support-preview{border-top:1px solid var(--line);padding-top:18px;margin-top:22px}
+#support-preview textarea{margin-bottom:14px;font-size:12px}
+@media(max-width:900px){.desk-grid{grid-template-columns:1fr;gap:35px}.guide-options{gap:14px}.option-card{padding:20px}.option-card.featured{padding-top:17px}.purchase-help-grid{gap:32px}.desk-footer{align-items:flex-start}}
+@media(max-width:620px){.plan-quick{display:grid;grid-template-columns:1fr;gap:16px}.plan-quick .btn{width:100%;min-width:0}.planning-desk>summary{padding:18px;gap:12px;flex-wrap:wrap}.desk-count{margin-left:0;font-size:11px}.desk-grid{padding:20px}.budget-fields{gap:14px}.budget-fields label:nth-child(n+3){grid-column:1/-1}.desk-footer{padding:18px 20px;flex-direction:column;gap:14px}.guide-options,.purchase-help-grid{grid-template-columns:1fr}.option-card{padding:24px}.option-card.featured{padding-top:21px}.option-card .btn{width:100%;text-align:center}.support-helper{padding:22px}.purchase-steps>li{grid-template-columns:32px 1fr;gap:14px}.budget-breakdown{grid-template-columns:1fr;gap:3px}.budget-breakdown dd{margin-bottom:10px}.planning-desk>summary:after{margin-left:auto}}
+@media print{.plan-quick,.pdf-status,.planning-desk{display:none!important}}
 @media(max-width:820px){.personal-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.plan-context{grid-template-columns:1fr;gap:22px}.personal-reading{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:20px}}
 @media(max-width:620px){.travel-hero{grid-template-columns:1fr}.personal-controls{grid-template-columns:1fr}.planner-submit{align-items:stretch;flex-direction:column;gap:12px}.planner-submit .btn{width:100%;min-width:0}.traveler-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.traveler-shortcuts button{padding:10px 8px}.plan-context{padding:22px}.matched-offer{padding:22px}.matched-offer .cta{align-items:stretch;flex-direction:column}.plan-tools{display:grid;grid-template-columns:1fr}.plan-tools button{width:100%;text-align:center}.profile-caption{margin-bottom:18px}}
 @media print{main>section:not(.planner-section),main>.travel-promise,.traveler-shortcuts,.plan-tools,.matched-offer,.personal-controls,.planner-next,.personal-reading,#planner-status,#plan-tool-status{display:none!important}.plan-context{display:block;border:0;padding:0}.planner-section{padding:0}.route-list{break-before:auto}.route-day{break-inside:avoid}a[href^='https://www.google.com/maps']{font-size:10px}}

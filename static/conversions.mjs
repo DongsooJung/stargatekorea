@@ -1,5 +1,5 @@
 // Reuse the existing analytics service; send fixed action names only.
-export const conversionNames = new Set(['route_generated','profile_preset','plan_download','plan_print','plan_saved','plan_shared','checklist_download','personal_reading_open','matched_book_open','matched_custom_open','book_view','book_sample_download','book_checkout_open','custom_guide_view','enquiry_prepared','enquiry_email_open','essential_airport','essential_connectivity','essential_stays','essential_experiences']);
+export const conversionNames = new Set(['plan_pdf_download','planning_desk_open','budget_calculated','checklist_updated','purchase_help_open','support_answer_view','support_draft_prepared','support_email_open','route_generated','profile_preset','plan_download','plan_print','plan_saved','plan_shared','checklist_download','personal_reading_open','matched_book_open','matched_custom_open','book_view','book_sample_download','book_checkout_open','custom_guide_view','enquiry_prepared','enquiry_email_open','essential_airport','essential_connectivity','essential_stays','essential_experiences']);
 const sent = new Set();
 let visitor, session;
 function id(storage, key) {

@@ -1,3 +1,4 @@
+import { initPlanningDesk, initBookSupport } from './journey.js';
 import { personalizeTrip, profileOptions, defaults, normalizeProfile, profileFromQuery, profileQuery, planAsText } from './personalization.mjs';
 import { trackConversion as track } from './conversions.mjs';
 
@@ -35,6 +36,8 @@ function renderTrip(trip){
   secondary.textContent=trip.offer.kind==='custom'?'Prefer a fixed-price guide? →':'Need research around specific needs? →';
   secondary.dataset.conversion=trip.offer.kind==='custom'?'book_view':'custom_guide_view';
   document.getElementById('personalize-link').href=customUrl;
+  document.getElementById('compare-guide-link').href='/books/?'+profileQuery(trip.profile)+'#guide-options';
+  document.dispatchEvent(new CustomEvent('seoul-plan-update',{detail:trip}));
 }
 
 if(planner){
@@ -68,6 +71,7 @@ if(planner){
     try{await navigator.clipboard.writeText(url);toolStatus.textContent='Plan link copied. The link contains the selected travel preferences.';track('plan_shared');}
     catch{toolStatus.replaceChildren(element('span','Copy this plan link: '));const field=element('input','');field.value=url;field.readOnly=true;field.setAttribute('aria-label','Link to your plan');toolStatus.append(field);field.select();}
   });
+  initPlanningDesk(activeTrip);
 }
 
 const enquiry=document.getElementById('guide-enquiry');
@@ -99,3 +103,10 @@ if(bookFit&&Object.keys(defaults).some(key=>new URLSearchParams(location.search)
   bookFit.querySelector('a').href='/custom-guide/?'+profileQuery(trip.profile);
 }
 document.addEventListener('click',event=>{const link=event.target.closest?.('[data-conversion]');if(link)track(link.dataset.conversion);});
+
+initBookSupport();
+
+if(Object.keys(defaults).some(key=>new URLSearchParams(location.search).has(key))){
+  const profile=profileFromQuery(location.search);
+  document.querySelectorAll('a[data-carry-profile]').forEach(link=>{const url=new URL(link.getAttribute('href'),location.origin);if(url.origin!==location.origin)return;for(const [key,value]of Object.entries(profile))url.searchParams.set(key,value);link.href=url.pathname+url.search+url.hash;});
+}
