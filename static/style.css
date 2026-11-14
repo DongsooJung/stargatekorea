@@ -107,6 +107,9 @@ img { max-width: 100%; height: auto; }
 .prose a { text-decoration: underline; text-underline-offset: 3px; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
 .tags span { background: var(--chip); border-radius: 999px; padding: 4px 10px; font-size: 13px; color: var(--ink-2); }
+.campus-trips-cta { margin-top: 28px; padding: 14px 18px; background: var(--chip); border-radius: 12px; }
+.campus-trips-cta p { margin: 0; }
+.campus-trips-cta a { text-decoration: underline; text-underline-offset: 3px; }
 
 /* Footer */
 .site-footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 40px 0 28px; background: var(--surface); }

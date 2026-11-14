@@ -321,6 +321,9 @@ export function build() {
   <!-- ad-slot: post-bottom -->
   ${p.category === 'travel-korea' ? postCta : ''}
   ${p.tags?.length ? `<p class="tags">${p.tags.map((t) => `<span>#${esc(t)}</span>`).join('')}</p>` : ''}
+  <aside class="campus-trips-cta">
+    <p><strong>Campus Trips</strong> are small-group weekend trips for international students. Dates are not open for booking yet. Email <a href="mailto:${esc(site.email)}?subject=Campus%20Trips">${esc(site.email)}</a> with the subject "Campus Trips", or <a href="/campus-trips/">register your interest</a>.</p>
+  </aside>
 </article>
 ${related.length ? `<section class="wrap section"><div class="section-head"><h2>Keep reading</h2></div><div class="grid">${related.map(card).join('')}</div></section>` : ''}`;
     write(
