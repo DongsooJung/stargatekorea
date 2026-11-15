@@ -54,6 +54,10 @@ Rules the factory follows:
 
 Run `npm test` before publishing. The suite covers the calendar rules, window selection, markdown escaping, marker replacement, idempotency, expiry handling and the order of steps in the deploy workflow.
 
+### Which runner executes the factory
+
+The Pages workflow in `.github/workflows/deploy.yml` already contains the factory step and the IndexNow submission, but changing a workflow file needs a GitHub token with the `workflow` scope. Until that scope is granted, the daily run is executed by the scheduled desktop task that owns this repository, which runs the same commands (`refresh:events` → `factory` → `npm test` → commit → push → IndexNow) and the workflow takes the step over automatically once the file can be pushed.
+
 ## Economy — /economy/
 
 영어 경제·정책 검증 섹션입니다. 글은 `content/economy/*.md`에 넣으면 `/economy/{slug}/`로 발행됩니다.

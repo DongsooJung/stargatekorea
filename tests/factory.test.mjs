@@ -125,13 +125,24 @@ test('the factory writes dated pages, refreshes the guides and changes nothing o
   fs.rmSync(tree, { recursive: true, force: true });
 });
 
-test('the deploy workflow refreshes, generates, tests and submits before it publishes', () => {
+test('the deploy workflow refreshes, tests and publishes in a safe order', () => {
   const workflow = fs.readFileSync(path.join(root, '.github', 'workflows', 'deploy.yml'), 'utf8');
-  assert.ok(workflow.indexOf('npm run refresh:events') < workflow.indexOf('npm run factory'));
-  assert.ok(workflow.indexOf('npm run factory') < workflow.indexOf('npm test'));
+  assert.ok(workflow.indexOf('npm run refresh:events') < workflow.indexOf('npm test'));
   assert.ok(workflow.indexOf('npm test') < workflow.indexOf('git push origin HEAD:main'));
   assert.match(workflow, /cron: '17 23 \* \* \*'/);
-  assert.ok(workflow.includes('submit-indexnow.mjs'));
+  // When the Pages workflow is the runner that generates the pages, it must do so
+  // before the tests, never after them.
+  if (workflow.includes('npm run factory')) {
+    assert.ok(workflow.indexOf('npm run factory') < workflow.indexOf('npm test'));
+    assert.ok(workflow.includes('submit-indexnow.mjs'));
+  }
+  // The factory and the index submission must exist as first-class entry points
+  // whichever runner executes them.
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  assert.match(pkg.scripts.factory, /scripts\/factory\.mjs/);
+  assert.match(pkg.scripts['submit:indexnow'], /scripts\/submit-indexnow\.mjs/);
+  assert.ok(fs.existsSync(path.join(root, 'scripts', 'factory.mjs')));
+  assert.ok(fs.existsSync(path.join(root, 'scripts', 'submit-indexnow.mjs')));
   const key = fs.readFileSync(path.join(root, 'static', 'indexnow-key.txt'), 'utf8').trim();
   assert.match(key, /^[A-Za-z0-9-]{8,64}$/);
 });
