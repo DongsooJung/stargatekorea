@@ -6,6 +6,8 @@
     "build": "node build.mjs",
     "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "refresh:events": "node scripts/refresh-events.mjs",
+    "factory": "node scripts/factory.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "export:wordpress": "node export-wordpress.mjs"
   },
   "dependencies": {

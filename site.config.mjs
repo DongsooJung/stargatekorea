@@ -20,6 +20,22 @@ export default {
     { slug: 'korean-culture', name: 'Korean Culture', icon: '🏮', blurb: 'Food, etiquette and language' },
     { slug: 'books', name: 'Books & Guides', icon: '📚', blurb: 'Longer guides and our books' },
   ],
+  // Twelve evergreen month guides (/seoul-in-january/ ... /seoul-in-december/).
+  // The content factory refreshes the official listing block inside each one.
+  months: [
+    { key: 'january', label: 'January' },
+    { key: 'february', label: 'February' },
+    { key: 'march', label: 'March' },
+    { key: 'april', label: 'April' },
+    { key: 'may', label: 'May' },
+    { key: 'june', label: 'June' },
+    { key: 'july', label: 'July' },
+    { key: 'august', label: 'August' },
+    { key: 'september', label: 'September' },
+    { key: 'october', label: 'October' },
+    { key: 'november', label: 'November' },
+    { key: 'december', label: 'December' },
+  ],
   nav: [
     { label: 'Plan your trip', href: '/#plan' },
     { label: 'Travel essentials', href: '/travel-essentials/' },

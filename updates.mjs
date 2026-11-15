@@ -2,7 +2,7 @@ import { eventSource, koreaDay, validDay, inWindow, weekEvents, isStale, validat
 
 const esc = value => String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 const dayLabel = day => new Date(day + 'T12:00:00+09:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'Asia/Seoul' });
-export function renderUpdates(snapshot, notices = [], now = new Date()) {
+export function renderUpdates(snapshot, notices = [], now = new Date(), links = {}) {
   validateEvents(snapshot.events);
   const today = koreaDay(now), stale = isStale(snapshot.lastSuccessAt, now), events = stale ? [] : weekEvents(snapshot.events, now);
   for (const item of notices) {
@@ -16,6 +16,7 @@ export function renderUpdates(snapshot, notices = [], now = new Date()) {
   <div class="updates-grid" data-event-list>${events.map(item => `<article class="update-card" data-event-card data-start="${esc(item.startDate)}" data-end="${esc(item.endDate)}"><p class="eyebrow">Official event listing</p><h3><a href="${esc(item.url)}" rel="noopener">${esc(item.title)} ↗</a></h3><p class="event-dates"><time datetime="${esc(item.startDate)}">${dayLabel(item.startDate)}</time> – <time datetime="${esc(item.endDate)}">${dayLabel(item.endDate)}</time></p><p class="small muted">Source: Visit Seoul</p></article>`).join('')}</div>
   <p class="small muted" data-events-empty${events.length ? ' hidden' : ''}>No current event suggestions are available here. Browse the official calendar for your dates.</p>
   <div class="travel-notices" data-notice-list${activeNotices.length ? '' : ' hidden'}><h3>Before you set out</h3>${activeNotices.map(item => `<article class="travel-notice" data-travel-notice data-show-from="${esc(item.showFrom)}" data-show-until="${esc(item.showUntil)}"><div><h4><a href="${esc(item.href)}">${esc(item.title)} →</a></h4><p>${esc(item.summary)}</p><p class="small muted">Applies through ${dayLabel(item.showUntil)} · Checked ${dayLabel(item.checkedOn)} · <a href="${esc(item.sourceUrl)}" rel="noopener">${esc(item.sourceName)}</a></p></div></article>`).join('')}</div>
+  ${links.weekSlug || links.monthSlug ? `<div class="updates-links">${links.weekSlug ? `<a class="text-link" href="/${links.weekSlug}/" data-conversion="weekly_roundup_open">Read the full week →</a>` : ''}${links.monthSlug ? `<a class="text-link" href="/${links.monthSlug}/" data-conversion="month_guide_open">Seoul in ${esc(links.monthLabel || 'your month')} →</a>` : ''}</div>` : ''}
   <div class="updates-foot"><p class="small muted">Listing last checked: <time data-listing-checked>${esc(checkedLabel)}</time>. Dates can change; confirm hours, admission and any booking directly with the organizer.</p><a class="text-link" href="${eventSource.url}" rel="noopener">Official Seoul event calendar ↗</a></div>
   <script type="module" src="/updates.js?v=20261114"></script>
   </section>`;

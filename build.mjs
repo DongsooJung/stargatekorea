@@ -8,9 +8,10 @@ import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import site from './site.config.mjs';
-import { homePage, customGuidePage, essentialsSection, postCta } from './travel.mjs';
+import { homePage, customGuidePage, essentialsSection, postCta, pageCta } from './travel.mjs';
 import { booksPage, book } from './books.mjs';
 import { renderUpdates } from './updates.mjs';
+import { koreaDay } from './static/update-state.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(ROOT, 'dist');
@@ -98,7 +99,7 @@ ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/travel.css?v=20261114b-updates1">
+<link rel="stylesheet" href="/travel.css?v=20261115-factory1">
 <link rel="stylesheet" href="/personalization.css?v=20261114-desk">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
@@ -281,8 +282,20 @@ function write(rel, content) {
   fs.writeFileSync(file, content);
 }
 
+// A dated roundup is "expired" once its Korea-time week is over. The page stays
+// online as an archive, but it is no longer promoted, listed in the feed or
+// advertised in the sitemap.
+export const expiryDay = (value) => (value ? new Date(value).toISOString().slice(0, 10) : null);
+export const isExpiredPost = (post, today = koreaDay()) => {
+  const day = expiryDay(post.expires);
+  return Boolean(day) && day < today;
+};
+
 export function build() {
   const { posts, pages, reports } = loadContent();
+  const today = koreaDay();
+  const isExpired = (post) => isExpiredPost(post, today);
+  const livePosts = posts.filter((post) => !isExpired(post));
   live.cats = new Set(posts.map((p) => p.category));
   live.economy = reports.length > 0;
   fs.rmSync(DIST, { recursive: true, force: true });
@@ -295,7 +308,11 @@ export function build() {
   // Home
   const snapshot = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/data/seoul-events.json'), 'utf8'));
   const notices = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/data/travel-notices.json'), 'utf8'));
-  const home = homePage(posts, card, renderUpdates(snapshot, notices));
+  const currentWeek = livePosts.find((post) => post.weekStart && post.weekEnd && post.weekStart <= today && today <= post.weekEnd);
+  const month = site.months[Number(today.slice(5, 7)) - 1];
+  const monthPage = month ? pages.find((page) => page.slug === `seoul-in-${month.key}`) : null;
+  const links = { weekSlug: currentWeek?.slug ?? null, monthSlug: monthPage?.slug ?? null, monthLabel: month?.label ?? null };
+  const home = homePage(livePosts, card, renderUpdates(snapshot, notices, new Date(), links), site.months);
   write(
     'index.html',
     layout({
@@ -317,10 +334,15 @@ export function build() {
   // Posts
   for (const p of posts) {
     const c = catOf(p.category);
-    const related = posts.filter((x) => x.slug !== p.slug).slice(0, 3);
+    const related = livePosts.filter((x) => x.slug !== p.slug).slice(0, 3);
+    const expired = isExpired(p);
+    const expiredNotice = expired
+      ? `<aside class="post-expired"><p><strong>This roundup has passed.</strong> It covered ${esc(p.weekStart)} – ${esc(p.weekEnd)}. Check <a href="/#seoul-this-week">this week's listings</a> or browse the <a href="/seoul-weekly/">weekly archive</a>.</p></aside>`
+      : '';
     const body = `
 <article class="wrap narrow post">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/category/${c.slug}/">${esc(c.name)}</a></nav>
+  ${expiredNotice}
   <h1>${esc(p.title)}</h1>
   <p class="meta">By ${esc(site.author.name)} · <time datetime="${new Date(p.date).toISOString()}">${fmtDate(p.date)}</time> · ${p.minutes} min read</p>
   <p class="dek">${esc(p.excerpt)}</p>
@@ -343,6 +365,7 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
         body,
         type: 'article',
         date: p.date,
+        head: expired ? '<meta name="robots" content="noindex,follow">' : '',
         jsonld: {
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
@@ -361,7 +384,7 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
 
   // Categories
   for (const c of liveCategories()) {
-    const list = posts.filter((p) => p.category === c.slug);
+    const list = livePosts.filter((p) => p.category === c.slug);
     const body = `
 <section class="wrap section">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Topics</nav>
@@ -373,7 +396,9 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
 
   // Pages
   for (const pg of pages) {
-    const body = `<article class="wrap narrow post"><h1>${esc(pg.title)}</h1><div class="prose">${pg.html}</div></article>`;
+    // Travel guides carry the offer so a reader who lands on one can act without hunting.
+    const wantsCta = pg.cta === true || /^seoul-/.test(pg.slug);
+    const body = `<article class="wrap narrow post"><h1>${esc(pg.title)}</h1><div class="prose">${pg.html}</div>${wantsCta ? pageCta : ''}</article>`;
     write(`${pg.slug}/index.html`, layout({ title: pg.title, description: pg.excerpt, pathname: `/${pg.slug}/`, body }));
   }
 
@@ -392,9 +417,15 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
 <title>${esc(site.title)}</title><link>${site.url}/</link><description>${esc(site.description)}</description><language>en-us</language>
 <atom:link href="${site.url}/feed.xml" rel="self" type="application/rss+xml"/>
-${posts
+${livePosts
   .map(
     (p) => `<item><title>${esc(p.title)}</title><link>${site.url}/${p.slug}/</link><guid>${site.url}/${p.slug}/</guid><pubDate>${new Date(p.date).toUTCString()}</pubDate><category>${esc(catOf(p.category).name)}</category><description>${esc(p.excerpt)}</description></item>`
+  )
+  .join('\n')}
+${pages
+  .filter((pg) => pg.feed === true)
+  .map(
+    (pg) => `<item><title>${esc(pg.title)}</title><link>${site.url}/${pg.slug}/</link><guid>${site.url}/${pg.slug}/</guid><pubDate>${new Date(pg.updated || '2026-01-01').toUTCString()}</pubDate><category>${esc(catOf(pg.category || 'travel-korea').name)}</category><description>${esc(pg.excerpt)}</description></item>`
   )
   .join('\n')}
 ${reports
@@ -406,10 +437,10 @@ ${reports
   write('feed.xml', feed);
 
   const urls = [
-    { loc: '/', lastmod: posts[0]?.date },
-    ...posts.map((p) => ({ loc: `/${p.slug}/`, lastmod: p.updated || p.date })),
+    { loc: '/', lastmod: livePosts[0]?.date },
+    ...livePosts.map((p) => ({ loc: `/${p.slug}/`, lastmod: p.updated || p.date })),
     ...liveCategories().map((c) => ({ loc: `/category/${c.slug}/` })),
-    ...pages.map((pg) => ({ loc: `/${pg.slug}/` })),
+    ...pages.map((pg) => ({ loc: `/${pg.slug}/`, lastmod: pg.updated || pg.date })),
     ...travelPages.map((pg) => ({ loc: `/${pg.slug}/`, lastmod: '2026-11-13T16:30:00+09:00' })),
     ...(reports.length ? [{ loc: '/economy/', lastmod: reports[0].date }] : []),
     ...E.sections.filter((x) => reports.some((r) => r.section === x.slug)).map((x) => ({ loc: `/economy/${x.slug}/` })),

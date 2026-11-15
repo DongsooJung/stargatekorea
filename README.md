@@ -35,6 +35,25 @@ Additional allowlisted action counts are `plan_pdf_download`, `planning_desk_ope
 
 The test suite includes the real client modules in a controlled DOM for save/restore/forget, recalculation after profile changes, export snapshot consistency, reset, support drafts and inert text handling. PDFs are reopened to validate their page count and canonical interactive field values. This is in addition to route-combination and published-link tests, and does not replace visual browser QA.
 
+## Content factory — dated pages from the official listing
+
+`npm run factory` turns the official Visit Seoul snapshot into pages that match how people actually search for a trip: a dated roundup for the current week (and the weeks that already have listings), a refreshed event block inside each monthly guide, and a weekly archive that links every roundup.
+
+- `scripts/factory.mjs` — the engine. Calendar helpers, listing selection, markdown generation and the marker-block refresh are pure functions, so they are covered by `tests/factory.test.mjs`.
+- `content/posts/seoul-week-of-YYYY-MM-DD.md` — one roundup per week. The slug is stable for the life of the week, so the URL never changes.
+- `content/pages/seoul-in-{month}.md` — twelve evergreen month guides. The editorial text is written by hand and never overwritten; only the block between `<!-- factory:month-events -->` and `<!-- /factory:month-events -->` is replaced.
+- `content/pages/seoul-weekly.md` — the archive index. Its list block is replaced on every run.
+- `npm run submit:indexnow` — submits the live sitemap to IndexNow after a deploy, so Bing and other partners learn about new URLs immediately. The key lives in `static/indexnow-key.txt` and is public on purpose.
+
+Rules the factory follows:
+
+- **No invented facts.** Every listing comes from the official snapshot. Event titles are escaped before they enter markdown, and only `https://english.visitseoul.net/events/…` links are published.
+- **Deterministic and idempotent.** The same data always produces the same file, and a run that changes nothing writes nothing, so the daily job does not create empty commits.
+- **A week stops being promoted when it ends.** The roundup page stays online as an archive with a "this roundup has passed" notice and `noindex,follow`, and it is removed from the home page, the RSS feed and the sitemap.
+- **Auto-published, with the source visible.** The Pages workflow refreshes the listing, runs the factory, runs the tests, commits the result and deploys in one run. The home page and each monthly guide show where the listings came from and when they were checked.
+
+Run `npm test` before publishing. The suite covers the calendar rules, window selection, markdown escaping, marker replacement, idempotency, expiry handling and the order of steps in the deploy workflow.
+
 ## Economy — /economy/
 
 영어 경제·정책 검증 섹션입니다. 글은 `content/economy/*.md`에 넣으면 `/economy/{slug}/`로 발행됩니다.

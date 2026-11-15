@@ -136,6 +136,12 @@ summary { cursor: pointer; padding-block: 6px; }
 .post-cta h2 { font: 400 29px/1.2 var(--serif); margin: 10px 0; }
 .post-cta p { font-size: 14px; }
 .post-cta .cta { align-items: center; }
+.updates-links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; }
+.month-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; margin-block: 22px; }
+.month-link { border: 1px solid var(--line); background: var(--surface); padding: 14px 16px; color: var(--ink); font-weight: 600; }
+.month-link:hover, .month-link:focus-visible { border-color: var(--brand); }
+.post-expired { border-left: 3px solid var(--accent); background: var(--paper-panel); padding: 14px 18px; margin-bottom: 18px; }
+.post-expired p { margin: 0; font-size: 14px; }
 .prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin-bottom: 24px; font-size: 14px; }
 .prose th, .prose td { padding: 12px; border: 1px solid var(--line); text-align: left; }
 .site-footer { margin-top: 30px; background: var(--bg); }

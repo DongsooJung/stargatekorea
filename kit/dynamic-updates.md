@@ -22,6 +22,19 @@ The initial Suneung notice summarizes the already-published explainer and the of
 
 This repository is public. Keep private drafts, customer information, unpublished analysis and secrets outside it. `approved: false` controls website visibility, not repository access. General article scheduling and an editor dashboard are later work.
 
+## Content factory
+
+The daily job also generates the dated pages that make the site searchable by week and by month.
+
+- `npm run factory` runs after `npm run refresh:events` in `.github/workflows/deploy.yml`. It writes a weekly roundup for the current week, publishes the weeks ahead that already have official listings, refreshes the listing block inside the current and next monthly guide, and rebuilds the weekly archive list.
+- Weekly roundups live in `content/posts/seoul-week-of-YYYY-MM-DD.md`. The slug contains the Monday of that week, so a week always keeps the same URL.
+- A roundup expires when its week ends. The page stays online with an archive notice and `noindex,follow`, and it leaves the home page, the feed and the sitemap.
+- The monthly guides in `content/pages/seoul-in-{month}.md` are edited by hand. Only the block between `<!-- factory:month-events -->` and `<!-- /factory:month-events -->` belongs to the factory. If the marker is missing, the page is skipped rather than rewritten.
+- The archive at `/seoul-weekly/` is the hub for every roundup. Its block between `<!-- factory:weekly-archive -->` and `<!-- /factory:weekly-archive -->` is rebuilt on every run.
+- The factory never invents a listing, a date or a price. It only reuses the official snapshot, and it publishes nothing when the snapshot is stale.
+- After the deploy, `npm run submit:indexnow` sends the live sitemap to IndexNow. The key in `static/indexnow-key.txt` is public because IndexNow verifies it from the site. A failed submission is a warning, not a failed deploy.
+- Naver and Google do not accept an automatic sitemap ping. Their webmaster tools need the owner’s account, so the sitemap in `robots.txt` and the weekly roundups are the supported path until then.
+
 ## Verification and recovery
 
 Run `npm test` before publication. Tests cover source parsing, failed fetches, invalid dates/URLs, Korea-midnight and seven-day boundaries, stale data, approved notice windows, browser expiry, existing itineraries and internal links. For a source-layout change, inspect the official page and update the parser and a representative test fixture; do not label old data newly checked.
