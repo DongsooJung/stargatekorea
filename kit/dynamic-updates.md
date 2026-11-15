@@ -26,7 +26,7 @@ This repository is public. Keep private drafts, customer information, unpublishe
 
 The daily job also generates the dated pages that make the site searchable by week and by month.
 
-- `npm run factory` runs after `npm run refresh:events` in `.github/workflows/deploy.yml`, or in the scheduled desktop run when the workflow file cannot be pushed yet. It writes a weekly roundup for the current week, publishes the weeks ahead that already have official listings, refreshes the listing block inside the current and next monthly guide, and rebuilds the weekly archive list.
+- `npm run factory` runs after `npm run refresh:events` in `.github/workflows/deploy.yml`, and also through the `pretest` hook that every `npm test` and `npm run build` triggers. It writes a weekly roundup for the current week, publishes the weeks ahead that already have official listings, refreshes the listing block inside the current and next monthly guide, and rebuilds the weekly archive list. The Pages run therefore deploys pages generated from the same morning's snapshot, without depending on a desktop being awake.
 - Weekly roundups live in `content/posts/seoul-week-of-YYYY-MM-DD.md`. The slug contains the Monday of that week, so a week always keeps the same URL.
 - A roundup expires when its week ends. The page stays online with an archive notice and `noindex,follow`, and it leaves the home page, the feed and the sitemap.
 - The monthly guides in `content/pages/seoul-in-{month}.md` are edited by hand. Only the block between `<!-- factory:month-events -->` and `<!-- /factory:month-events -->` belongs to the factory. If the marker is missing, the page is skipped rather than rewritten.

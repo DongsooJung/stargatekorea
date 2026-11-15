@@ -56,7 +56,9 @@ Run `npm test` before publishing. The suite covers the calendar rules, window se
 
 ### Which runner executes the factory
 
-The Pages workflow in `.github/workflows/deploy.yml` already contains the factory step and the IndexNow submission, but changing a workflow file needs a GitHub token with the `workflow` scope. Until that scope is granted, the daily run is executed by the scheduled desktop task that owns this repository, which runs the same commands (`refresh:events` → `factory` → `npm test` → commit → push → IndexNow) and the workflow takes the step over automatically once the file can be pushed.
+The daily Pages workflow already runs the factory on GitHub's own servers: it refreshes the listing, then runs `npm test`, and the `pretest` hook executes `scripts/factory.mjs` before the site is built. The deployed site therefore always carries the dated pages generated from that morning's official snapshot, and the run does not depend on any desktop being awake.
+
+The workflow file additionally contains an explicit factory step, a wider commit list and the IndexNow submission, but changing a workflow file needs a GitHub token with the `workflow` scope. Until that scope is granted, the scheduled desktop task commits the generated pages back to the repository, submits them to IndexNow and verifies that the deployment succeeded.
 
 ## Economy — /economy/
 
