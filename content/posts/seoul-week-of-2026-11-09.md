@@ -10,7 +10,7 @@ generated: weekly
 weekStart: "2026-11-09"
 weekEnd: "2026-11-15"
 expires: "2026-11-15"
-eventCount: 3
+eventCount: 2
 ---
 Every week we check the official Visit Seoul listing and turn it into a dated plan you can use. This one covers **November 9–15, 2026**.
 
@@ -19,7 +19,6 @@ Dates, hours and admission can change, so every entry below links to the organiz
 ## Official listings for this week
 
 - **[2026 SEOUL AUTUMN FESTA](https://english.visitseoul.net/events/2026SeoulAutumnFesta/ENPjm3hw1)** — September 18, 2026 – November 29, 2026
-- **[2026 Namsan Night Festival](https://english.visitseoul.net/events/2026Namsan-Night-Festival/ENP3rjagy)** — October 23, 2026 – November 14, 2026
 - **[2026 Seoul K-CONTENT WEEK](https://english.visitseoul.net/events/2026Seoul-K-content-Week/ENP2vf8eo)** — Nov 14 – Nov 20, 2026
 
 ## How to fit them into a short trip

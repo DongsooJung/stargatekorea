@@ -15,7 +15,6 @@ November is usually the month when everything about Seoul works at once. The wea
 ### Official listings in November
 
 - **[2026 SEOUL AUTUMN FESTA](https://english.visitseoul.net/events/2026SeoulAutumnFesta/ENPjm3hw1)** — September 18, 2026 – November 29, 2026
-- **[2026 Namsan Night Festival](https://english.visitseoul.net/events/2026Namsan-Night-Festival/ENP3rjagy)** — October 23, 2026 – November 14, 2026
 - **[2026 Seoul K-CONTENT WEEK](https://english.visitseoul.net/events/2026Seoul-K-content-Week/ENP2vf8eo)** — Nov 14 – Nov 20, 2026
 
 Official listings only. Confirm hours, admission and any booking with the organizer.

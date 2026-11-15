@@ -16,7 +16,7 @@ Seoul changes its programme week by week, and a festival, exhibition or market t
 
 - [November 23–29, 2026](/seoul-week-of-2026-11-23/) — 1 official listing
 - [November 16–22, 2026](/seoul-week-of-2026-11-16/) — 2 official listings
-- [November 9–15, 2026](/seoul-week-of-2026-11-09/) — 3 official listings
+- [November 9–15, 2026](/seoul-week-of-2026-11-09/) — 2 official listings
 <!-- /factory:weekly-archive -->
 
 ## How these pages are produced
