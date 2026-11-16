@@ -1,4 +1,5 @@
-import { normalizeProfile } from './personalization.mjs';
+import { normalizeStartDate } from './trip-calendar.mjs?v=20261116-editor1';
+import { normalizeProfile } from './personalization.mjs?v=20261116-editor1';
 
 export function tripChecklist(input) {
   const p = normalizeProfile(input);
@@ -49,7 +50,7 @@ export const krw = amount => 'KRW ' + Math.round(amount).toLocaleString('en-US')
 export function normalizeWorkspace(input = {}, profile) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) input = {};
   const p = normalizeProfile(profile), allowed = new Set(tripChecklist(p).map(task => task.id));
-  return { budget: normalizeBudget(input.budget, Number(p.days)), completed: Array.isArray(input.completed) ? [...new Set(input.completed.filter(id => allowed.has(id)))] : [] };
+  return { startDate: normalizeStartDate(input.startDate), budget: normalizeBudget(input.budget, Number(p.days)), completed: Array.isArray(input.completed) ? [...new Set(input.completed.filter(id => allowed.has(id)))] : [] };
 }
 
 export function supportAdvice(kind) {

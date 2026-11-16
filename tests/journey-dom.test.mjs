@@ -88,3 +88,28 @@ test('comparing offers and opening help keeps the trip preferences on site, with
     const target=new URL(link.href);assert.equal(target.searchParams.get('idx'),'10');assert.equal(target.searchParams.has('party'),false);
   }
 });
+
+test('route edits survive a reload from a preference URL and follow through to a quote draft',async t=>{
+  const dom=setup(t,'index.html','http://127.0.0.1/?days=3&party=family&interest=food&preview=1');await load();const d=dom.window.document;
+  const choose=d.querySelector('[data-route-day="0"]');choose.value='seongsu';choose.dispatchEvent(new dom.window.Event('change',{bubbles:true}));
+  d.querySelector('[data-move-day="0"][data-direction="1"]').click();d.getElementById('save-plan').click();
+  assert.equal(new URL(dom.window.location.href).searchParams.get('routes'),'mangwon,seongsu,hongdae');
+  assert.equal(new URL(dom.window.location.href).searchParams.get('preview'),'1');
+  const savedProfile=localStorage.getItem('stargateKoreaSavedPlanV1'),savedDesk=localStorage.getItem('stargateKoreaWorkspaceV1'),address=dom.window.location.href;
+  const next=setup(t,'index.html',address);localStorage.setItem('stargateKoreaSavedPlanV1',savedProfile);localStorage.setItem('stargateKoreaWorkspaceV1',savedDesk);await load();
+  assert.equal(next.window.document.querySelector('[data-route-day="0"]').value,'mangwon');
+  const quote=next.window.document.getElementById('personalize-link').href;
+  const enquiry=setup(t,'custom-guide/index.html',quote);await load();enquiry.window.document.getElementById('guide-enquiry').dispatchEvent(new enquiry.window.Event('submit',{bubbles:true,cancelable:true}));
+  const text=enquiry.window.document.getElementById('enquiry-text').value;
+  assert.match(text,/Day 1: Mangwon Market/);assert.match(text,/Day 2: Seongsu-dong/);
+});
+
+test('calendar date and month guide restore locally and stay out of the shared plan link',async t=>{
+  const dom=setup(t,'index.html','http://127.0.0.1/?days=3');await load();const d=dom.window.document;
+  const date=d.getElementById('trip-start-date');date.value='2026-11-20';date.dispatchEvent(new dom.window.Event('change',{bubbles:true}));
+  assert.equal(d.getElementById('month-guide-link').getAttribute('href'),'/seoul-in-november/');
+  d.getElementById('save-plan').click();assert.equal(JSON.parse(localStorage.getItem('stargateKoreaWorkspaceV1')).startDate,'2026-11-20');
+  d.getElementById('share-plan').click();await new Promise(resolve=>setImmediate(resolve));
+  const link=d.querySelector('[aria-label="Link to your plan"]').value;assert.ok(!link.includes('2026-11-20'));
+  d.getElementById('reset-workspace').click();assert.equal(date.value,'');assert.equal(d.getElementById('month-guide-link').hidden,true);
+});

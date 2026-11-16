@@ -4,7 +4,7 @@ slug: seoul-in-december
 excerpt: "December is cold, dry and festive, with illuminations, year-end closures and the quietest weekdays of the year. How to plan a December visit."
 category: travel-korea
 feed: true
-updated: "2026-11-15T09:00:00+09:00"
+updated: "2026-11-16T09:00:00+09:00"
 ---
 
 *Editorial guide · Updated November 15, 2026*
@@ -12,7 +12,11 @@ updated: "2026-11-15T09:00:00+09:00"
 December is cold, dry and unusually quiet in a way that surprises first-time visitors. The year-end work period winds down, small businesses close for the year at different points, and the streets fill with lights instead of people. It is a good month for museums, palaces in low winter light, and long meals indoors. It is a less easy month if you rely on a fixed restaurant booking or a shop that closes when you happen to arrive.
 
 <!-- factory:month-events -->
-Official listings for **December** are not published in our source yet. They appear here as soon as the [official Seoul event calendar](https://english.visitseoul.net/events) publishes them.
+### Official listings in December
+
+- **[Korea Christmas Festival](https://english.visitseoul.net/events/2026KoreaChristmasFestival/ENPqjti55)** — November 16, 2026 – December 31, 2026
+
+Official listings only. Confirm hours, admission and any booking with the organizer.
 <!-- /factory:month-events -->
 
 ## What the weather actually means for your days

@@ -4,15 +4,16 @@ slug: privacy-policy
 excerpt: "How Stargate Korea handles information about visitors."
 ---
 
-*Last updated: November 14, 2026*
+*Last updated: November 16, 2026*
 
 This Privacy Policy explains how **Stargate Corporation (주식회사 별의문)** ("we", "us") handles information when you visit **stargatekorea.net** (the "Site").
 
 ## Information we collect
 
 - **Information you send us.** If you email us, we receive your email address and the contents of your message. We use it only to reply and, if you asked, to send you updates such as Campus Trips announcements.
-- **Trip planner choices.** Days, group, interests, pace, spending style and season are processed within your browser. These choices are not sent to an AI provider. If you choose “Remember on this device,” the selected preferences are saved in local storage until you choose “Forget saved plan” or clear site data. A copied plan link contains the selected preferences in its URL; share that link only if you want to share those preferences. Opening a preference link sends that URL to the hosting provider as part of a normal page request.
+- **Trip planner choices.** Days, group, interests, pace, spending style and season are processed within your browser. These choices are not sent to an AI provider. If you choose “Remember on this device,” the selected preferences are saved in local storage until you choose “Forget saved plan” or clear site data. A copied plan link contains the selected preferences and edited neighborhood order in its URL; share that link only if you want to share those preferences. Opening a preference link sends that URL to the hosting provider as part of a normal page request.
 - **Your planning desk and free PDF.** Budget estimates and completed checklist items stay in the page. Choosing “Remember on this device” also saves them in local storage; “Forget saved plan” removes the saved copy. Shared preference links do not include budget amounts or checklist completion. The free PDF is generated in your browser and includes the choices, checklist and estimates present when you download it. No planner or budget data is sent to a PDF or AI provider.
+- **Edited routes and optional calendar dates.** You can reorder days or select a different neighborhood from our editorial catalog. Choosing “Remember on this device” also saves the edited order. The optional first sightseeing date is processed locally and saved on this browser only if you remember the plan. It selects a month guide and dates for a downloadable calendar file. That file contains the itinerary and dates; it does not contain budget amounts, order references or enquiry text. Downloading it does not access or change a calendar account. Copied plan links omit calendar dates and budget amounts.
 - **Book support helper.** Situation choices, an optional order reference and issue details are used only to prepare a local email draft. We receive them only if you send the draft through your email service. The helper does not read or change store orders and does not store order references or issue text on this site.
 - **Trip and book enquiries.** The enquiry builder prepares an email draft within the page. Its contents are shared with us only if you choose to send it through your own email service. Please do not include passports, card details or other sensitive documents. We use an enquiry to respond and, if you place an order, to handle the agreed document purchase or writing service.
 - **Usage data.** Our hosting provider and analytics tools may automatically record technical information such as your browser type, device, approximate location derived from your IP address, pages visited and referring site. We use this in aggregate to understand which guides are useful.

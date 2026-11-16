@@ -1,6 +1,8 @@
-import { tripChecklist, normalizeWorkspace, calculateBudget, krw, supportAdvice } from './planning-tools.mjs';
-import { createPlanPdf } from './plan-pdf.mjs';
-import { trackConversion as track } from './conversions.mjs';
+import { tripPreferences } from './personalization.mjs?v=20261116-editor1';
+import { createTripCalendar, normalizeStartDate, monthReading } from './trip-calendar.mjs?v=20261116-editor1';
+import { tripChecklist, normalizeWorkspace, calculateBudget, krw, supportAdvice } from './planning-tools.mjs?v=20261116-editor1';
+import { createPlanPdf } from './plan-pdf.mjs?v=20261116-editor1';
+import { trackConversion as track } from './conversions.mjs?v=20261116-editor1';
 
 const workspaceKey='stargateKoreaWorkspaceV1', profileKey='stargateKoreaSavedPlanV1';
 const node=(tag,text,className='')=>{const e=document.createElement(tag);e.textContent=text;e.className=className;return e;};
@@ -12,7 +14,7 @@ export function initPlanningDesk(initialTrip,{makePdf=createPlanPdf}={}) {
   const status=document.getElementById('plan-tool-status'), result=document.getElementById('budget-result'), pdfButton=document.getElementById('download-pdf');
   const announcePdf=message=>{status.textContent=message;document.getElementById('pdf-download-status').textContent=message;};
   const readBudget=()=>Object.fromEntries(new FormData(form));
-  const persist=()=>{if(saved)try{localStorage.setItem(profileKey,JSON.stringify(trip.profile));localStorage.setItem(workspaceKey,JSON.stringify(state));}catch{status.textContent='Device storage is full or unavailable. Your PDF can still keep this plan.';}};
+  const persist=()=>{if(saved)try{localStorage.setItem(profileKey,JSON.stringify(tripPreferences(trip)));localStorage.setItem(workspaceKey,JSON.stringify(state));}catch{status.textContent='Device storage is full or unavailable. Your PDF can still keep this plan.';}};
   function updateEstimate(){
     state.budget=calculateBudget(readBudget(),trip.count).values;
     if(!form.checkValidity()){result.textContent='Use whole numbers within the limits shown. Amounts must be zero or above, with at least one traveler.';return;}
@@ -31,19 +33,25 @@ export function initPlanningDesk(initialTrip,{makePdf=createPlanPdf}={}) {
       note.append(link);label.append(input,title);box.append(label,note);list.append(box);
     }updateProgress();
   }
+  const calendar=document.getElementById('trip-calendar'),startInput=document.getElementById('trip-start-date'),calendarStatus=document.getElementById('calendar-status');
+  function syncCalendar(){startInput.value=state.startDate;const reading=monthReading(state.startDate),link=document.getElementById('month-guide-link');link.hidden=!reading;if(reading){link.textContent=reading.title;link.href=reading.href;link.dataset.conversion='month_guide_open';}}
+  startInput.addEventListener('change',()=>{state.startDate=normalizeStartDate(startInput.value);syncCalendar();persist();calendarStatus.textContent=state.startDate?'Date ready. The calendar will use your current neighborhood order.':'';});
+  calendar.addEventListener('submit',event=>{event.preventDefault();if(!calendar.reportValidity())return;const date=normalizeStartDate(startInput.value);if(!date){calendarStatus.textContent='Choose a valid first sightseeing date.';return;}state.startDate=date;syncCalendar();persist();
+    const blob=new Blob([createTripCalendar(trip,date)],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=node('a','');a.href=url;a.download='seoul-'+trip.count+'-day-'+date+'.ics';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);calendarStatus.textContent='Calendar file prepared. Import it in your calendar app; no calendar account was accessed.';track('calendar_download');});
+  document.querySelectorAll('a[href="#planning-desk"],a[href="#calendar-tools"]').forEach(link=>link.addEventListener('click',()=>{document.getElementById('planning-desk').open=true;}));
   function fillBudget(){for(const [key,value]of Object.entries(state.budget))form.elements[key].value=['people','nights'].includes(key)||value?value:'';updateEstimate();}
-  fillBudget();renderChecklist();
+  fillBudget();renderChecklist();syncCalendar();
   form.addEventListener('input',event=>{if(event.target.name==='nights')nightsEdited=true;updateEstimate();persist();});
   form.addEventListener('submit',event=>{event.preventDefault();if(form.reportValidity()){updateEstimate();persist();track('budget_calculated');}});
   document.getElementById('planning-desk').addEventListener('toggle',event=>{if(event.target.open)track('planning_desk_open');});
   document.addEventListener('seoul-plan-update',event=>{
     const next=event.detail;
     if(!nightsEdited&&state.budget.nights===previousDays-1)state.budget.nights=Math.max(0,next.count-1);
-    trip=next;previousDays=trip.count;state=normalizeWorkspace(state,trip.profile);fillBudget();renderChecklist();persist();
+    trip=next;previousDays=trip.count;state=normalizeWorkspace(state,trip.profile);fillBudget();renderChecklist();syncCalendar();persist();
   });
   document.getElementById('save-plan').addEventListener('click',()=>{try{saved=Boolean(localStorage.getItem(profileKey));persist();if(saved)status.textContent='Plan, checklist and budget saved on this device. “Forget saved plan” removes the saved copy.';}catch{}});
   document.getElementById('forget-plan').addEventListener('click',()=>{saved=false;try{localStorage.removeItem(workspaceKey);}catch{}});
-  document.getElementById('reset-workspace').addEventListener('click',()=>{state=normalizeWorkspace({},trip.profile);nightsEdited=false;fillBudget();renderChecklist();persist();status.textContent='Checklist and budget cleared. Your chosen trip preferences stay as selected.';});
+  document.getElementById('reset-workspace').addEventListener('click',()=>{state=normalizeWorkspace({},trip.profile);nightsEdited=false;fillBudget();renderChecklist();syncCalendar();persist();calendarStatus.textContent='';status.textContent='Checklist, budget and calendar date cleared. Your chosen trip preferences stay as selected.';});
   pdfButton.addEventListener('click',async()=>{
     if(!form.reportValidity())return;
     const exportTrip=trip,exportState=normalizeWorkspace(state,trip.profile);

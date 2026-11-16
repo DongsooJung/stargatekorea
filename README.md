@@ -60,6 +60,16 @@ The daily Pages workflow already runs the factory on GitHub's own servers: it re
 
 The workflow file additionally contains an explicit factory step, a wider commit list and the IndexNow submission, but changing a workflow file needs a GitHub token with the `workflow` scope. Until that scope is granted, the scheduled desktop task commits the generated pages back to the repository, submits them to IndexNow and verifies that the deployment succeeded.
 
+## Edited neighborhood days and calendar files
+
+Each suggested day can be changed to another neighborhood in the editorial catalog or moved earlier/later. Selecting an already used neighborhood swaps the two days, preserving a distinct route for every day. Family/slow limits still apply. A new main-planner submission or “Reset suggested days” rebuilds the suggestions from the current profile.
+
+The visible route is kept in the address bar, saved preferences, PDF, text outline, product/help links and quote draft. The optional `routes` URL value contains allowlisted catalog IDs only. Unknown IDs and duplicates are filtered; no arbitrary address or free text is inserted. Old preference-only links and saved profiles remain valid. The preview flag is retained when the page updates its address, so QA does not enable action tracking accidentally.
+
+The optional first sightseeing date lives in the preparation desk. It selects an existing month guide and creates an RFC 5545 `.ics` file with one tentative, transparent, all-day suggestion per day. Civil dates use UTC date arithmetic to avoid timezone or DST shifts; long UTF-8 lines are folded without splitting a character. Calendar files include itinerary dates, but exclude budget figures, order references and enquiry text. Downloading a file never accesses or changes a calendar account. Shared preference links and PDF reopen links exclude the private start date. Remembering/forgetting or clearing the desk also handles the local date.
+
+Action labels `route_edited`, `calendar_download` and `month_guide_open` are fixed and contain no route values or dates. Browser checks should cover a reload from an existing preference URL after editing, a saved route, a shared route, exported PDF/ICS contents, and both desktop/mobile layouts. Automated tests also cover duplicate swaps, route validation, leap days, year boundaries, line folding and quote-draft continuity.
+
 ## Economy — /economy/
 
 영어 경제·정책 검증 섹션입니다. 글은 `content/economy/*.md`에 넣으면 `/economy/{slug}/`로 발행됩니다.

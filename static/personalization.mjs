@@ -82,13 +82,27 @@ const reading = {
   design: { title: 'Seoul for shops, design & small discoveries', href: '/seoul-design-neighborhood-plan/', reason: 'Build shopping around neighborhoods and a clear spending limit.' },
 };
 
-export function personalizeTrip(input = {}) {
-  const profile = normalizeProfile(input);
-  const count = Number(profile.days);
-  const slow = profile.pace === 'slow' || profile.party === 'family';
+function suggestedRouteIds(profile) {
   let ids = [...themeOrder[profile.interest]];
   if (profile.party === 'family' && profile.interest === 'mixed') ids = ['museum', ...ids.filter(id => id !== 'museum')];
-  const days = ids.slice(0, count).map((id, index) => {
+  return ids.slice(0, Number(profile.days));
+}
+
+export function routeOptions() {
+  return Object.entries(routes).map(([id, route]) => ({ id, title: route.title, area: route.area }));
+}
+
+export function personalizeTrip(input = {}, requestedRoutes = []) {
+  const profile = normalizeProfile(input), count = Number(profile.days);
+  const slow = profile.pace === 'slow' || profile.party === 'family';
+  const suggested = suggestedRouteIds(profile);
+  const candidates = typeof requestedRoutes === 'string' ? requestedRoutes.slice(0,128).split(',') : Array.isArray(requestedRoutes) ? requestedRoutes.slice(0,16) : [];
+  const ids = [];
+  for (const id of [...candidates, ...suggested, ...Object.keys(routes)]) {
+    if (typeof id === 'string' && Object.hasOwn(routes,id) && !ids.includes(id)) ids.push(id);
+    if (ids.length === count) break;
+  }
+  const days = ids.map((id, index) => {
     const base = routes[id];
     const stops = slow ? base.stops.slice(0, 2) : [...base.stops];
     return { ...base, id, number: index + 1, stops, route: stops.join(' → '),
@@ -101,7 +115,7 @@ export function personalizeTrip(input = {}) {
     : reading[profile.interest],
     profile.party === 'family' && profile.interest !== 'mixed' ? reading[profile.interest]
       : { title: 'Choose your Seoul base first', href: '/where-to-stay-first-seoul-trip/', reason: 'Compare the hotel area with the places you will actually visit.' }];
-  return { profile, count, pace: slow ? 'slow' : 'balanced',
+  return { profile, count, pace: slow ? 'slow' : 'balanced', customized: ids.some((id,index)=>id!==suggested[index]),
     label: `${profileOptions.party[profile.party]} · ${profileOptions.interest[profile.interest]}`,
     summary: `${count} ${count === 1 ? 'day' : 'days'} in Seoul · ${profileOptions.interest[profile.interest]}`,
     why: [partyNotes[profile.party], budgetNotes[profile.budget], seasonalNotes[profile.season]],
@@ -110,6 +124,39 @@ export function personalizeTrip(input = {}) {
       ? { kind: 'custom', title: 'Need a brief around your family or particular interests?', reason: 'Your profile may benefit from extra research into access, meal pauses or a specific theme. Start with the free plan; request a quote only for the details you need checked.' }
       : { kind: 'book', title: 'Want the preparation notes in one offline guide?', reason: 'The standard English PDF is a practical next step for an independent 1–5 day Seoul trip. It collects routes, checklists and worksheets; it is a fixed edition rather than a custom itinerary.' },
   };
+}
+
+export function changeTripDay(trip, index, id) {
+  const current = personalizeTrip(trip.profile,trip.days.map(day=>day.id)), ids = current.days.map(day=>day.id);
+  if (!Number.isInteger(index) || index < 0 || index >= ids.length || !Object.hasOwn(routes,id)) return current;
+  const other = ids.indexOf(id);
+  if (other !== -1) [ids[index],ids[other]] = [ids[other],ids[index]];
+  else ids[index] = id;
+  return personalizeTrip(current.profile,ids);
+}
+
+export function moveTripDay(trip, index, direction) {
+  const current = personalizeTrip(trip.profile,trip.days.map(day=>day.id)), ids = current.days.map(day=>day.id), next=index+direction;
+  if (!Number.isInteger(index) || ![-1,1].includes(direction) || index < 0 || index >= ids.length || next < 0 || next >= ids.length) return current;
+  [ids[index],ids[next]]=[ids[next],ids[index]];
+  return personalizeTrip(current.profile,ids);
+}
+
+export function tripFromQuery(query) {
+  const params = new URLSearchParams(query);
+  return personalizeTrip(profileFromQuery(query),params.get('routes'));
+}
+
+export function tripQuery(trip) {
+  const current=personalizeTrip(trip?.profile,Array.isArray(trip?.days)?trip.days.map(day=>day.id):[]);
+  const params=new URLSearchParams(profileQuery(current.profile));
+  if(current.customized)params.set('routes',current.days.map(day=>day.id).join(','));
+  return params.toString();
+}
+
+export function tripPreferences(trip) {
+  const current=personalizeTrip(trip.profile,trip.days.map(day=>day.id));
+  return current.customized?{...current.profile,routes:current.days.map(day=>day.id)}:{...current.profile};
 }
 
 export function planAsText(trip) {
@@ -121,8 +168,8 @@ export function planAsText(trip) {
     ...trip.days.flatMap(day => [`## Day ${day.number}: ${day.title}`, day.area, day.route, day.detail, day.alternative, `Map starting point: ${day.map}`, '']),
     '## Read next', ...trip.resources.map(r => `${r.title}: https://www.stargatekorea.net${r.href}`), '',
     'Free editorial outline. Check opening days, current fees, access, weather and the journey from your hotel before booking.',
-    'Save or share your settings: https://www.stargatekorea.net/?' + profileQuery(trip.profile) + '#plan',
+    'Save or share your settings: https://www.stargatekorea.net/?' + tripQuery(trip) + '#plan',
     'Optional PDF guide: https://www.stargatekorea.net/books/',
-    'Custom digital brief enquiry: https://www.stargatekorea.net/custom-guide/?' + profileQuery(trip.profile),
+    'Custom digital brief enquiry: https://www.stargatekorea.net/custom-guide/?' + tripQuery(trip),
   ].join('\n');
 }

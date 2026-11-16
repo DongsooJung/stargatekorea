@@ -1,5 +1,5 @@
-import { profileOptions, profileQuery } from './personalization.mjs';
-import { tripChecklist, normalizeWorkspace, calculateBudget, krw } from './planning-tools.mjs';
+import { profileOptions, tripQuery } from './personalization.mjs?v=20261116-editor1';
+import { tripChecklist, normalizeWorkspace, calculateBudget, krw } from './planning-tools.mjs?v=20261116-editor1';
 
 const ascii = value => String(value).normalize('NFKD').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[–—·]/g,' - ').replace(/×/g,' x ').replace(/→|↗/g,' > ').replace(/₩/g,'KRW ').replace(/[^\x20-\x7E\n]/g,'');
 
@@ -49,7 +49,7 @@ export async function createPlanPdf(trip, input = {}, library, photoBytes) {
   if(budget.hasValues){for(const row of budget.rows)at=text(desk,row.label+': '+krw(row.value),at-3,{size:10});at=text(desk,'Group total: '+krw(budget.total)+' / Per person: '+krw(budget.perPerson),at-7,{font:bold,size:12});}
   else at=text(desk,'No estimates entered. Add your food, transport, accommodation, activity and other allowances in the online planning desk, then download again.',at-5,{size:10.5,color:muted});
   at=text(desk,'The estimate excludes anything you have not included. The optional paid PDF or custom brief is separate. Ticking a box does not confirm a reservation or access.',at-7,{size:9.5,color:muted});
-  at=link(desk,'Reopen these trip preferences', 'https://www.stargatekorea.net/?'+profileQuery(trip.profile)+'#plan',at-8);
+  at=link(desk,'Reopen these trip preferences', 'https://www.stargatekorea.net/?'+tripQuery(trip)+'#plan',at-8);
   at=link(desk,'Compare the free outline, standard PDF and custom brief','https://www.stargatekorea.net/books/#guide-options',at);
   link(desk,'Buying or download help','https://www.stargatekorea.net/book-help/',at);
   form.updateFieldAppearances(regular);
