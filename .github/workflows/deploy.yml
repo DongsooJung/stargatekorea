@@ -30,14 +30,16 @@ jobs:
       - run: npm ci
       - name: Refresh official Seoul event listing
         run: npm run refresh:events
+      - name: Generate dated pages from the official listing
+        run: npm run factory
       - run: npm test
-      - name: Save checked listing for the next run
+      - name: Save checked listing and generated pages for the next run
         run: |
-          git add content/data/seoul-events.json
+          git add content/data/seoul-events.json 'content/posts/seoul-week-of-*.md' 'content/pages/seoul-in-*.md' content/pages/seoul-weekly.md
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'Refresh official Seoul event listing'
+            git commit -m 'Refresh official Seoul listing and dated pages'
             git push origin HEAD:main
           fi
       - name: Write update status
@@ -55,3 +57,6 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Submit updated URLs to IndexNow
+        uses: actions/checkout@v4
+      - run: node scripts/submit-indexnow.mjs
