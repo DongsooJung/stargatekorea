@@ -121,6 +121,7 @@ export async function measure() {
     windowDays: WINDOW_DAYS,
     source: 'cloudflare',
     rule: 'Only paths that belong to this site are used. A guide is merged into another guide only when it was read at least ' + MERGE_MIN_VIEWS + ' times in the window and never acted on.',
+    notes: 'Views and clicks under /probe-* paths and under the labels probe_* on 2026-11-21 are diagnostic probes, not visitor activity. This site\'s store was empty before that date, so those records are the baseline.',
     guides,
     funnel,
     totals: {

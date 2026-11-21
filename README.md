@@ -95,6 +95,8 @@ Data note: every analytics read must carry the header `Origin: https://www.starg
 
 The merge rule is deliberate and conservative. **The twelve month guides are not merged.** Each one is a separate search-intent asset, so a guide is only a merge candidate when it was read at least 10 times in 30 days, was never clicked, and overlaps the intent of the page it would join. A guide with no views is missing data, not a defect, and must not push the loop into deleting an asset. Everything else is strengthened instead.
 
+Baseline note: this site's analytics store was empty before November 21, 2026. The records under `/probe-*` paths and the `probe_*` labels are diagnostic probes made while the measurement was being repaired, not visitor activity, and the file says so in its `notes` field.
+
 What was strengthened instead, on 2026-11-21: every month guide now ends with a **month index** that links all twelve guides, marks the month being read and carries the `month_guide_open` label. The twelve pages used to be twelve islands that never pointed at each other; they are now one cluster that can pass a reader from January to December and then to the offer. `tests/analytics.test.mjs` holds the rule in place: all twelve guides must link to all twelve months, and pages that are not month guides must not carry the block.
 
 ## Economy — /economy/
