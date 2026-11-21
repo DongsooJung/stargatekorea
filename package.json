@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/factory.mjs && node build.mjs",
-    "pretest": "node scripts/factory.mjs && node scripts/self-improve.mjs",
+    "pretest": "node scripts/factory.mjs",
+    "posttest": "node scripts/self-improve.mjs",
     "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "refresh:events": "node scripts/refresh-events.mjs",
     "factory": "node scripts/factory.mjs",

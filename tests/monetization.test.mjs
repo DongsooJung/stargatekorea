@@ -51,7 +51,8 @@ test('a generated page that loses its offer is repaired automatically', () => {
 });
 
 test('the improvement log records the rule, the data limitation and the streak', async () => {
-  const result = await runSelfImprovement({ today: '2026-11-21' });
+  const today = new Date().toISOString().slice(0, 10);
+  const result = await runSelfImprovement({ today });
   assert.ok(result.iterations >= 1);
   const log = JSON.parse(fs.readFileSync(path.join(root, 'content', 'data', 'self-improvement.json'), 'utf8'));
   assert.match(log.rule, /next step/);

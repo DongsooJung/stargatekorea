@@ -32,8 +32,6 @@ jobs:
         run: npm run refresh:events
       - name: Generate dated pages from the official listing
         run: npm run factory
-      - name: Audit and repair the conversion path
-        run: npm run self-improve
       - run: npm test
       - name: Save checked listing and generated pages for the next run
         run: |

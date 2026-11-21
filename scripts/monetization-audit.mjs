@@ -64,7 +64,14 @@ export function auditHtml(html, rel) {
 }
 
 export function auditDist(dist = DIST) {
-  if (!fs.existsSync(dist)) return { pages: [], generatedAt: null };
+  const empty = {
+    generatedAt: new Date().toISOString(),
+    pages: [],
+    totals: { all: 0, inScope: 0, withOffer: 0, missingOffer: 0, unmeasured: 0 },
+    missingOffer: [],
+    unmeasured: [],
+  };
+  if (!fs.existsSync(dist)) return empty;
   const pages = [];
   const walk = dir => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
