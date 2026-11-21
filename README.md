@@ -70,6 +70,18 @@ The optional first sightseeing date lives in the preparation desk. It selects an
 
 Action labels `route_edited`, `calendar_download` and `month_guide_open` are fixed and contain no route values or dates. Browser checks should cover a reload from an existing preference URL after editing, a saved route, a shared route, exported PDF/ICS contents, and both desktop/mobile layouts. Automated tests also cover duplicate swaps, route validation, leap days, year boundaries, line folding and quote-draft continuity.
 
+### The self-improvement loop
+
+`npm run self-improve` is the second half of the factory. It audits every published page, repairs what it can, and records what it found so the next run starts from the last state instead of from zero.
+
+- `scripts/monetization-audit.mjs` — reads `dist/` and checks, for every page a visitor can land on, that the page offers a next step **inside the content** and that the offer carries a conversion label. Navigation and footer links do not count: they appear on every page and prove nothing. Legal pages, the custom guide page itself and the separate Campus Trips product are out of scope, and the reasons are written down in the script.
+- `scripts/self-improve.mjs` — runs the audit, re-inserts the offer block into a generated page that lost it, carries unresolved findings forward with their age, closes the ones that are fixed, and writes `content/data/self-improvement.json`. That file holds page paths and counts only, and the build never publishes it as a page.
+- `tests/monetization.test.mjs` — turns the audit into a gate. A page that reaches a visitor without a next step, or an offer that cannot be measured, fails the build.
+
+The Pages workflow runs the loop on every deploy: refresh the listing → generate the dated pages → audit and repair → test → commit → deploy → submit to IndexNow. The log accumulates in the repository, so a regression that is fixed on one day is recorded as closed on the next.
+
+Data note: visit counts are separated per site, but click counts on generic paths such as `/` are shared with the other Stargate sites. Only site-specific paths are used for decisions, and the limitation is recorded next to the log.
+
 ## Economy — /economy/
 
 영어 경제·정책 검증 섹션입니다. 글은 `content/economy/*.md`에 넣으면 `/economy/{slug}/`로 발행됩니다.

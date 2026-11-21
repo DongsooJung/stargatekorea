@@ -35,6 +35,14 @@ The daily job also generates the dated pages that make the site searchable by we
 - After the deploy, `npm run submit:indexnow` sends the live sitemap to IndexNow. The key in `static/indexnow-key.txt` is public because IndexNow verifies it from the site. A failed submission is a warning, not a failed deploy.
 - Naver and Google do not accept an automatic sitemap ping. Their webmaster tools need the owner’s account, so the sitemap in `robots.txt` and the weekly roundups are the supported path until then.
 
+## Self-improvement pass
+
+- `npm run self-improve` runs after `npm run factory` and before the build. It audits every published page for a next step inside the content, repairs a generated page that lost its offer block, and writes `content/data/self-improvement.json`.
+- The log carries unresolved findings forward with their age and closes the ones that are fixed. It is committed with the daily run, so the improvement history lives in the repository and the build never publishes it as a page.
+- `npm run audit:monetization` prints the same audit without writing anything. Use it to check a page set before a release.
+- `tests/monetization.test.mjs` fails the build when a page that a visitor can reach has no in-content offer, or when an offer carries no conversion label. Navigation and footer links are ignored on purpose.
+- Click counts on generic paths are shared with the other Stargate sites, so decisions use site-specific paths and the visit summary, which are separated per site.
+
 ## Verification and recovery
 
 Run `npm test` before publication. Tests cover source parsing, failed fetches, invalid dates/URLs, Korea-midnight and seven-day boundaries, stale data, approved notice windows, browser expiry, existing itineraries and internal links. For a source-layout change, inspect the official page and update the parser and a representative test fixture; do not label old data newly checked.
