@@ -177,9 +177,37 @@
       "guidesWithViews": 1,
       "guidesWithClicks": 1,
       "streak": 15
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "streak": 16
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "streak": 17
     }
   ],
   "today": "2026-11-21",
   "repaired": [],
-  "guideMetrics": "2026-11-21T11:50:35.438Z"
+  "guideMetrics": "2026-11-21T12:28:05.055Z"
 }
