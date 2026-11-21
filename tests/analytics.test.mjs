@@ -8,6 +8,7 @@ import { conversionPayload, pageViewPayload, linkTarget } from '../static/conver
 import { monthIndexBlock } from '../travel.mjs';
 import { verdict, mergeCandidate, actionFor, monthPaths, MERGE_MIN_VIEWS } from '../scripts/measure-guides.mjs';
 import { guideFindings } from '../scripts/self-improve.mjs';
+import { qualifies, selectGuides, markerFor, isStrengthened, MIN_VIEWS } from '../scripts/strengthen-guide.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 before(() => build());
@@ -103,4 +104,34 @@ test('only a guide that is read and never acted on becomes a finding', () => {
   assert.equal(findings[0].code, 'guide_read_not_acting');
   assert.equal(findings[0].target, '/seoul-in-february/');
   assert.deepEqual(guideFindings(null), []);
+});
+
+test('a guide qualifies only after several reads and no click at all', () => {
+  assert.equal(qualifies({ views: 2, clicks: 0 }), false, 'two reads are not evidence');
+  assert.equal(qualifies({ views: 3, clicks: 0 }), true);
+  assert.equal(qualifies({ views: 9, clicks: 1 }), false, 'a guide that converts is left alone');
+  assert.equal(qualifies({ views: 3, clicks: 0 }, 5), false, 'the threshold can be raised');
+  assert.equal(qualifies(null), false);
+});
+
+test('a guide that already carries the marker is never rewritten twice', async () => {
+  const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+  const metrics = {
+    guides: [
+      { path: '/seoul-in-january/', views: 5, clicks: 0 },
+      { path: '/seoul-in-february/', views: 4, clicks: 0 },
+    ],
+  };
+  const file = path.join(root, 'content', 'pages', 'seoul-in-january.md');
+  const original = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, `${original}\n${markerFor('2026-11-25')}\n`, 'utf8');
+  try {
+    const { candidates, done } = await selectGuides({ root, metrics });
+    assert.equal(done.length, 1, 'the marked guide is skipped');
+    assert.equal(done[0].path, '/seoul-in-january/');
+    assert.equal(candidates.length, 1, 'the unmarked guide still needs work');
+    assert.equal(candidates[0].path, '/seoul-in-february/');
+  } finally {
+    fs.writeFileSync(file, original, 'utf8');
+  }
 });

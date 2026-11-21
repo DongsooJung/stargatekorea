@@ -97,6 +97,14 @@ The merge rule is deliberate and conservative. **The twelve month guides are not
 
 Baseline note: this site's analytics store was empty before November 21, 2026. The records under `/probe-*` paths and the `probe_*` labels are diagnostic probes made while the measurement was being repaired, not visitor activity, and the file says so in its `notes` field.
 
+### Strengthening a guide that is read but never acted on
+
+`npm run strengthen:guides` decides which guides need a stronger offer. A guide qualifies when it was read at least **3 times** in the 30-day window and was never clicked. One or two reads are missing data, not a defect, and never start a rewrite. The script only chooses; the rewrite itself is editorial work on the guide's own markdown.
+
+A guide that has been strengthened carries the marker `<!-- guide-offer-strengthened: YYYY-MM-DD -->` in its markdown, and the script then leaves it alone. That keeps one page from being rewritten twice and keeps the decision visible in the content it changed.
+
+The rewrite stays inside the guide's own file: `content/pages/seoul-in-{month}.md`. The shared offer block (`pageCta` in `travel.mjs`) is used by every guide and is not edited for one page. The factory markers `<!-- factory:month-events -->` and `<!-- /factory:month-events -->` must survive untouched, and the offer links to `/#plan`, `/books/` and `/custom-guide/` must stay, or the self-improvement pass puts them back.
+
 What was strengthened instead, on 2026-11-21: every month guide now ends with a **month index** that links all twelve guides, marks the month being read and carries the `month_guide_open` label. The twelve pages used to be twelve islands that never pointed at each other; they are now one cluster that can pass a reader from January to December and then to the offer. `tests/analytics.test.mjs` holds the rule in place: all twelve guides must link to all twelve months, and pages that are not month guides must not carry the block.
 
 ## Economy — /economy/
