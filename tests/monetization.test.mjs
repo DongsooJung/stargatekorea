@@ -56,7 +56,7 @@ test('the improvement log records the rule, the data limitation and the streak',
   assert.ok(result.iterations >= 1);
   const log = JSON.parse(fs.readFileSync(path.join(root, 'content', 'data', 'self-improvement.json'), 'utf8'));
   assert.match(log.rule, /next step/);
-  assert.match(log.dataQuality, /separated per site/);
+  assert.match(log.dataQuality, /one store per site/);
   const last = log.iterations.at(-1);
   assert.equal(last.pagesMissingOffer, 0);
   assert.ok(last.streak >= 1);

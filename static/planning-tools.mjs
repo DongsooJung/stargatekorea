@@ -1,5 +1,5 @@
-import { normalizeStartDate } from './trip-calendar.mjs?v=20261116-editor1';
-import { normalizeProfile } from './personalization.mjs?v=20261116-editor1';
+import { normalizeStartDate } from './trip-calendar.mjs?v=20261122-analytics1';
+import { normalizeProfile } from './personalization.mjs?v=20261122-analytics1';
 
 export function tripChecklist(input) {
   const p = normalizeProfile(input);

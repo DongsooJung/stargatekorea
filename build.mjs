@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import site from './site.config.mjs';
-import { homePage, customGuidePage, essentialsSection, postCta, pageCta, landingCta, crossCta } from './travel.mjs';
+import { homePage, customGuidePage, essentialsSection, postCta, pageCta, landingCta, crossCta, monthIndexBlock } from './travel.mjs';
 import { booksPage, book } from './books.mjs';
 import { renderUpdates } from './updates.mjs';
 import { koreaDay } from './static/update-state.mjs';
@@ -99,8 +99,8 @@ ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/travel.css?v=20261115-factory1">
-<link rel="stylesheet" href="/personalization.css?v=20261116-editor1">
+<link rel="stylesheet" href="/travel.css?v=20261122-analytics1">
+<link rel="stylesheet" href="/personalization.css?v=20261122-analytics1">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 ${ads}${ga}
 </head>
@@ -128,7 +128,7 @@ ${body}
   <div class="wrap legal muted"><span>© ${new Date().getFullYear()} ${esc(site.publisher)} · Seoul, Republic of Korea</span><span id="visitor-summary" class="visits" hidden><span aria-hidden="true">👥</span> Visitors · Today <b id="visitor-today-count" data-visitor-today>–</b> · Total <b id="visitor-total-count" data-visitor-total>–</b></span></div>
 </footer>
 <script src="/visitor-counter.js?v=20261114b" defer></script>
-<script type="module" src="/travel.js?v=20261116-editor1"></script>
+<script type="module" src="/travel.js?v=20261122-analytics1"></script>
 </body>
 </html>`;
 }
@@ -399,7 +399,10 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
   for (const pg of pages) {
     // Travel guides carry the offer so a reader who lands on one can act without hunting.
     const wantsCta = pg.cta === true || /^seoul-/.test(pg.slug);
-    const body = `<article class="wrap narrow post"><h1>${esc(pg.title)}</h1><div class="prose">${pg.html}</div>${wantsCta ? pageCta : ''}</article>`;
+    // A month guide also links to the other eleven so the twelve guides reinforce each other.
+    const monthKey = /^seoul-in-([a-z]+)$/.exec(pg.slug)?.[1] ?? null;
+    const monthIndex = monthKey ? monthIndexBlock(monthKey, site.months) : '';
+    const body = `<article class="wrap narrow post"><h1>${esc(pg.title)}</h1><div class="prose">${pg.html}</div>${wantsCta ? pageCta : ''}${monthIndex}</article>`;
     write(`${pg.slug}/index.html`, layout({ title: pg.title, description: pg.excerpt, pathname: `/${pg.slug}/`, body }));
   }
 

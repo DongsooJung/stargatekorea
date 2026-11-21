@@ -8,7 +8,7 @@ The home page shows up to six official Visit Seoul event listings overlapping th
 - The adapter reads static page text without executing remote scripts. A missing or partial listing, invalid dates, unsafe URLs or a changed layout preserve the last good snapshot in `content/data/seoul-events.json`.
 - A genuine successful listing fetch updates `lastSuccessAt`. An unsuccessful attempt updates only `lastAttemptAt` and status. Building the site alone never advances either timestamp.
 - More than 48 hours after the last successful fetch, event suggestions are hidden and visitors get a link to the official calendar. Expired events are always removed from the seven-day suggestions. Check the organizer directly for cancellations, hours and admission.
-- The existing Pages workflow runs daily at **08:17 Asia/Seoul** (`17 23 * * *` UTC), on pushes to main, and manually from Actions. It refreshes, runs tests, saves the sanitized snapshot to main, and deploys in one workflow. Bot snapshot pushes do not need to trigger a second workflow.
+- The existing Pages workflow runs daily at **08:17 Asia/Seoul** (`17 23 * * *` UTC), on pushes to main, and manually from Actions. It refreshes the listing, measures the evergreen guides, runs tests, saves the sanitized snapshot to main, and deploys in one workflow. Bot snapshot pushes do not need to trigger a second workflow.
 - The build job alone has contents-write permission. If another edit advances main before the snapshot push, the ordinary non-forced push fails and deployment stops rather than overwriting another change. Rerun from the latest main.
 - The workflow summary reports source status and the last success. A source failure is a warning so the rest of the site can still deploy; it is not reported as a fresh data check. Build/test/push/deployment failures fail the workflow.
 - GitHub may delay or miss scheduled runs. Keep an eye on the last-success time and Actions summary. Browser code independently rechecks Korea-time expiry on load, every minute, and on returning to a tab.
@@ -41,7 +41,9 @@ The daily job also generates the dated pages that make the site searchable by we
 - The log carries unresolved findings forward with their age and closes the ones that are fixed. It is committed with the daily run, so the improvement history lives in the repository and the build never publishes it as a page.
 - `npm run audit:monetization` prints the same audit without writing anything. Use it to check a page set before a release.
 - `tests/monetization.test.mjs` fails the build when a page that a visitor can reach has no in-content offer, or when an offer carries no conversion label. Navigation and footer links are ignored on purpose.
-- Click counts on generic paths are shared with the other Stargate sites, so decisions use site-specific paths and the visit summary, which are separated per site.
+- `npm run measure:guides` reads the live analytics service and writes `content/data/guide-metrics.json`: views, clicks, action labels and a verdict for every month guide, weekly roundup and funnel page. It runs before the tests in the Pages workflow, so the log always carries the current numbers.
+- **Every analytics read must send the header `Origin: https://www.stargatekorea.net`.** The service keeps one store per site and picks the store from that header. A request without it answers with another Stargate site's data, which is why click counts on generic paths look mixed and why an earlier reading of this site's click counts came back empty.
+- Only site-specific paths are used for decisions. A guide with no views is missing data, not a defect; a guide that is read and never acted on becomes a finding and is strengthened. Guides are merged only with evidence: at least 10 views in 30 days, no clicks, and an overlapping intent.
 
 ## Verification and recovery
 

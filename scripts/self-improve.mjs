@@ -14,6 +14,7 @@ import { auditDist } from './monetization-audit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOG_FILE = path.join(ROOT, 'content', 'data', 'self-improvement.json');
+const GUIDE_METRICS = path.join(ROOT, 'content', 'data', 'guide-metrics.json');
 const GENERATED = [
   path.join(ROOT, 'content', 'posts'),
   path.join(ROOT, 'content', 'pages'),
@@ -55,8 +56,25 @@ export async function repairGeneratedPages(log = []) {
   return repaired;
 }
 
-export function mergeFindings(previous = [], current = []) {
-  const before = new Map(previous.map(item => [`${item.code}:${item.target}`, item]));
+// The guide measurement lives beside the log. It is written by scripts/measure-guides.mjs.
+export async function loadGuideMetrics() {
+  try {
+    return JSON.parse(await fs.readFile(GUIDE_METRICS, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+// Only a guide that is read and never acted on is a finding. A guide with no reads
+// yet is missing data, not a defect, so it must not push the loop into busy work.
+export function guideFindings(metrics) {
+  if (!metrics?.guides?.length) return [];
+  return metrics.guides
+    .filter((guide) => guide.verdict === 'read-not-acting')
+    .map((guide) => ({ code: 'guide_read_not_acting', target: guide.path }));
+}
+
+export function mergeFindings(previous = [], current = []) {  const before = new Map(previous.map(item => [`${item.code}:${item.target}`, item]));
   const now = new Map(current.map(item => [`${item.code}:${item.target}`, item]));
   const open = [];
   const closed = [];
@@ -79,9 +97,11 @@ export async function runSelfImprovement({ today = new Date().toISOString().slic
   }
 
   const report = auditDist();
+  const metrics = await loadGuideMetrics();
   const findings = [
     ...report.missingOffer.map(url => ({ code: 'missing_offer', target: url })),
     ...report.unmeasured.map(url => ({ code: 'unmeasured_offer', target: url })),
+    ...guideFindings(metrics),
   ];
   const { open, closed } = mergeFindings(previous.openFindings ?? [], findings);
 
@@ -92,17 +112,18 @@ export async function runSelfImprovement({ today = new Date().toISOString().slic
     const remaining = [
       ...after.missingOffer.map(url => ({ code: 'missing_offer', target: url })),
       ...after.unmeasured.map(url => ({ code: 'unmeasured_offer', target: url })),
+      ...guideFindings(metrics),
     ];
     const merged = mergeFindings(open, remaining);
-    await writeLog({ ...previous, today, repaired, openFindings: merged.open, iterations: appendIteration(previous, today, after, merged, repaired) });
+    await writeLog({ ...previous, today, repaired, guideMetrics: metrics?.updatedAt ?? null, openFindings: merged.open, iterations: appendIteration(previous, today, after, merged, repaired, metrics) });
     return { report: after, open: merged.open, closed: merged.closed, repaired, iterations: (previous.iterations ?? []).length + 1 };
   }
 
-  await writeLog({ ...previous, today, repaired, openFindings: open, iterations: appendIteration(previous, today, report, { open, closed }, repaired) });
+  await writeLog({ ...previous, today, repaired, guideMetrics: metrics?.updatedAt ?? null, openFindings: open, iterations: appendIteration(previous, today, report, { open, closed }, repaired, metrics) });
   return { report, open, closed, repaired, iterations: (previous.iterations ?? []).length + 1 };
 }
 
-function appendIteration(previous, today, report, merged, repaired) {
+function appendIteration(previous, today, report, merged, repaired, metrics) {
   const iterations = previous.iterations ?? [];
   const last = iterations[iterations.length - 1];
   const iteration = {
@@ -113,6 +134,10 @@ function appendIteration(previous, today, report, merged, repaired) {
     pagesUnmeasured: report.totals?.unmeasured ?? 0,
     openFindings: merged.open.length,
     repaired: repaired.length,
+    guideViews: metrics?.totals?.guideViews ?? 0,
+    guideClicks: metrics?.totals?.guideClicks ?? 0,
+    guidesWithViews: metrics?.totals?.guidesWithViews ?? 0,
+    guidesWithClicks: metrics?.totals?.guidesWithClicks ?? 0,
   };
   const streak = last && last.pagesMissingOffer === 0 && iteration.pagesMissingOffer === 0 ? (last.streak ?? 1) + 1 : 1;
   iteration.streak = streak;
@@ -121,11 +146,14 @@ function appendIteration(previous, today, report, merged, repaired) {
 
 async function writeLog(payload) {
   await fs.mkdir(path.dirname(LOG_FILE), { recursive: true });
+  // The rule and the data limitation are owned by this file, so an older copy in the
+  // log must not win over the current wording.
+  const { rule, dataQuality, ...rest } = payload;
   const ordered = {
     updatedAt: new Date().toISOString(),
     rule: 'Every page a visitor can land on must offer a next step inside the content, and that step must be measurable.',
-    dataQuality: 'Visit counts are separated per site. Click counts on generic paths such as / are shared with the other Stargate sites, so only site-specific paths are used for decisions.',
-    ...payload,
+    dataQuality: 'Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site\'s data. Page views are recorded per path and clicks per path, action and destination.',
+    ...rest,
   };
   await fs.writeFile(LOG_FILE, `${JSON.stringify(ordered, null, 2)}\n`, 'utf8');
 }

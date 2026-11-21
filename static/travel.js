@@ -1,7 +1,8 @@
-import { initPlanningDesk, initBookSupport } from './journey.js?v=20261116-editor1';
-import { personalizeTrip, profileOptions, defaults, normalizeProfile, tripQuery, tripFromQuery, tripPreferences, routeOptions, changeTripDay, moveTripDay, planAsText } from './personalization.mjs?v=20261116-editor1';
-import { trackConversion as track } from './conversions.mjs?v=20261116-editor1';
+import { initPlanningDesk, initBookSupport } from './journey.js?v=20261122-analytics1';
+import { personalizeTrip, profileOptions, defaults, normalizeProfile, tripQuery, tripFromQuery, tripPreferences, routeOptions, changeTripDay, moveTripDay, planAsText } from './personalization.mjs?v=20261122-analytics1';
+import { trackConversion as track, trackPageView } from './conversions.mjs?v=20261122-analytics1';
 
+trackPageView();
 const planner=document.getElementById('trip-planner'),savedKey='stargateKoreaSavedPlanV1';
 const element=(tag,text,className='')=>{const item=document.createElement(tag);item.textContent=text;item.className=className;return item;};
 const choicesFrom=form=>normalizeProfile(Object.fromEntries(Object.keys(defaults).map(key=>[key,form.elements[key]?.value])));
@@ -114,7 +115,7 @@ if(bookFit&&Object.keys(defaults).some(key=>new URLSearchParams(location.search)
     : 'This standard 1–5 day English guide is a useful match for your starting plan. Preview the sample, then decide whether offline checklists and worksheets would help your trip.';
   bookFit.querySelector('a').href='/custom-guide/?'+tripQuery(trip);
 }
-document.addEventListener('click',event=>{const link=event.target.closest?.('[data-conversion]');if(link)track(link.dataset.conversion);});
+document.addEventListener('click',event=>{const link=event.target.closest?.('[data-conversion]');if(link)track(link.dataset.conversion,link);});
 
 initBookSupport();
 

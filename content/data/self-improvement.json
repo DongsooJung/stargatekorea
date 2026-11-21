@@ -1,7 +1,7 @@
 {
   "updatedAt": "2026-11-21T10:53:41.769Z",
   "rule": "Every page a visitor can land on must offer a next step inside the content, and that step must be measurable.",
-  "dataQuality": "Visit counts are separated per site. Click counts on generic paths such as / are shared with the other Stargate sites, so only site-specific paths are used for decisions.",
+  "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. Page views are recorded per path and clicks per path, action and destination.",
   "openFindings": [],
   "iterations": [
     {
@@ -93,8 +93,37 @@
       "openFindings": 0,
       "repaired": 0,
       "streak": 9
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 1,
+      "guideClicks": 3,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "streak": 10
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 1,
+      "guideClicks": 3,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "streak": 11
     }
   ],
   "today": "2026-11-21",
-  "repaired": []
+  "repaired": [],
+  "guideMetrics": "2026-11-21T11:46:02.549Z"
 }

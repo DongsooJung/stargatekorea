@@ -1,8 +1,8 @@
-import { tripPreferences } from './personalization.mjs?v=20261116-editor1';
-import { createTripCalendar, normalizeStartDate, monthReading } from './trip-calendar.mjs?v=20261116-editor1';
-import { tripChecklist, normalizeWorkspace, calculateBudget, krw, supportAdvice } from './planning-tools.mjs?v=20261116-editor1';
-import { createPlanPdf } from './plan-pdf.mjs?v=20261116-editor1';
-import { trackConversion as track } from './conversions.mjs?v=20261116-editor1';
+import { tripPreferences } from './personalization.mjs?v=20261122-analytics1';
+import { createTripCalendar, normalizeStartDate, monthReading } from './trip-calendar.mjs?v=20261122-analytics1';
+import { tripChecklist, normalizeWorkspace, calculateBudget, krw, supportAdvice } from './planning-tools.mjs?v=20261122-analytics1';
+import { createPlanPdf } from './plan-pdf.mjs?v=20261122-analytics1';
+import { trackConversion as track } from './conversions.mjs?v=20261122-analytics1';
 
 const workspaceKey='stargateKoreaWorkspaceV1', profileKey='stargateKoreaSavedPlanV1';
 const node=(tag,text,className='')=>{const e=document.createElement(tag);e.textContent=text;e.className=className;return e;};

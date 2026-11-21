@@ -10,6 +10,7 @@
     "refresh:events": "node scripts/refresh-events.mjs",
     "factory": "node scripts/factory.mjs",
     "audit:monetization": "node scripts/monetization-audit.mjs",
+    "measure:guides": "node scripts/measure-guides.mjs",
     "self-improve": "node scripts/self-improve.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "export:wordpress": "node export-wordpress.mjs"

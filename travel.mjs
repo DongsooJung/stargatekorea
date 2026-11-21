@@ -126,3 +126,10 @@ export const landingCta = `<aside class="post-cta landing-cta"><p class="eyebrow
 // Study and living guides reach a different reader: the travel guide still helps
 // with the trip itself, and the education site is where study paperwork is answered.
 export const crossCta = `<aside class="post-cta cross-cta"><p class="eyebrow">Also useful for your time in Korea</p><h2>Living here, and travelling in it?</h2><p>The practical part — arrival, transport, neighbourhoods and planning checklists — is collected in one 24-page English PDF. For study paperwork, our education site covers applications, visas and arrival.</p><div class="cta"><a class="btn" href="/books/" data-conversion="book_view">See the PDF guide →</a><a class="text-link" href="/#plan" data-conversion="page_plan_open">Get a free Seoul plan →</a><a class="text-link" href="https://www.stargateedu.co.kr/" rel="noopener">Study help in Korea →</a></div></aside>`;
+
+// Every month guide points at the other eleven, so the twelve guides work as one
+// cluster instead of twelve pages that never meet.
+export function monthIndexBlock(currentKey, months) {
+  if (!months?.length) return '';
+  return `<section class="month-index"><div class="section-head"><p class="eyebrow">Compare the months</p><h2>Seoul in each month.</h2></div><p class="lead">Each month has its own guide, and the official listings inside it are refreshed on a schedule. Pick the month you travel, or read a neighbouring one to compare.</p><div class="month-grid">${months.map((month) => `<a class="month-link${month.key === currentKey ? ' is-current' : ''}" href="/seoul-in-${month.key}/"${month.key === currentKey ? ' aria-current="page"' : ''} data-conversion="month_guide_open">${esc(month.label)}</a>`).join('')}</div><p class="small muted">Also: <a class="text-link" href="/seoul-weekly/" data-conversion="weekly_archive_open">browse every weekly Seoul roundup →</a></p></section>`;
+}

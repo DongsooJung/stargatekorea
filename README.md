@@ -19,7 +19,9 @@ The standard PDF and custom brief are distinct offers. The existing store produc
 
 `static/conversions.mjs` reuses the existing Stargate analytics service at `https://stargate.stargate8225.workers.dev/api/analytics/`. It records allowlisted action labels without preferences, query strings, draft text or payment data. Actions are deduplicated by label within a page load; they are action counts, not unique customers. Only `www.stargatekorea.net` sends these events. Do Not Track and `?preview=1` suppress this action tracking (the existing visitor counter is independent).
 
-For owner review, POST `{ "p_page_path": "/" }` to `get_site_button_click_counts` using the site origin. Review `route_generated`, `plan_download`, `matched_book_open` and `matched_custom_open`; review `/books/` for `book_sample_download` and `book_checkout_open`, and `/custom-guide/` for `enquiry_prepared` and `enquiry_email_open`. Compare checkout opens against completed paid orders in the store separately. A click or prepared email is never a purchase or received enquiry. No new affiliate commission is enabled.
+Two measurements were added so the funnel can be read page by page. A **page view** is recorded once per page load with the page path and no other detail, and a **click** now also carries the destination it led to (`target_url`), so a click on "See the PDF guide" and a click on "Ask for a custom brief" are separable. The page view reuses the same visitor id as the visitor counter, and the counter counts each browser once per Korea day, so the visitor total keeps its meaning while the new view counts land in the page-by-page store.
+
+For owner review, POST `{ "p_page_path": "/" }` to `get_site_button_click_counts` **with the header `Origin: https://www.stargatekorea.net`**. The analytics service keeps one store per site and picks the store from the Origin header, so a request without that header answers with another Stargate site's data. Review `route_generated`, `plan_download`, `matched_book_open` and `matched_custom_open`; review `/books/` for `book_sample_download` and `book_checkout_open`, and `/custom-guide/` for `enquiry_prepared` and `enquiry_email_open`. Compare checkout opens against completed paid orders in the store separately. A click or prepared email is never a purchase or received enquiry. No new affiliate commission is enabled.
 
 Run `npm test` before publishing. It builds the site and checks all preference combinations, route variation, shorter family/slow days, untrusted query handling, conversion data minimization, published links, checkout destination and the separation of paid PDF from public sample. Browser checks should include desktop and mobile, preference links, download, remember/forget, book suitability and the enquiry draft. Use `?preview=1&days=5&party=family&interest=food&pace=slow&budget=lean&season=winter#plan` for a production preview without action counts.
 
@@ -78,9 +80,22 @@ Action labels `route_edited`, `calendar_download` and `month_guide_open` are fix
 - `scripts/self-improve.mjs` — runs the audit, re-inserts the offer block into a generated page that lost it, carries unresolved findings forward with their age, closes the ones that are fixed, and writes `content/data/self-improvement.json`. That file holds page paths and counts only, and the build never publishes it as a page.
 - `tests/monetization.test.mjs` — turns the audit into a gate. A page that reaches a visitor without a next step, or an offer that cannot be measured, fails the build.
 
-The Pages workflow runs the loop on every deploy: refresh the listing → generate the dated pages → audit and repair → test → commit → deploy → submit to IndexNow. The log accumulates in the repository, so a regression that is fixed on one day is recorded as closed on the next.
+The Pages workflow runs the loop on every deploy: refresh the listing → generate the dated pages → measure the guides → audit and repair → test → commit → deploy → submit to IndexNow. The log accumulates in the repository, so a regression that is fixed on one day is recorded as closed on the next.
 
-Data note: visit counts are separated per site, but click counts on generic paths such as `/` are shared with the other Stargate sites. Only site-specific paths are used for decisions, and the limitation is recorded next to the log.
+Data note: every analytics read must carry the header `Origin: https://www.stargatekorea.net`. The service keeps one store per site and chooses the store from that header, so a request without it answers with another Stargate site's data — including click counts on generic paths such as `/`. Only site-specific paths are used for decisions, and the limitation is recorded next to the log.
+
+## Measuring the twelve month guides
+
+`npm run measure:guides` reads the live analytics service for this site only and writes `content/data/guide-metrics.json`: for every month guide, every weekly roundup and the funnel pages, the views, the clicks, the action labels behind those clicks and a verdict. The file holds paths and counts only, and the build never publishes it as a page.
+
+- `views` — page views recorded for that path in the last 30 days.
+- `clicks` — offer clicks recorded for that path, with the destination each click led to.
+- `verdict` — `no-data` (nothing measured yet), `read-not-acting` (read but never acted on), `acting` (clicked without a recorded view) or `working`.
+- `action` — what the loop should do next: `collect-data`, `strengthen-offer` or `keep-separate`.
+
+The merge rule is deliberate and conservative. **The twelve month guides are not merged.** Each one is a separate search-intent asset, so a guide is only a merge candidate when it was read at least 10 times in 30 days, was never clicked, and overlaps the intent of the page it would join. A guide with no views is missing data, not a defect, and must not push the loop into deleting an asset. Everything else is strengthened instead.
+
+What was strengthened instead, on 2026-11-21: every month guide now ends with a **month index** that links all twelve guides, marks the month being read and carries the `month_guide_open` label. The twelve pages used to be twelve islands that never pointed at each other; they are now one cluster that can pass a reader from January to December and then to the offer. `tests/analytics.test.mjs` holds the rule in place: all twelve guides must link to all twelve months, and pages that are not month guides must not carry the block.
 
 ## Economy — /economy/
 

@@ -218,3 +218,8 @@ summary { cursor: pointer; padding-block: 6px; }
 .trend-table summary { cursor: pointer; color: var(--ink-2); }
 .trend-table table { font-size: 12px; border-collapse: collapse; margin-top: 6px; }
 .trend-table th, .trend-table td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.month-index { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
+.month-index .section-head { margin-bottom: 6px; }
+.month-index .section-head h2 { font-size: 22px; }
+.month-index .lead { margin: 0 0 4px; color: var(--ink-2); font-size: 15px; }
+.month-link.is-current { border-color: var(--brand); background: var(--chip); color: var(--brand); }

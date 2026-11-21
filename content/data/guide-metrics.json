@@ -1,0 +1,255 @@
+{
+  "updatedAt": "2026-11-21T11:46:02.549Z",
+  "origin": "https://www.stargatekorea.net",
+  "windowDays": 30,
+  "source": "cloudflare",
+  "rule": "Only paths that belong to this site are used. A guide is merged into another guide only when it was read at least 10 times in the window and never acted on.",
+  "guides": [
+    {
+      "path": "/seoul-in-january/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-february/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-march/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-april/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-may/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-june/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-july/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-august/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-september/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-october/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-november/",
+      "kind": "month",
+      "views": 1,
+      "clicks": 3,
+      "labels": {
+        "page_plan_open": 1,
+        "probe_label_xyz": 1,
+        "probe_manual_test": 1
+      },
+      "verdict": "working",
+      "action": "keep-separate",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-in-december/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-week-of-2026-11-09/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-week-of-2026-11-16/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-week-of-2026-11-23/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-week-of-2026-11-30/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    }
+  ],
+  "funnel": [
+    {
+      "path": "/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 2,
+      "labels": {
+        "matched_book_open": 1,
+        "route_generated": 1
+      },
+      "verdict": "acting",
+      "action": "keep-separate",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-weekly/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-starter/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/category/travel-korea/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/travel-essentials/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/books/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/custom-guide/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    }
+  ],
+  "totals": {
+    "guides": 16,
+    "guideViews": 1,
+    "guideClicks": 3,
+    "guidesWithViews": 1,
+    "guidesWithClicks": 1
+  }
+}
