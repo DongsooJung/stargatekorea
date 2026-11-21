@@ -1,9 +1,10 @@
 {
-  "updatedAt": "2026-11-21T11:46:29.988Z",
+  "updatedAt": "2026-11-21T11:50:35.438Z",
   "origin": "https://www.stargatekorea.net",
   "windowDays": 30,
   "source": "cloudflare",
   "rule": "Only paths that belong to this site are used. A guide is merged into another guide only when it was read at least 10 times in the window and never acted on.",
+  "notes": "Views and clicks under /probe-* paths and under the labels probe_* on 2026-11-21 are diagnostic probes, not visitor activity. This site's store was empty before that date, so those records are the baseline.",
   "guides": [
     {
       "path": "/seoul-in-january/",
@@ -108,9 +109,10 @@
     {
       "path": "/seoul-in-november/",
       "kind": "month",
-      "views": 1,
-      "clicks": 3,
+      "views": 2,
+      "clicks": 4,
       "labels": {
+        "page_book_open": 1,
         "page_plan_open": 1,
         "probe_label_xyz": 1,
         "probe_manual_test": 1
@@ -227,11 +229,11 @@
     {
       "path": "/books/",
       "kind": "funnel",
-      "views": 0,
+      "views": 1,
       "clicks": 0,
       "labels": {},
-      "verdict": "no-data",
-      "action": "collect-data",
+      "verdict": "read-not-acting",
+      "action": "strengthen-offer",
       "mergeCandidate": null
     },
     {
@@ -247,8 +249,8 @@
   ],
   "totals": {
     "guides": 16,
-    "guideViews": 1,
-    "guideClicks": 3,
+    "guideViews": 2,
+    "guideClicks": 4,
     "guidesWithViews": 1,
     "guidesWithClicks": 1
   }
