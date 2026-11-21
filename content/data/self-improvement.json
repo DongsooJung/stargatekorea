@@ -1,0 +1,60 @@
+{
+  "updatedAt": "2026-11-21T10:53:41.769Z",
+  "rule": "Every page a visitor can land on must offer a next step inside the content, and that step must be measurable.",
+  "dataQuality": "Visit counts are separated per site. Click counts on generic paths such as / are shared with the other Stargate sites, so only site-specific paths are used for decisions.",
+  "openFindings": [],
+  "iterations": [
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "streak": 1
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "streak": 2
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "streak": 3
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "streak": 4
+    },
+    {
+      "date": "2026-11-21",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "openFindings": 0,
+      "repaired": 0,
+      "streak": 5
+    }
+  ],
+  "today": "2026-11-21",
+  "repaired": []
+}

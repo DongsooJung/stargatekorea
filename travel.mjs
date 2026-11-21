@@ -79,7 +79,7 @@ export function planner() {
 export function essentialsSection(full = false) {
   return `<section class="wrap section" id="essentials" aria-labelledby="essentials-title"><div class="section-head split-head"><div><p class="eyebrow">02 / Sort the practical things</p><h${full ? '1' : '2'} id="essentials-title">Less arrival admin.<br>More time for Korea.</h${full ? '1' : '2'}></div><p class="lead">Four decisions to make before you go. Compare the details that matter to your trip.</p></div>
   <div class="essentials-grid">${essentials.map((item) => `<article class="essential"><span class="item-number">${item.number}</span><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p>${full ? `<p class="essential-check">${esc(item.check)}</p>` : ''}<p class="provider">${esc(item.provider)}</p>${outbound(item)}</article>`).join('')}</div><p class="disclosure-note">${esc(disclosure())} <a href="/disclosure/">How we earn & choose links</a>.</p>
-  ${full ? '<p class="small muted">Links checked November 12, 2026. Prices and availability are shown by the provider. Listing a service does not imply a commercial partnership.</p>' : '<p><a class="text-link" href="/travel-essentials/">See the full pre-trip checklist →</a></p>'}</section>`;
+  ${full ? '<p class="small muted">Links checked November 12, 2026. Prices and availability are shown by the provider. Listing a service does not imply a commercial partnership.</p>' : '<p><a class="text-link" href="/travel-essentials/">See the full pre-trip checklist →</a></p>'}${full ? landingCta : ''}</section>`;
 }
 
 export function customTeaser() {
@@ -118,3 +118,11 @@ export const postCta = `<aside class="post-cta"><p class="eyebrow">Take the next
 
 // Guide pages have no planner form of their own, so they carry the offer explicitly.
 export const pageCta = `<aside class="post-cta"><p class="eyebrow">Take the next step</p><h2>Turn this guide into your trip.</h2><p>Build a free route around your dates, pace and interests, keep the standard English PDF guide offline, or ask about a custom brief.</p><div class="cta"><a class="btn" href="/#plan" data-conversion="page_plan_open">Get my free route →</a><a class="text-link" href="/books/" data-conversion="page_book_open">See the PDF guide →</a><a class="text-link" href="/custom-guide/" data-conversion="page_custom_open">Ask for a custom brief →</a></div></aside>`;
+
+// A visitor who lands on a category or checklist page from search has no other
+// route to the offer, so the next step has to sit inside the page.
+export const landingCta = `<aside class="post-cta landing-cta"><p class="eyebrow">Take the next step</p><h2>Turn this list into a plan.</h2><p>Build a free Seoul plan around your dates, pace and interests, keep the standard English PDF guide offline, or ask about a custom digital brief.</p><div class="cta"><a class="btn" href="/#plan" data-conversion="page_plan_open">Get my free plan →</a><a class="text-link" href="/books/" data-conversion="page_book_open">See the PDF guide →</a><a class="text-link" href="/custom-guide/" data-conversion="page_custom_open">Ask for a custom brief →</a></div></aside>`;
+
+// Study and living guides reach a different reader: the travel guide still helps
+// with the trip itself, and the education site is where study paperwork is answered.
+export const crossCta = `<aside class="post-cta cross-cta"><p class="eyebrow">Also useful for your time in Korea</p><h2>Living here, and travelling in it?</h2><p>The practical part — arrival, transport, neighbourhoods and planning checklists — is collected in one 24-page English PDF. For study paperwork, our education site covers applications, visas and arrival.</p><div class="cta"><a class="btn" href="/books/" data-conversion="book_view">See the PDF guide →</a><a class="text-link" href="/#plan" data-conversion="page_plan_open">Get a free Seoul plan →</a><a class="text-link" href="https://www.stargateedu.co.kr/" rel="noopener">Study help in Korea →</a></div></aside>`;

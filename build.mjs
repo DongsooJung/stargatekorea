@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import site from './site.config.mjs';
-import { homePage, customGuidePage, essentialsSection, postCta, pageCta } from './travel.mjs';
+import { homePage, customGuidePage, essentialsSection, postCta, pageCta, landingCta, crossCta } from './travel.mjs';
 import { booksPage, book } from './books.mjs';
 import { renderUpdates } from './updates.mjs';
 import { koreaDay } from './static/update-state.mjs';
@@ -349,7 +349,7 @@ export function build() {
   <!-- ad-slot: post-top -->
   <div class="prose">${p.html}</div>
   <!-- ad-slot: post-bottom -->
-  ${p.category === 'travel-korea' ? postCta : ''}
+  ${p.category === 'travel-korea' ? postCta : crossCta}
   ${p.tags?.length ? `<p class="tags">${p.tags.map((t) => `<span>#${esc(t)}</span>`).join('')}</p>` : ''}
   <aside class="campus-trips-cta">
     <p><strong>Campus Trips</strong> are small-group weekend trips for international students. Dates are not open for booking yet. Email <a href="mailto:${esc(site.email)}?subject=Campus%20Trips">${esc(site.email)}</a> with the subject "Campus Trips", or <a href="/campus-trips/">register your interest</a>.</p>
@@ -390,6 +390,7 @@ ${related.length ? `<section class="wrap section"><div class="section-head"><h2>
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Topics</nav>
   <div class="section-head"><p class="eyebrow">${c.icon} Topic</p><h1>${esc(c.name)}</h1><p class="lead">${esc(c.blurb)}.</p></div>
   ${list.length ? `<div class="grid">${list.map(card).join('')}</div>` : `<p class="empty">New guides in this topic are on the way. In the meantime, <a href="/#latest">browse the latest posts</a>.</p>`}
+  ${landingCta}
 </section>`;
     write(`category/${c.slug}/index.html`, layout({ title: c.name, description: `${c.name}: ${c.blurb}. Guides from ${site.title}.`, pathname: `/category/${c.slug}/`, body }));
   }
