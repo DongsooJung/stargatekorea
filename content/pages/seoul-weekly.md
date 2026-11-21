@@ -4,7 +4,7 @@ slug: seoul-weekly
 excerpt: "An index of our dated Seoul event roundups, each checked against the official Visit Seoul listing."
 category: travel-korea
 feed: true
-updated: "2026-11-16T09:00:00+09:00"
+updated: "2026-11-21T09:00:00+09:00"
 ---
 
 *Editorial guide · Updated November 15, 2026*
@@ -16,7 +16,7 @@ Seoul changes its programme week by week, and a festival, exhibition or market t
 
 - [November 30 – December 6, 2026](/seoul-week-of-2026-11-30/) — 1 official listing
 - [November 23–29, 2026](/seoul-week-of-2026-11-23/) — 2 official listings
-- [November 16–22, 2026](/seoul-week-of-2026-11-16/) — 4 official listings
+- [November 16–22, 2026](/seoul-week-of-2026-11-16/) — 3 official listings
 - [November 9–15, 2026](/seoul-week-of-2026-11-09/) — 2 official listings · past week
 <!-- /factory:weekly-archive -->
 

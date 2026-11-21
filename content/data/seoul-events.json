@@ -5,8 +5,8 @@
     "url": "https://english.visitseoul.net/events"
   },
   "status": "ok",
-  "lastAttemptAt": "2026-11-20T03:59:53.744Z",
-  "lastSuccessAt": "2026-11-20T03:59:53.744Z",
+  "lastAttemptAt": "2026-11-21T03:59:36.999Z",
+  "lastSuccessAt": "2026-11-21T03:59:36.999Z",
   "events": [
     {
       "id": "ENPqjti55",
@@ -21,13 +21,6 @@
       "url": "https://english.visitseoul.net/events/2026MyeongdongSquare-MissionFesta/ENPfq5ffd",
       "startDate": "2026-11-16",
       "endDate": "2026-11-21"
-    },
-    {
-      "id": "ENP2vf8eo",
-      "title": "2026 Seoul K-CONTENT WEEK",
-      "url": "https://english.visitseoul.net/events/2026Seoul-K-content-Week/ENP2vf8eo",
-      "startDate": "2026-11-14",
-      "endDate": "2026-11-20"
     },
     {
       "id": "ENPjm3hw1",

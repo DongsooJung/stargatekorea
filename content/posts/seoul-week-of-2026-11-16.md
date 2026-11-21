@@ -1,5 +1,5 @@
 ---
-updated: "2026-11-16T09:00:00+09:00"
+updated: "2026-11-21T09:00:00+09:00"
 title: "This Week in Seoul: November 16–22, 2026"
 slug: "seoul-week-of-2026-11-16"
 date: 2026-11-15T09:00:00+09:00
@@ -10,7 +10,7 @@ generated: weekly
 weekStart: "2026-11-16"
 weekEnd: "2026-11-22"
 expires: "2026-11-22"
-eventCount: 4
+eventCount: 3
 ---
 Every week we check the official Visit Seoul listing and turn it into a dated plan you can use. This one covers **November 16–22, 2026**.
 
@@ -19,7 +19,6 @@ Dates, hours and admission can change, so every entry below links to the organiz
 ## Official listings for this week
 
 - **[2026 SEOUL AUTUMN FESTA](https://english.visitseoul.net/events/2026SeoulAutumnFesta/ENPjm3hw1)** — September 18, 2026 – November 29, 2026
-- **[2026 Seoul K-CONTENT WEEK](https://english.visitseoul.net/events/2026Seoul-K-content-Week/ENP2vf8eo)** — Nov 14 – Nov 20, 2026
 - **[2026 Myeongdong Square Mission Festa](https://english.visitseoul.net/events/2026MyeongdongSquare-MissionFesta/ENPfq5ffd)** — Nov 16 – Nov 21, 2026
 - **[Korea Christmas Festival](https://english.visitseoul.net/events/2026KoreaChristmasFestival/ENPqjti55)** — November 16, 2026 – December 31, 2026
 
