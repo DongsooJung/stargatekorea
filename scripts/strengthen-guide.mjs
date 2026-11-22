@@ -1,9 +1,10 @@
 // Choose the evergreen guides whose offer has to be strengthened.
 //
-// A guide qualifies when it was read often enough to trust the reading and was
-// never acted on: several views and not a single offer click. A guide with one or
-// two views is missing data, not a problem, and must not send the loop into
-// rewriting editorial content on a single visit.
+// A guide qualifies when it was read often enough to trust the reading and never
+// produced a step toward money: several views and no click that reached a paid
+// offer. A click that only led to another guide is not a result, so it does not
+// save the page. A guide with one or two views is missing data, not a problem,
+// and must not send the loop into rewriting editorial content on a single visit.
 //
 // The list comes from content/data/guide-metrics.json, written by measure-guides.
 // What the agent still has to do is the editorial work itself, so this script
@@ -11,11 +12,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { stageCounts } from './revenue.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const METRICS_FILE = path.join(ROOT, 'content', 'data', 'guide-metrics.json');
 
-// Several reads and not one click. One visitor is not evidence.
+// Several reads and no step toward money. One visitor is not evidence.
 export const MIN_VIEWS = 3;
 
 export const MARKER = 'guide-offer-strengthened';
@@ -28,11 +30,15 @@ export function isStrengthened(markdown) {
   return markdown.includes(MARKER);
 }
 
+// The money rule: the guide has to be read often enough, and nothing it collected
+// may have reached a paid offer or a purchase intent.
 export function qualifies(guide, minViews = MIN_VIEWS) {
   if (!guide) return false;
   const views = Number(guide.views) || 0;
-  const clicks = Number(guide.clicks) || 0;
-  return views >= minViews && clicks === 0;
+  if (views < minViews) return false;
+  const counts = guide.stageClicks ?? (guide.labels ? stageCounts(guide.labels) : null);
+  if (counts) return !(counts.consideration > 0 || counts.intent > 0);
+  return (Number(guide.clicks) || 0) === 0;
 }
 
 export function guideFile(guidePath) {

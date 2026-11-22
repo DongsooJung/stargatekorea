@@ -128,7 +128,7 @@ Baseline note: this site's analytics store was empty before November 21, 2026. T
 
 ### Strengthening a guide that is read but never acted on
 
-`npm run strengthen:guides` decides which guides need a stronger offer. A guide qualifies when it was read at least **3 times** in the 30-day window and was never clicked. One or two reads are missing data, not a defect, and never start a rewrite. The script only chooses; the rewrite itself is editorial work on the guide's own markdown.
+`npm run strengthen:guides` decides which guides need a stronger offer. A guide qualifies when it was read at least **3 times** in the 30-day window and produced no step toward money: no click reached a paid offer or a purchase intent. A click that only led to another guide is not a result and does not save the page. One or two reads are missing data, not a defect, and never start a rewrite. The script only chooses; the rewrite itself is editorial work on the guide's own markdown.
 
 A guide that has been strengthened carries the marker `<!-- guide-offer-strengthened: YYYY-MM-DD -->` in its markdown, and the script then leaves it alone. That keeps one page from being rewritten twice and keeps the decision visible in the content it changed.
 

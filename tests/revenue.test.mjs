@@ -25,6 +25,7 @@ import {
 } from '../scripts/revenue.mjs';
 import { auditDist, auditEndpoints, bridgeFindings, revenueOfferFindings } from '../scripts/monetization-audit.mjs';
 import { measure as measureRevenue } from '../scripts/measure-revenue.mjs';
+import { qualifies } from '../scripts/strengthen-guide.mjs';
 import { collectFindings, sortByRevenueImpact, withRevenueImpact } from '../scripts/self-improve.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -144,6 +145,13 @@ test('a page that offers only the free plan cannot move a visitor toward money',
   const findings = revenueOfferFindings(pages);
   const codes = findings.map(item => `${item.code}:${item.target}`);
   assert.deepEqual(codes, ['revenue_offer_missing:/free-only/', 'revenue_offer_unmeasured:/paid-unmeasured/']);
+});
+
+test('a guide that only led to another guide is still a guide to strengthen', () => {
+  assert.equal(qualifies({ views: 4, clicks: 1, labels: { month_guide_open: 1 } }), true, 'a click to another guide is not money');
+  assert.equal(qualifies({ views: 4, clicks: 1, labels: { book_view: 1 } }), false, 'a click on the paid offer is money');
+  assert.equal(qualifies({ views: 4, clicks: 1, labels: { book_checkout_open: 1 } }), false, 'a checkout is money');
+  assert.equal(qualifies({ views: 4, clicks: 1, labels: { month_guide_open: 1, book_sample_download: 1 } }), false);
 });
 
 test('the revenue report reuses the guide clicks and never counts one twice', async () => {
