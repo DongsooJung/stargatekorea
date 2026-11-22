@@ -80,9 +80,38 @@ Action labels `route_edited`, `calendar_download` and `month_guide_open` are fix
 - `scripts/self-improve.mjs` — runs the audit, re-inserts the offer block into a generated page that lost it, carries unresolved findings forward with their age, closes the ones that are fixed, and writes `content/data/self-improvement.json`. That file holds page paths and counts only, and the build never publishes it as a page.
 - `tests/monetization.test.mjs` — turns the audit into a gate. A page that reaches a visitor without a next step, or an offer that cannot be measured, fails the build.
 
-The Pages workflow runs the loop on every deploy: refresh the listing → generate the dated pages → measure the guides → audit and repair → test → commit → deploy → submit to IndexNow. The log accumulates in the repository, so a regression that is fixed on one day is recorded as closed on the next.
+The Pages workflow runs the loop on every deploy: refresh the listing → generate the dated pages → measure the guides → measure the revenue funnel → audit and repair → test → commit → deploy → submit to IndexNow. The log accumulates in the repository, so a regression that is fixed on one day is recorded as closed on the next.
 
 Data note: every analytics read must carry the header `Origin: https://www.stargatekorea.net`. The service keeps one store per site and chooses the store from that header, so a request without it answers with another Stargate site's data — including click counts on generic paths such as `/`. Only site-specific paths are used for decisions, and the limitation is recorded next to the log.
+
+## The revenue funnel
+
+The loop is judged by money, not by traffic. Traffic was the wrong yardstick: a page could be read a thousand times and still never move anyone toward a purchase, while a page with two reads could look like a problem when it was nothing.
+
+`npm run measure:revenue` reads the guide measurement — the same views and the same click labels — and places every click on the money path:
+
+| stage | what happens | measured by |
+| --- | --- | --- |
+| `attention` | the visitor reads | guide and archive links |
+| `activation` | the free plan is used | `page_plan_open`, `route_generated`, `plan_download`, `plan_shared`, `profile_preset` |
+| `consideration` | the paid offer is looked at | `book_view`, `page_book_open`, `book_sample_download`, `custom_guide_view`, `matched_book_open` |
+| `intent` | money is asked for | `book_checkout_open`, `enquiry_prepared`, `enquiry_email_open`, `purchase_help_open` |
+| `revenue` | the order is paid | the Korean store and email — outside this site |
+
+`scripts/revenue.mjs` owns that model. Every conversion label of this site belongs to exactly one stage, and `tests/revenue.test.mjs` fails the build when one does not, so a new label can never quietly disappear from the report.
+
+**The order itself is never counted here.** The PDF is paid for in the Korean store and the custom brief is agreed by email, so the last stage is external: the report marks it instead of filling it with a guess. What this site can measure is intent, and intent is the only honest proxy for money.
+
+What the revenue rule changes in the loop:
+
+- A page read often enough that produced **no step toward money** is a finding. A guide that only led to another guide is a leak, where the old rule saw only the number of clicks.
+- A visitor who used the free plan and never looked at a paid offer is a **stalled funnel**, and that path is worked first.
+- A page with fewer than **3 reads** is a watch item, not a defect. It is reported and left alone.
+- Findings are **ranked by money**: the step at stake first — purchase intent outweighs a look at the offer — then the traffic behind it. A page with no readers is ranked last, not dropped.
+
+`content/data/revenue-metrics.json` holds the paths, the stage counts, the score and a `sufficiency` statement. When the data cannot settle the ranking, the file says so in words. It does today: this site has two days of page views and no recorded purchase intent, so the rule is in place and the order of work will follow the traffic when the traffic arrives.
+
+`scripts/monetization-audit.mjs` reads the same money path statically. It checks that each page on it reaches money, that the end of the funnel exists (`/`, `/books/`, `/custom-guide/`, `/book-help/`) and measures the step it owes, that no page links to a funnel page that is not there, and that a page offering only the free plan is reported as such.
 
 ## Measuring the twelve month guides
 

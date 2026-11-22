@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T03:13:59.721Z",
+  "updatedAt": "2026-11-22T11:49:05.691Z",
   "origin": "https://www.stargatekorea.net",
   "windowDays": 30,
   "source": "cloudflare",
@@ -238,6 +238,16 @@
     },
     {
       "path": "/custom-guide/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
+    },
+    {
+      "path": "/book-help/",
       "kind": "funnel",
       "views": 0,
       "clicks": 0,

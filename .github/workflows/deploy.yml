@@ -34,10 +34,12 @@ jobs:
         run: npm run factory
       - name: Measure the evergreen guides
         run: npm run measure:guides
+      - name: Measure the revenue funnel
+        run: npm run measure:revenue
       - run: npm test
       - name: Save checked listing and generated pages for the next run
         run: |
-          git add content/data/seoul-events.json content/data/self-improvement.json content/data/guide-metrics.json 'content/posts/seoul-week-of-*.md' 'content/pages/seoul-in-*.md' content/pages/seoul-weekly.md
+          git add content/data/seoul-events.json content/data/self-improvement.json content/data/guide-metrics.json content/data/revenue-metrics.json 'content/posts/seoul-week-of-*.md' 'content/pages/seoul-in-*.md' content/pages/seoul-weekly.md
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

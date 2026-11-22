@@ -1,9 +1,15 @@
 // Self-improvement pass — the recursive loop that keeps the site earning.
 //
-//   observe   → audit every published page for a next step and for measurement
+//   observe   → audit every published page for a next step, for measurement and
+//               for the place it holds on the money path
 //   diagnose  → carry unresolved findings forward from the previous iteration
 //   repair    → re-insert the offer block into generated pages that lost it
+//   rank      → order the findings by the money at stake, not by the defect
 //   record    → write the decision log the next iteration starts from
+//
+// The loop used to be judged by traffic. It is judged by money now: every click is
+// placed on the money path — read, free plan, paid offer considered, purchase
+// intent — and a finding is worth what it costs to leave money on the table.
 //
 // The log lives in content/data/, which the build never publishes as a page.
 // It holds page paths and counts only: no visitor data, no names, no clicks.
@@ -11,10 +17,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { auditDist } from './monetization-audit.mjs';
+import { revenuePriority } from './revenue.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOG_FILE = path.join(ROOT, 'content', 'data', 'self-improvement.json');
 const GUIDE_METRICS = path.join(ROOT, 'content', 'data', 'guide-metrics.json');
+const REVENUE_METRICS = path.join(ROOT, 'content', 'data', 'revenue-metrics.json');
 const GENERATED = [
   path.join(ROOT, 'content', 'posts'),
   path.join(ROOT, 'content', 'pages'),
@@ -65,13 +73,60 @@ export async function loadGuideMetrics() {
   }
 }
 
+// The revenue measurement lives beside it. It is written by scripts/measure-revenue.mjs
+// and holds the same clicks placed on the money path.
+export async function loadRevenueMetrics() {
+  try {
+    return JSON.parse(await fs.readFile(REVENUE_METRICS, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
 // Only a guide that is read and never acted on is a finding. A guide with no reads
 // yet is missing data, not a defect, so it must not push the loop into busy work.
 export function guideFindings(metrics) {
   if (!metrics?.guides?.length) return [];
   return metrics.guides
     .filter((guide) => guide.verdict === 'read-not-acting')
-    .map((guide) => ({ code: 'guide_read_not_acting', target: guide.path }));
+    .map((guide) => ({ code: 'guide_read_not_acting', target: guide.path, stage: 'consideration' }));
+}
+
+// Every finding carries the money step it threatens and an impact score, so the
+// log reads as a revenue plan instead of a defect list.
+export function withRevenueImpact(findings = [], revenue = null) {
+  const views = new Map((revenue?.paths ?? []).map(item => [item.path, Number(item.views) || 0]));
+  return findings.map(finding => {
+    const stage = finding.stage ?? 'consideration';
+    const pageViews = views.get(finding.target) ?? 0;
+    return {
+      ...finding,
+      stage,
+      revenueImpact: finding.revenueImpact ?? revenuePriority({ views: pageViews, stage }),
+    };
+  });
+}
+
+// The order of the work: what stands between the visitor and the money first.
+export function sortByRevenueImpact(findings = []) {
+  return [...findings].sort((a, b) => {
+    const diff = (Number(b.revenueImpact) || 0) - (Number(a.revenueImpact) || 0);
+    if (diff !== 0) return diff;
+    return String(a.target).localeCompare(String(b.target));
+  });
+}
+
+// The static pass sees the structure of the funnel, the measured pass sees the
+// behaviour. The measured rule replaces the older guide rule when it exists, so a
+// guide that was read and only led to another guide is still a revenue finding.
+export function collectFindings(report, metrics, revenue) {
+  const structural = [
+    ...report.missingOffer.map(url => ({ code: 'missing_offer', target: url, stage: 'consideration' })),
+    ...report.unmeasured.map(url => ({ code: 'unmeasured_offer', target: url, stage: 'consideration' })),
+    ...(report.revenueFindings ?? []),
+  ];
+  const measured = revenue?.findings ? revenue.findings : guideFindings(metrics);
+  return sortByRevenueImpact(withRevenueImpact([...structural, ...measured], revenue));
 }
 
 export function mergeFindings(previous = [], current = []) {  const before = new Map(previous.map(item => [`${item.code}:${item.target}`, item]));
@@ -98,32 +153,25 @@ export async function runSelfImprovement({ today = new Date().toISOString().slic
 
   const report = auditDist();
   const metrics = await loadGuideMetrics();
-  const findings = [
-    ...report.missingOffer.map(url => ({ code: 'missing_offer', target: url })),
-    ...report.unmeasured.map(url => ({ code: 'unmeasured_offer', target: url })),
-    ...guideFindings(metrics),
-  ];
+  const revenue = await loadRevenueMetrics();
+  const findings = collectFindings(report, metrics, revenue);
   const { open, closed } = mergeFindings(previous.openFindings ?? [], findings);
 
   const repaired = dryRun ? [] : await repairGeneratedPages([]);
   if (repaired.length) {
     // A repaired page is no longer a finding; re-audit after the repair.
     const after = auditDist();
-    const remaining = [
-      ...after.missingOffer.map(url => ({ code: 'missing_offer', target: url })),
-      ...after.unmeasured.map(url => ({ code: 'unmeasured_offer', target: url })),
-      ...guideFindings(metrics),
-    ];
+    const remaining = collectFindings(after, metrics, revenue);
     const merged = mergeFindings(open, remaining);
-    await writeLog({ ...previous, today, repaired, guideMetrics: metrics?.updatedAt ?? null, openFindings: merged.open, iterations: appendIteration(previous, today, after, merged, repaired, metrics) });
-    return { report: after, open: merged.open, closed: merged.closed, repaired, iterations: (previous.iterations ?? []).length + 1 };
+    await writeLog({ ...previous, today, repaired, guideMetrics: metrics?.updatedAt ?? null, revenue, openFindings: merged.open, iterations: appendIteration(previous, today, after, merged, repaired, metrics, revenue) });
+    return { report: after, open: merged.open, closed: merged.closed, repaired, iterations: (previous.iterations ?? []).length + 1, revenue };
   }
 
-  await writeLog({ ...previous, today, repaired, guideMetrics: metrics?.updatedAt ?? null, openFindings: open, iterations: appendIteration(previous, today, report, { open, closed }, repaired, metrics) });
-  return { report, open, closed, repaired, iterations: (previous.iterations ?? []).length + 1 };
+  await writeLog({ ...previous, today, repaired, guideMetrics: metrics?.updatedAt ?? null, revenue, openFindings: open, iterations: appendIteration(previous, today, report, { open, closed }, repaired, metrics, revenue) });
+  return { report, open, closed, repaired, iterations: (previous.iterations ?? []).length + 1, revenue };
 }
 
-function appendIteration(previous, today, report, merged, repaired, metrics) {
+function appendIteration(previous, today, report, merged, repaired, metrics, revenue) {
   const iterations = previous.iterations ?? [];
   const last = iterations[iterations.length - 1];
   const iteration = {
@@ -132,12 +180,18 @@ function appendIteration(previous, today, report, merged, repaired, metrics) {
     pagesWithOffer: report.totals?.withOffer ?? 0,
     pagesMissingOffer: report.totals?.missingOffer ?? 0,
     pagesUnmeasured: report.totals?.unmeasured ?? 0,
+    pagesRevenueReady: report.totals?.revenueReady ?? 0,
     openFindings: merged.open.length,
     repaired: repaired.length,
     guideViews: metrics?.totals?.guideViews ?? 0,
     guideClicks: metrics?.totals?.guideClicks ?? 0,
     guidesWithViews: metrics?.totals?.guidesWithViews ?? 0,
     guidesWithClicks: metrics?.totals?.guidesWithClicks ?? 0,
+    revenueScore: revenue?.totals?.revenueScore ?? 0,
+    activationClicks: revenue?.totals?.activationClicks ?? 0,
+    considerationClicks: revenue?.totals?.considerationClicks ?? 0,
+    revenueIntentClicks: revenue?.totals?.revenueIntentClicks ?? 0,
+    pathsWithReads: revenue?.totals?.pathsWithReads ?? 0,
   };
   const streak = last && last.pagesMissingOffer === 0 && iteration.pagesMissingOffer === 0 ? (last.streak ?? 1) + 1 : 1;
   iteration.streak = streak;
@@ -148,11 +202,19 @@ async function writeLog(payload) {
   await fs.mkdir(path.dirname(LOG_FILE), { recursive: true });
   // The rule and the data limitation are owned by this file, so an older copy in the
   // log must not win over the current wording.
-  const { rule, dataQuality, ...rest } = payload;
+  const { rule, dataQuality, revenue, ...rest } = payload;
   const ordered = {
     updatedAt: new Date().toISOString(),
-    rule: 'Every page a visitor can land on must offer a next step inside the content, and that step must be measurable.',
-    dataQuality: 'Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site\'s data. Page views are recorded per path and clicks per path, action and destination.',
+    rule: 'Every page a visitor can land on must offer a next step inside the content, and that step must be measurable. The work is then ranked by money: every click is placed on the money path — read, free plan, paid offer considered, purchase intent — and a finding is worth what it costs to leave that money on the table. The completed order happens in the Korean store and by email, so the last step is external and is never counted here.',
+    dataQuality: 'Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site\'s data. Page views are recorded per path and clicks per path, action and destination. The revenue report reuses those same clicks, so no click is counted twice, and it states whether the data collected so far can settle the ranking at all.',
+    revenue: revenue
+      ? {
+          updatedAt: revenue.updatedAt ?? null,
+          sufficiency: revenue.sufficiency ?? null,
+          steps: revenue.funnel?.steps ?? [],
+          totals: revenue.totals ?? null,
+        }
+      : null,
     ...rest,
   };
   await fs.writeFile(LOG_FILE, `${JSON.stringify(ordered, null, 2)}\n`, 'utf8');
@@ -161,8 +223,13 @@ async function writeLog(payload) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const dryRun = process.argv.includes('--dry-run');
   const result = await runSelfImprovement({ dryRun });
-  console.log(`[self-improve] ${result.report.totals?.inScope ?? 0} pages in scope · ${result.report.totals?.withOffer ?? 0} with an offer · ${result.report.totals?.missingOffer ?? 0} missing · ${result.report.totals?.unmeasured ?? 0} unmeasured`);
+  const revenue = result.revenue;
+  console.log(`[self-improve] ${result.report.totals?.inScope ?? 0} pages in scope · ${result.report.totals?.withOffer ?? 0} with an offer · ${result.report.totals?.missingOffer ?? 0} missing · ${result.report.totals?.unmeasured ?? 0} unmeasured · ${result.report.totals?.revenueReady ?? 0} revenue ready`);
   console.log(`[self-improve] iteration ${result.iterations} · open findings ${result.open.length} · repaired ${result.repaired.length}`);
-  for (const item of result.open) console.log(`[self-improve] open: ${item.code} ${item.target} (seen ${item.count}x)`);
+  if (revenue?.totals) {
+    console.log(`[self-improve] money path: ${(revenue.funnel?.steps ?? []).map(step => `${step.id}=${step.clicks}`).join(' · ')} · intent score ${revenue.totals.revenueScore}`);
+    console.log(`[self-improve] ranking can be settled: ${revenue.sufficiency?.sufficient ? 'yes' : 'no'} — ${revenue.sufficiency?.reason ?? ''}`);
+  }
+  for (const item of result.open) console.log(`[self-improve] open: ${item.code} ${item.target} (stage ${item.stage}, impact ${item.revenueImpact}, seen ${item.count}x)`);
   for (const item of result.closed) console.log(`[self-improve] closed: ${item.code} ${item.target}`);
 }

@@ -27,6 +27,7 @@ export const FUNNEL_PATHS = [
   '/travel-essentials/',
   '/books/',
   '/custom-guide/',
+  '/book-help/',
 ];
 
 export function monthPaths(months = site.months) {

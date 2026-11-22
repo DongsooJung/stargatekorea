@@ -1,7 +1,62 @@
 {
   "updatedAt": "2026-11-21T10:53:41.769Z",
-  "rule": "Every page a visitor can land on must offer a next step inside the content, and that step must be measurable.",
-  "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. Page views are recorded per path and clicks per path, action and destination.",
+  "rule": "Every page a visitor can land on must offer a next step inside the content, and that step must be measurable. The work is then ranked by money: every click is placed on the money path — read, free plan, paid offer considered, purchase intent — and a finding is worth what it costs to leave that money on the table. The completed order happens in the Korean store and by email, so the last step is external and is never counted here.",
+  "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. Page views are recorded per path and clicks per path, action and destination. The revenue report reuses those same clicks, so no click is counted twice, and it states whether the data collected so far can settle the ranking at all.",
+  "revenue": {
+    "updatedAt": "2026-11-22T11:49:05.818Z",
+    "sufficiency": {
+      "sufficient": false,
+      "reason": "No path has been read 3 times or more in the window, and no purchase intent has been recorded. The rule is in place, but the ranking cannot be settled from the data yet."
+    },
+    "steps": [
+      {
+        "id": "attention",
+        "label": "Read",
+        "clicks": 0,
+        "weight": 0,
+        "external": false
+      },
+      {
+        "id": "activation",
+        "label": "Free plan used",
+        "clicks": 2,
+        "weight": 1,
+        "external": false
+      },
+      {
+        "id": "consideration",
+        "label": "Paid offer considered",
+        "clicks": 2,
+        "weight": 3,
+        "external": false
+      },
+      {
+        "id": "intent",
+        "label": "Purchase intent",
+        "clicks": 0,
+        "weight": 5,
+        "external": false
+      },
+      {
+        "id": "revenue",
+        "label": "Order completed",
+        "clicks": 0,
+        "weight": 10,
+        "external": true
+      }
+    ],
+    "totals": {
+      "paths": 24,
+      "pathsWithViews": 3,
+      "pathsWithReads": 0,
+      "clicks": 6,
+      "revenueScore": 9,
+      "activationClicks": 2,
+      "considerationClicks": 2,
+      "revenueIntentClicks": 0,
+      "orderClicks": 0
+    }
+  },
   "openFindings": [],
   "iterations": [
     {
@@ -233,9 +288,69 @@
       "guidesWithViews": 1,
       "guidesWithClicks": 1,
       "streak": 19
+    },
+    {
+      "date": "2026-11-22",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "pagesRevenueReady": 45,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "revenueScore": 9,
+      "activationClicks": 2,
+      "considerationClicks": 2,
+      "revenueIntentClicks": 0,
+      "pathsWithReads": 0,
+      "streak": 20
+    },
+    {
+      "date": "2026-11-22",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "pagesRevenueReady": 45,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "revenueScore": 9,
+      "activationClicks": 2,
+      "considerationClicks": 2,
+      "revenueIntentClicks": 0,
+      "pathsWithReads": 0,
+      "streak": 21
+    },
+    {
+      "date": "2026-11-22",
+      "pagesInScope": 45,
+      "pagesWithOffer": 45,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "pagesRevenueReady": 45,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "revenueScore": 9,
+      "activationClicks": 2,
+      "considerationClicks": 2,
+      "revenueIntentClicks": 0,
+      "pathsWithReads": 0,
+      "streak": 22
     }
   ],
   "today": "2026-11-22",
   "repaired": [],
-  "guideMetrics": "2026-11-22T03:13:59.721Z"
+  "guideMetrics": "2026-11-22T11:49:05.691Z"
 }

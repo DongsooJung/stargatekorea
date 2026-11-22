@@ -1,0 +1,609 @@
+{
+  "updatedAt": "2026-11-22T11:49:05.818Z",
+  "origin": "https://www.stargatekorea.net",
+  "windowDays": 30,
+  "source": "guide-metrics",
+  "measuredAt": "2026-11-22T11:49:05.691Z",
+  "rule": "A page is judged by money, not by traffic. Every click is placed on the money path — read, free plan, paid offer considered, purchase intent, order — and a page is a finding when it was read often enough to trust the reading and produced no step toward money. The completed order happens in the Korean store and by email, so the last step is external and is never counted here.",
+  "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. This report reuses the views and click labels already collected for the guides, so no click is counted twice. Page views are recorded per path and clicks per path, action and destination.",
+  "stages": [
+    {
+      "id": "attention",
+      "order": 0,
+      "label": "Read",
+      "weight": 0,
+      "revenue": false,
+      "external": false
+    },
+    {
+      "id": "activation",
+      "order": 1,
+      "label": "Free plan used",
+      "weight": 1,
+      "revenue": false,
+      "external": false
+    },
+    {
+      "id": "consideration",
+      "order": 2,
+      "label": "Paid offer considered",
+      "weight": 3,
+      "revenue": true,
+      "external": false
+    },
+    {
+      "id": "intent",
+      "order": 3,
+      "label": "Purchase intent",
+      "weight": 5,
+      "revenue": true,
+      "external": false
+    },
+    {
+      "id": "revenue",
+      "order": 4,
+      "label": "Order completed",
+      "weight": 10,
+      "revenue": true,
+      "external": true
+    }
+  ],
+  "paths": [
+    {
+      "path": "/seoul-in-january/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-february/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-march/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-april/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-may/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-june/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-july/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-august/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-september/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-october/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-in-november/",
+      "kind": "month",
+      "views": 2,
+      "clicks": 4,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 1,
+        "consideration": 1,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 2,
+        "unclassifiedLabels": {
+          "probe_label_xyz": 1,
+          "probe_manual_test": 1
+        }
+      },
+      "revenueScore": 4,
+      "topStage": "consideration",
+      "verdict": "consideration",
+      "moneyStep": "consideration"
+    },
+    {
+      "path": "/seoul-in-december/",
+      "kind": "month",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-week-of-2026-11-09/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-week-of-2026-11-16/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-week-of-2026-11-23/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-week-of-2026-11-30/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/",
+      "kind": "funnel",
+      "views": 2,
+      "clicks": 2,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 1,
+        "consideration": 1,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 5,
+      "topStage": "consideration",
+      "verdict": "consideration",
+      "moneyStep": "consideration"
+    },
+    {
+      "path": "/seoul-weekly/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/seoul-starter/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/category/travel-korea/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/travel-essentials/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/books/",
+      "kind": "funnel",
+      "views": 1,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "read-not-acting",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/custom-guide/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
+      "path": "/book-help/",
+      "kind": "funnel",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    }
+  ],
+  "funnel": {
+    "views": 5,
+    "clicks": 6,
+    "revenueScore": 9,
+    "stageClicks": {
+      "attention": 0,
+      "activation": 2,
+      "consideration": 2,
+      "intent": 0,
+      "revenue": 0
+    },
+    "steps": [
+      {
+        "id": "attention",
+        "label": "Read",
+        "clicks": 0,
+        "weight": 0,
+        "external": false
+      },
+      {
+        "id": "activation",
+        "label": "Free plan used",
+        "clicks": 2,
+        "weight": 1,
+        "external": false
+      },
+      {
+        "id": "consideration",
+        "label": "Paid offer considered",
+        "clicks": 2,
+        "weight": 3,
+        "external": false
+      },
+      {
+        "id": "intent",
+        "label": "Purchase intent",
+        "clicks": 0,
+        "weight": 5,
+        "external": false
+      },
+      {
+        "id": "revenue",
+        "label": "Order completed",
+        "clicks": 0,
+        "weight": 10,
+        "external": true
+      }
+    ],
+    "conversion": [
+      {
+        "from": "attention",
+        "to": "activation",
+        "ratio": null
+      },
+      {
+        "from": "activation",
+        "to": "consideration",
+        "ratio": 1
+      },
+      {
+        "from": "consideration",
+        "to": "intent",
+        "ratio": 0
+      },
+      {
+        "from": "intent",
+        "to": "revenue",
+        "ratio": null
+      }
+    ]
+  },
+  "findings": [],
+  "watch": [
+    {
+      "target": "/books/",
+      "kind": "funnel",
+      "views": 1,
+      "stage": "consideration",
+      "reason": "fewer than 3 reads"
+    }
+  ],
+  "totals": {
+    "paths": 24,
+    "pathsWithViews": 3,
+    "pathsWithReads": 0,
+    "clicks": 6,
+    "revenueScore": 9,
+    "activationClicks": 2,
+    "considerationClicks": 2,
+    "revenueIntentClicks": 0,
+    "orderClicks": 0
+  },
+  "notes": "Views and clicks under /probe-* paths and under the labels probe_* on 2026-11-21 are diagnostic probes, not visitor activity. This site's store was empty before that date, so those records are the baseline.",
+  "sufficiency": {
+    "sufficient": false,
+    "reason": "No path has been read 3 times or more in the window, and no purchase intent has been recorded. The rule is in place, but the ranking cannot be settled from the data yet."
+  }
+}

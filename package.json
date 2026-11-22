@@ -11,6 +11,7 @@
     "factory": "node scripts/factory.mjs",
     "audit:monetization": "node scripts/monetization-audit.mjs",
     "measure:guides": "node scripts/measure-guides.mjs",
+    "measure:revenue": "node scripts/measure-revenue.mjs",
     "strengthen:guides": "node scripts/strengthen-guide.mjs",
     "self-improve": "node scripts/self-improve.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
