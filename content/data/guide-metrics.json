@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T12:28:05.055Z",
+  "updatedAt": "2026-11-22T03:13:59.721Z",
   "origin": "https://www.stargatekorea.net",
   "windowDays": 30,
   "source": "cloudflare",
@@ -176,13 +176,13 @@
     {
       "path": "/",
       "kind": "funnel",
-      "views": 0,
+      "views": 2,
       "clicks": 2,
       "labels": {
         "matched_book_open": 1,
         "route_generated": 1
       },
-      "verdict": "acting",
+      "verdict": "working",
       "action": "keep-separate",
       "mergeCandidate": null
     },

@@ -4,7 +4,7 @@ slug: seoul-in-november
 excerpt: "November is often the most comfortable month in Seoul, with crisp dry days, fewer visitors and clear light. What to expect and how to use it."
 category: travel-korea
 feed: true
-updated: "2026-11-21T09:00:00+09:00"
+updated: "2026-11-22T09:00:00+09:00"
 ---
 
 *Editorial guide · Updated November 15, 2026*
@@ -15,7 +15,6 @@ November is usually the month when everything about Seoul works at once. The wea
 ### Official listings in November
 
 - **[2026 SEOUL AUTUMN FESTA](https://english.visitseoul.net/events/2026SeoulAutumnFesta/ENPjm3hw1)** — September 18, 2026 – November 29, 2026
-- **[2026 Myeongdong Square Mission Festa](https://english.visitseoul.net/events/2026MyeongdongSquare-MissionFesta/ENPfq5ffd)** — Nov 16 – Nov 21, 2026
 - **[Korea Christmas Festival](https://english.visitseoul.net/events/2026KoreaChristmasFestival/ENPqjti55)** — November 16, 2026 – December 31, 2026
 
 Official listings only. Confirm hours, admission and any booking with the organizer.

@@ -5,8 +5,8 @@
     "url": "https://english.visitseoul.net/events"
   },
   "status": "ok",
-  "lastAttemptAt": "2026-11-21T12:27:58.932Z",
-  "lastSuccessAt": "2026-11-21T12:27:58.932Z",
+  "lastAttemptAt": "2026-11-22T03:13:53.207Z",
+  "lastSuccessAt": "2026-11-22T03:13:53.207Z",
   "events": [
     {
       "id": "ENPqjti55",
@@ -14,13 +14,6 @@
       "url": "https://english.visitseoul.net/events/2026KoreaChristmasFestival/ENPqjti55",
       "startDate": "2026-11-16",
       "endDate": "2026-12-31"
-    },
-    {
-      "id": "ENPfq5ffd",
-      "title": "2026 Myeongdong Square Mission Festa",
-      "url": "https://english.visitseoul.net/events/2026MyeongdongSquare-MissionFesta/ENPfq5ffd",
-      "startDate": "2026-11-16",
-      "endDate": "2026-11-21"
     },
     {
       "id": "ENPjm3hw1",
