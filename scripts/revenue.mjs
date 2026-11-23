@@ -291,21 +291,52 @@ export function buildFunnel(paths = []) {
   return { views, clicks, revenueScore: Math.round(score * 100) / 100, stageClicks, steps, conversion };
 }
 
-// Whether the collected data can rank anything at all. When it cannot, the reason
-// is written down instead of an empty ranking being presented as a result.
+// What the collected data can actually do right now.
+//
+// Three different questions used to be packed into one word, and the word was
+// read both ways: as "the order of work is settled" and as "the order of work
+// cannot be settled yet". They are told apart here:
+//
+//   canRank           - is there enough traffic to produce an order of work?
+//   moneyStepsMeasured - has a click reached a money step (offer or intent)?
+//   provisional       - the order may still change once money is measured.
+//
+// The order of work is final only when moneyStepsMeasured is true. Until then it
+// is provisional and says so in words, so no empty ranking is ever presented as
+// a settled result.
 export function sufficiency(report) {
   const totals = report?.totals ?? {};
-  if (!totals.pathsWithReads) {
+  const pathsWithReads = Number(totals.pathsWithReads) || 0;
+  const intentClicks = Number(totals.revenueIntentClicks) || 0;
+  const offerClicks = Number(totals.considerationClicks) || 0;
+
+  if (!pathsWithReads) {
     return {
-      sufficient: false,
-      reason: `No path has been read ${MIN_VIEWS} times or more in the window, and no purchase intent has been recorded. The rule is in place, but the ranking cannot be settled from the data yet.`,
+      canRank: false,
+      moneyStepsMeasured: false,
+      provisional: true,
+      rankBasis: 'none',
+      reason: `Not enough traffic to rank: no path has been read ${MIN_VIEWS} times or more in the window, so no order of work is claimed. The rule stays in place and waits for reads.`,
+      nextStep: `Collect reads until a path passes ${MIN_VIEWS} reads, then rank the paths by money.`,
     };
   }
-  if (!totals.revenueIntentClicks) {
+  if (!intentClicks) {
+    const basis = offerClicks ? 'the clicks that reached the paid offer' : 'reads only';
     return {
-      sufficient: true,
-      reason: `Paths have been read ${MIN_VIEWS} times or more, but no click has reached a paid offer yet. The ranking is driven by the revenue rule and the next step of the funnel.`,
+      canRank: true,
+      moneyStepsMeasured: false,
+      provisional: true,
+      rankBasis: offerClicks ? 'early-funnel-clicks' : 'traffic-only',
+      reason: `Enough traffic to rank (${pathsWithReads} path${pathsWithReads === 1 ? '' : 's'} read ${MIN_VIEWS} times or more), but no click has reached purchase intent yet, so the order of work is PROVISIONAL: it is built on ${basis}, not on measured money.`,
+      nextStep: 'Measure the money steps: send a click to the paid offer (US$7.07 PDF) and to the enquiry, then measure again.',
     };
   }
-  return { sufficient: true, reason: 'Purchase intent has been recorded, so the ranking is driven by measured money steps.' };
+  return {
+    canRank: true,
+    moneyStepsMeasured: true,
+    provisional: false,
+    rankBasis: 'money-steps',
+    reason: `${intentClicks} click${intentClicks === 1 ? '' : 's'} reached purchase intent, so the order of work is settled by measured money steps.`,
+    nextStep: 'Keep the money steps in view and work on the weakest step of the funnel.',
+  };
 }

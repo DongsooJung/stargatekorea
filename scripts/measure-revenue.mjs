@@ -10,6 +10,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ORIGIN, WINDOW_DAYS } from './measure-guides.mjs';
+import { jsonText } from './text-format.mjs';
 import {
   STAGES,
   stageCounts,
@@ -94,7 +95,7 @@ export async function measure(root = ROOT) {
 
 export async function writeReport(report) {
   await fs.mkdir(path.dirname(LOG_FILE), { recursive: true });
-  await fs.writeFile(LOG_FILE, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+  await fs.writeFile(LOG_FILE, jsonText(report), 'utf8');
   return LOG_FILE;
 }
 
@@ -117,7 +118,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     console.log(`[measure-revenue] ${totals.paths} paths over ${report.windowDays} days · ${totals.pathsWithViews} with reads · ${totals.pathsWithReads} read ${MIN_VIEWS}+ times`);
     console.log(`[measure-revenue] money path: ${report.funnel.steps.map(step => `${step.id}=${step.clicks}`).join(' · ')}`);
     console.log(`[measure-revenue] revenue intent clicks ${totals.revenueIntentClicks} · intent score ${totals.revenueScore}`);
-    console.log(`[measure-revenue] sufficiency: ${report.sufficiency.sufficient ? 'yes' : 'no'} — ${report.sufficiency.reason}`);
+    console.log(`[measure-revenue] ranking basis: ${report.sufficiency.rankBasis} · provisional ${report.sufficiency.provisional ? 'yes' : 'no'} · money steps measured ${report.sufficiency.moneyStepsMeasured ? 'yes' : 'no'} — ${report.sufficiency.reason}`);
     for (const finding of report.findings) {
       console.log(`[measure-revenue] finding: ${finding.code} ${finding.target} (views ${finding.views}, impact ${finding.revenueImpact})`);
     }

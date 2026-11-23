@@ -1,0 +1,25 @@
+# One line ending rule for the whole repository.
+#
+# Text files are stored with LF in the repository, whatever the core.autocrlf
+# setting of the machine that commits them happens to be. Without this rule the
+# content of the repository depends on the machine, the files drift apart and
+# `git add` keeps warning that LF will be replaced by CRLF. `text=auto` lets
+# Git decide per file, so the binary assets below are never touched.
+* text=auto
+
+# The deployment workflow is kept exactly as it was written, byte for byte.
+.github/workflows/deploy.yml -text
+
+# Binary assets are never converted.
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.mp4 binary
+*.mp3 binary

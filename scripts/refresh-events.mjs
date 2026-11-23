@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { eventSource, validateEvents } from '../static/update-state.mjs';
+import { jsonText } from './text-format.mjs';
 
 const output = fileURLToPath(new URL('../content/data/seoul-events.json', import.meta.url));
 const textOnly = value => value.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]*>/g, '').replace(/&(#x[0-9a-f]+|#\d+|amp|quot|apos|lt|gt|nbsp);/gi, (_, entity) => {
@@ -63,6 +64,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   try { previous = JSON.parse(await fs.readFile(output, 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
   const snapshot = await refreshEvents(previous, fetchPage);
   await fs.mkdir(path.dirname(output), { recursive: true });
-  await fs.writeFile(output, JSON.stringify(snapshot, null, 2) + '\n');
+  await fs.writeFile(output, jsonText(snapshot), 'utf8');
   console.log(snapshot.status === 'ok' ? `Checked official listing: ${snapshot.events.length} events.` : '::warning::Official listing check failed; last successful data retained.');
 }

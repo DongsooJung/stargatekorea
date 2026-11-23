@@ -109,7 +109,7 @@ What the revenue rule changes in the loop:
 - A page with fewer than **3 reads** is a watch item, not a defect. It is reported and left alone.
 - Findings are **ranked by money**: the step at stake first — purchase intent outweighs a look at the offer — then the traffic behind it. A page with no readers is ranked last, not dropped.
 
-`content/data/revenue-metrics.json` holds the paths, the stage counts, the score and a `sufficiency` statement. When the data cannot settle the ranking, the file says so in words. It does today: this site has two days of page views and no recorded purchase intent, so the rule is in place and the order of work will follow the traffic when the traffic arrives.
+`content/data/revenue-metrics.json` holds the paths, the stage counts, the score and a `sufficiency` statement that says what the data can and cannot settle. That statement keeps three facts apart, because one word cannot carry them: `canRank` (is there enough traffic to rank at all), `moneyStepsMeasured` (has a click reached a money step) and `provisional` (the order of work may still change once money is measured). The order of work is final only when money steps are measured. Until then the file says so in words, so a provisional order is never read as a settled one.
 
 `scripts/monetization-audit.mjs` reads the same money path statically. It checks that each page on it reaches money, that the end of the funnel exists (`/`, `/books/`, `/custom-guide/`, `/book-help/`) and measures the step it owes, that no page links to a funnel page that is not there, and that a page offering only the free plan is reported as such.
 

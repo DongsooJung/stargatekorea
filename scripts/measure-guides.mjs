@@ -9,6 +9,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import site from '../site.config.mjs';
+import { jsonText } from './text-format.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOG_FILE = path.join(ROOT, 'content', 'data', 'guide-metrics.json');
@@ -137,7 +138,7 @@ export async function measure() {
 
 export async function writeReport(report) {
   await fs.mkdir(path.dirname(LOG_FILE), { recursive: true });
-  await fs.writeFile(LOG_FILE, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+  await fs.writeFile(LOG_FILE, jsonText(report), 'utf8');
   return LOG_FILE;
 }
 

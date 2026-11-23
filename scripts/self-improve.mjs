@@ -18,6 +18,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { auditDist } from './monetization-audit.mjs';
 import { revenuePriority } from './revenue.mjs';
+import { jsonText } from './text-format.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOG_FILE = path.join(ROOT, 'content', 'data', 'self-improvement.json');
@@ -217,7 +218,7 @@ async function writeLog(payload) {
       : null,
     ...rest,
   };
-  await fs.writeFile(LOG_FILE, `${JSON.stringify(ordered, null, 2)}\n`, 'utf8');
+  await fs.writeFile(LOG_FILE, jsonText(ordered), 'utf8');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -228,7 +229,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   console.log(`[self-improve] iteration ${result.iterations} · open findings ${result.open.length} · repaired ${result.repaired.length}`);
   if (revenue?.totals) {
     console.log(`[self-improve] money path: ${(revenue.funnel?.steps ?? []).map(step => `${step.id}=${step.clicks}`).join(' · ')} · intent score ${revenue.totals.revenueScore}`);
-    console.log(`[self-improve] ranking can be settled: ${revenue.sufficiency?.sufficient ? 'yes' : 'no'} — ${revenue.sufficiency?.reason ?? ''}`);
+    console.log(`[self-improve] ranking: ${revenue.sufficiency?.canRank ? 'possible' : 'not possible'} · basis ${revenue.sufficiency?.rankBasis ?? 'none'} · provisional ${revenue.sufficiency?.provisional ? 'yes' : 'no'} — ${revenue.sufficiency?.reason ?? ''}`);
   }
   for (const item of result.open) console.log(`[self-improve] open: ${item.code} ${item.target} (stage ${item.stage}, impact ${item.revenueImpact}, seen ${item.count}x)`);
   for (const item of result.closed) console.log(`[self-improve] closed: ${item.code} ${item.target}`);

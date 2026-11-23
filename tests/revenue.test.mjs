@@ -178,13 +178,31 @@ test('the revenue report reuses the guide clicks and never counts one twice', as
   }
 });
 
-test('the report says when the data cannot settle the ranking', () => {
+test('the report says what the data can and cannot settle', () => {
   const empty = { totals: { pathsWithReads: 0, revenueIntentClicks: 0 } };
   const thin = sufficiency(empty);
-  assert.equal(thin.sufficient, false);
-  assert.match(thin.reason, /cannot be settled/);
+  assert.equal(thin.canRank, false);
+  assert.equal(thin.moneyStepsMeasured, false);
+  assert.equal(thin.rankBasis, 'none');
+  assert.match(thin.reason, /Not enough traffic to rank/);
+
   const usable = sufficiency({ totals: { pathsWithReads: 1, revenueIntentClicks: 0 } });
-  assert.equal(usable.sufficient, true);
+  assert.equal(usable.canRank, true);
+  assert.equal(usable.moneyStepsMeasured, false);
+  assert.equal(usable.provisional, true, 'an order without money steps is provisional, not settled');
+  assert.equal(usable.rankBasis, 'traffic-only');
+  assert.match(usable.reason, /PROVISIONAL/);
+
+  const early = sufficiency({ totals: { pathsWithReads: 2, revenueIntentClicks: 0, considerationClicks: 3 } });
+  assert.equal(early.rankBasis, 'early-funnel-clicks');
+  assert.equal(early.provisional, true);
+
+  const paid = sufficiency({ totals: { pathsWithReads: 4, revenueIntentClicks: 2 } });
+  assert.equal(paid.canRank, true);
+  assert.equal(paid.moneyStepsMeasured, true);
+  assert.equal(paid.provisional, false);
+  assert.equal(paid.rankBasis, 'money-steps');
+  assert.match(paid.reason, /settled by measured money steps/);
 });
 
 test('the improvement log ranks the findings by money', () => {
