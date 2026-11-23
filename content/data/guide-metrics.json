@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T11:52:50.763Z",
+  "updatedAt": "2026-11-23T02:20:03.328Z",
   "origin": "https://www.stargatekorea.net",
   "windowDays": 30,
   "source": "cloudflare",
@@ -170,13 +170,23 @@
       "verdict": "no-data",
       "action": "collect-data",
       "mergeCandidate": null
+    },
+    {
+      "path": "/seoul-week-of-2026-12-07/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "labels": {},
+      "verdict": "no-data",
+      "action": "collect-data",
+      "mergeCandidate": null
     }
   ],
   "funnel": [
     {
       "path": "/",
       "kind": "funnel",
-      "views": 2,
+      "views": 4,
       "clicks": 2,
       "labels": {
         "matched_book_open": 1,
@@ -258,7 +268,7 @@
     }
   ],
   "totals": {
-    "guides": 16,
+    "guides": 17,
     "guideViews": 2,
     "guideClicks": 4,
     "guidesWithViews": 1,

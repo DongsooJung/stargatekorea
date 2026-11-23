@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-11-22T11:52:50.919Z",
+  "updatedAt": "2026-11-23T02:20:04.591Z",
   "origin": "https://www.stargatekorea.net",
   "windowDays": 30,
   "source": "guide-metrics",
-  "measuredAt": "2026-11-22T11:52:50.763Z",
+  "measuredAt": "2026-11-23T02:20:03.328Z",
   "rule": "A page is judged by money, not by traffic. Every click is placed on the money path — read, free plan, paid offer considered, purchase intent, order — and a page is a finding when it was read often enough to trust the reading and produced no step toward money. The completed order happens in the Korean store and by email, so the last step is external and is never counted here.",
   "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. This report reuses the views and click labels already collected for the guides, so no click is counted twice. Page views are recorded per path and clicks per path, action and destination.",
   "stages": [
@@ -357,9 +357,28 @@
       "moneyStep": "attention"
     },
     {
+      "path": "/seoul-week-of-2026-12-07/",
+      "kind": "week",
+      "views": 0,
+      "clicks": 0,
+      "stageClicks": {
+        "attention": 0,
+        "activation": 0,
+        "consideration": 0,
+        "intent": 0,
+        "revenue": 0,
+        "unclassified": 0,
+        "unclassifiedLabels": {}
+      },
+      "revenueScore": 0,
+      "topStage": null,
+      "verdict": "no-data",
+      "moneyStep": "attention"
+    },
+    {
       "path": "/",
       "kind": "funnel",
-      "views": 2,
+      "views": 4,
       "clicks": 2,
       "stageClicks": {
         "attention": 0,
@@ -510,7 +529,7 @@
     }
   ],
   "funnel": {
-    "views": 5,
+    "views": 7,
     "clicks": 6,
     "revenueScore": 9,
     "stageClicks": {
@@ -591,9 +610,9 @@
     }
   ],
   "totals": {
-    "paths": 24,
+    "paths": 25,
     "pathsWithViews": 3,
-    "pathsWithReads": 0,
+    "pathsWithReads": 1,
     "clicks": 6,
     "revenueScore": 9,
     "activationClicks": 2,
@@ -603,7 +622,7 @@
   },
   "notes": "Views and clicks under /probe-* paths and under the labels probe_* on 2026-11-21 are diagnostic probes, not visitor activity. This site's store was empty before that date, so those records are the baseline.",
   "sufficiency": {
-    "sufficient": false,
-    "reason": "No path has been read 3 times or more in the window, and no purchase intent has been recorded. The rule is in place, but the ranking cannot be settled from the data yet."
+    "sufficient": true,
+    "reason": "Paths have been read 3 times or more, but no click has reached a paid offer yet. The ranking is driven by the revenue rule and the next step of the funnel."
   }
 }
