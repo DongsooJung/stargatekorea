@@ -3,7 +3,7 @@
   "rule": "Every page a visitor can land on must offer a next step inside the content, and that step must be measurable. The work is then ranked by money: every click is placed on the money path — read, free plan, paid offer considered, purchase intent — and a finding is worth what it costs to leave that money on the table. The completed order happens in the Korean store and by email, so the last step is external and is never counted here.",
   "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. Page views are recorded per path and clicks per path, action and destination. The revenue report reuses those same clicks, so no click is counted twice, and it states whether the data collected so far can settle the ranking at all.",
   "revenue": {
-    "updatedAt": "2026-11-23T03:44:24.956Z",
+    "updatedAt": "2026-11-24T06:58:22.283Z",
     "sufficiency": {
       "canRank": true,
       "moneyStepsMeasured": false,
@@ -63,34 +63,6 @@
   },
   "openFindings": [],
   "iterations": [
-    {
-      "date": "2026-11-21",
-      "pagesInScope": 45,
-      "pagesWithOffer": 45,
-      "pagesMissingOffer": 0,
-      "pagesUnmeasured": 0,
-      "openFindings": 0,
-      "repaired": 0,
-      "guideViews": 1,
-      "guideClicks": 3,
-      "guidesWithViews": 1,
-      "guidesWithClicks": 1,
-      "streak": 12
-    },
-    {
-      "date": "2026-11-21",
-      "pagesInScope": 45,
-      "pagesWithOffer": 45,
-      "pagesMissingOffer": 0,
-      "pagesUnmeasured": 0,
-      "openFindings": 0,
-      "repaired": 0,
-      "guideViews": 1,
-      "guideClicks": 3,
-      "guidesWithViews": 1,
-      "guidesWithClicks": 1,
-      "streak": 13
-    },
     {
       "date": "2026-11-21",
       "pagesInScope": 45,
@@ -614,9 +586,49 @@
       "revenueIntentClicks": 0,
       "pathsWithReads": 1,
       "streak": 41
+    },
+    {
+      "date": "2026-11-24",
+      "pagesInScope": 46,
+      "pagesWithOffer": 46,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "pagesRevenueReady": 46,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "revenueScore": 9,
+      "activationClicks": 2,
+      "considerationClicks": 2,
+      "revenueIntentClicks": 0,
+      "pathsWithReads": 1,
+      "streak": 42
+    },
+    {
+      "date": "2026-11-24",
+      "pagesInScope": 46,
+      "pagesWithOffer": 46,
+      "pagesMissingOffer": 0,
+      "pagesUnmeasured": 0,
+      "pagesRevenueReady": 46,
+      "openFindings": 0,
+      "repaired": 0,
+      "guideViews": 2,
+      "guideClicks": 4,
+      "guidesWithViews": 1,
+      "guidesWithClicks": 1,
+      "revenueScore": 9,
+      "activationClicks": 2,
+      "considerationClicks": 2,
+      "revenueIntentClicks": 0,
+      "pathsWithReads": 1,
+      "streak": 43
     }
   ],
-  "today": "2026-11-23",
+  "today": "2026-11-24",
   "repaired": [],
-  "guideMetrics": "2026-11-23T03:44:24.827Z"
+  "guideMetrics": "2026-11-24T06:58:22.161Z"
 }
