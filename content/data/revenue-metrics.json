@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-11-24T06:58:22.283Z",
+  "updatedAt": "2026-11-25T05:27:57.488Z",
   "origin": "https://www.stargatekorea.net",
   "windowDays": 30,
   "source": "guide-metrics",
-  "measuredAt": "2026-11-24T06:58:22.161Z",
+  "measuredAt": "2026-11-25T05:27:57.333Z",
   "rule": "A page is judged by money, not by traffic. Every click is placed on the money path — read, free plan, paid offer considered, purchase intent, order — and a page is a finding when it was read often enough to trust the reading and produced no step toward money. The completed order happens in the Korean store and by email, so the last step is external and is never counted here.",
   "dataQuality": "Every analytics read sends the Origin of this site. The service keeps one store per site, so a request without Origin answers with another Stargate site's data. This report reuses the views and click labels already collected for the guides, so no click is counted twice. Page views are recorded per path and clicks per path, action and destination.",
   "stages": [
@@ -378,7 +378,7 @@
     {
       "path": "/",
       "kind": "funnel",
-      "views": 8,
+      "views": 9,
       "clicks": 2,
       "stageClicks": {
         "attention": 0,
@@ -529,7 +529,7 @@
     }
   ],
   "funnel": {
-    "views": 11,
+    "views": 12,
     "clicks": 6,
     "revenueScore": 9,
     "stageClicks": {
